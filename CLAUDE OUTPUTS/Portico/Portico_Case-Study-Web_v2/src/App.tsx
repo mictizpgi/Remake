@@ -54,13 +54,8 @@ const mixConfig = {
 
 /* ---------- theme switch: follows the system until the reader picks ---------- */
 function useTheme() {
-  const [dark, setDark] = useState(() => {
-    try {
-      const saved = localStorage.getItem("theme")
-      if (saved) return saved === "dark"
-    } catch { /* storage blocked */ }
-    return matchMedia("(prefers-color-scheme: dark)").matches
-  })
+  // the boot script in index.html already picked the theme (viewer setting, saved choice, then system)
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"))
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
   }, [dark])
@@ -88,7 +83,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       {/* ---------- site header ---------- */}
-      <header className="sticky top-0 z-20 border-b bg-background/85 backdrop-blur-md">
+      <header className="sticky top-[env(safe-area-inset-top,0px)] z-20 border-b bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-[min(1120px,100%-32px)] items-center gap-6">
           <a href={SITE} aria-label="Portico Group home" className="shrink-0">
             <img src={dark ? logoMono : logo} alt="Portico Group" className="h-8 w-auto" width={471} height={131} />
