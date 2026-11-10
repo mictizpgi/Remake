@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "DM Serif Display", Georgia, serif;
+  --font-serif: "DM Serif Display", Georgia, serif;
+  /* grenade: only 5 text sizes */
+  --text-label: 13px;
+  --text-body: 16px;
+  --text-h2: 22px;
+  --text-num: 40px;
+  --text-title: clamp(32px, 4.4vw, 48px);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+
+  --color-good: var(--good);
+  --color-good-bg: var(--good-bg);
+  --color-ink-2: var(--ink-2);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+/* Portico brand, mapped into the shadcn theme. Coral is the one accent. */
+:root {
+  --background: #F5F7F7;
+  --foreground: #1C2B4A;
+  --ink-2: #3D4860;
+  --card: #FFFFFF;
+  --card-foreground: #1C2B4A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C2B4A;
+  --primary: #B4472F;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E9EEEE;
+  --secondary-foreground: #1C2B4A;
+  --muted: #EDF1F1;
+  --muted-foreground: #586275;
+  --accent: #E9EEEE;
+  --accent-foreground: #1C2B4A;
+  --destructive: #A42528;
+  --good: #0F6A5F;
+  --good-bg: rgba(20, 112, 110, .12);
+  --border: rgba(28, 43, 74, .13);
+  --input: rgba(28, 43, 74, .18);
+  --ring: #14706E;
+  --chart-1: #B4472F; /* STAT: the one to look at */
+  --chart-2: #1C2B4A; /* Next */
+  --chart-3: #B9C3C9; /* Normal */
+  --radius: 0.875rem;
+  --shadow-card: 0 1px 2px rgba(28, 43, 74, .05), 0 6px 20px rgba(28, 43, 74, .06);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0F1729;
+  --foreground: #EDF0F5;
+  --ink-2: #C3CAD6;
+  --card: #18233A;
+  --card-foreground: #EDF0F5;
+  --popover: #18233A;
+  --popover-foreground: #EDF0F5;
+  --primary: #EE8D74;
+  --primary-foreground: #0F1729;
+  --secondary: #223050;
+  --secondary-foreground: #EDF0F5;
+  --muted: #1D2944;
+  --muted-foreground: #A3ADBD;
+  --accent: #223050;
+  --accent-foreground: #EDF0F5;
+  --destructive: #F17778;
+  --good: #7FD1C9;
+  --good-bg: rgba(127, 196, 194, .14);
+  --border: rgba(237, 240, 245, .12);
+  --input: rgba(237, 240, 245, .18);
+  --ring: #7FC4C2;
+  --chart-1: #EE8D74;
+  --chart-2: #8FA3C7;
+  --chart-3: #3A4865;
+  --shadow-card: none;
+  color-scheme: dark;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { @apply font-sans; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { @apply bg-background text-foreground; font-size: 16px; line-height: 1.55; }
+  h1, h2, h3 { font-family: var(--font-heading); font-weight: 400; text-wrap: balance; letter-spacing: -0.01em; }
+  ::selection { background: color-mix(in oklab, var(--primary) 22%, transparent); color: var(--foreground); }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 6px; }
+  a { text-underline-offset: 3px; }
+  input, textarea { caret-color: var(--primary); }
+  html { scrollbar-color: color-mix(in oklab, var(--foreground) 25%, transparent) transparent; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/* Emil: press feedback on anything pressable, hover only on real pointers */
+@layer components {
+  .pressable { transition: transform 160ms var(--ease-out-strong), background-color 150ms ease, color 150ms ease; }
+  .pressable:active { transform: scale(0.97); }
+}
