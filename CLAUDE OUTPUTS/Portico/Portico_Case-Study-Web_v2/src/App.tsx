@@ -13,9 +13,11 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
 import heroImg from "@/assets/hospital-wing.jpg"
 import logo from "@/assets/portico-logo.png"
 import logoMono from "@/assets/logo-mono.svg"
+import badge from "@/assets/smartsheet-elite-partner.png"
 
 const BOOK = "https://zcal.co/michaelortiz/meet"
 const SITE = "https://porticogroup.co"
+const NAV = [["Services", "/#services"], ["Industries", "/#industries"], ["SmartOps Pro", "/#smartops"], ["Results", "/#results"], ["Insights", "/insights/"], ["About", "/#about"]]
 // Emil: strong ease-out; one entrance, 30-80ms stagger, 200-400ms each
 const ENTER = { duration: 0.36, ease: [0.23, 1, 0.32, 1] as const }
 
@@ -89,12 +91,16 @@ export default function App() {
             <img src={dark ? logoMono : logo} alt="Portico Group" className="h-8 w-auto" width={471} height={131} />
           </a>
           <nav aria-label="Main" className="ml-auto hidden gap-6 text-[length:var(--text-label)] text-muted-foreground md:flex">
-            {[["Services", "#services"], ["Industries", "#industries"], ["SmartOps Pro", "#smartops"], ["Results", "#results"], ["About", "#about"]].map(([t, h]) => (
-              <a key={t} href={`${SITE}/${h}`} className="py-2 transition-colors hover:text-foreground">{t}</a>
+            {NAV.map(([t, h]) => (
+              <a key={t} href={`${SITE}${h}`} className="py-2 transition-colors hover:text-foreground">{t}</a>
             ))}
           </nav>
           <Button variant="ghost" size="icon" onClick={toggle} aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} className="pressable ml-auto size-11 rounded-full md:ml-0">
             {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+          </Button>
+          {/* site-wide action: same on every page */}
+          <Button asChild className="pressable h-10 rounded-full px-4 text-[length:var(--text-label)] font-semibold">
+            <a href={BOOK} target="_blank" rel="noopener"><span className="sm:hidden">Book a call</span><span className="hidden sm:inline">Book a free assessment</span></a>
           </Button>
         </div>
       </header>
@@ -186,7 +192,7 @@ export default function App() {
             <dl className="grid content-start gap-0 text-[length:var(--text-label)]">
               {[
                 ["Client", "Major integrated health system"],
-                ["Scope", "EVS and hospital flow; one pilot site as the model for the region"],
+                ["Scope", "Environmental Services (EVS) and patient flow; one pilot site as the model for the region"],
                 ["Partners", "EVS, Nursing, bed control, case management, transport"],
                 ["Timeline", "A few months, through a hospital-wide patient surge"],
               ].map(([k, v]) => (
@@ -286,12 +292,43 @@ export default function App() {
           </div>
           <p className="mt-10 font-serif text-[length:var(--text-h2)]">Small, steady changes hold up under pressure.</p>
         </Section>
+        {/* ---------- closing ask: repeats the top button for readers who reached the end ---------- */}
+        <section id="contact" className="bg-foreground text-background dark:bg-card dark:text-foreground">
+          <div className="mx-auto grid w-[min(1120px,100%-32px)] gap-8 py-14 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div className="min-w-0">
+              <h2 className="text-[length:var(--text-title)] leading-[1.05]">Where is your capacity hiding?</h2>
+              <p className="mt-4 max-w-[52ch] opacity-85">Book a free 30-minute operational assessment. No pitch. Just an honest look at where you are and what to do next.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild variant="outline" className="pressable h-12 rounded-full border-current bg-transparent px-6 text-[length:var(--text-body)] font-semibold text-inherit hover:bg-background/10 dark:hover:bg-foreground/10">
+                <a href={`${SITE}/#results`}>See more results</a>
+              </Button>
+              <Button asChild className="pressable h-12 rounded-full px-6 text-[length:var(--text-body)] font-semibold">
+                <a href={BOOK} target="_blank" rel="noopener">Book your free assessment <ArrowRight className="size-4" /></a>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="border-t">
-        <div className="mx-auto flex w-[min(1120px,100%-32px)] flex-wrap items-center justify-between gap-3 py-8 text-[length:var(--text-label)] text-muted-foreground">
-          <p>© 2026 Portico Group, Inc. · 714-501-8437 · <a href={`${SITE}/privacy-policy.html`} className="underline">Privacy</a></p>
-          <a href={`${SITE}/#results`} className="underline">More case studies</a>
+        <div className="mx-auto flex w-[min(1120px,100%-32px)] flex-wrap items-center justify-between gap-6 pt-10 text-[length:var(--text-label)] text-muted-foreground">
+          <div className="flex items-center gap-5">
+            <img src={dark ? logoMono : logo} alt="Portico Group" className="h-9 w-auto" width={471} height={131} />
+            <img src={badge} alt="Smartsheet Aligned Elite Solution Partner" className="h-16 w-auto" width={104} height={104} />
+          </div>
+          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {[...NAV.filter(([t]) => t !== "Results"), ["Contact", "/#contact"]].map(([t, h]) => (
+              <a key={t} href={`${SITE}${h}`} className="py-1 transition-colors hover:text-foreground">{t}</a>
+            ))}
+            <a href="https://www.linkedin.com/in/ortizmichael" target="_blank" rel="noopener" aria-label="Michael Ortiz on LinkedIn" className="p-1 transition-colors hover:text-foreground">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </nav>
+        </div>
+        <div className="mx-auto mt-8 flex w-[min(1120px,100%-32px)] flex-wrap justify-between gap-3 border-t py-6 text-[length:var(--text-label)] text-muted-foreground">
+          <p>© 2026 Portico Group, Inc. · porticogroup.co · 714-501-8437 · <a href={`${SITE}/privacy-policy.html`} className="underline">Privacy</a><br />Smartsheet is a trademark of Smartsheet Inc.</p>
+          <p className="font-serif text-[length:var(--text-body)] italic text-good">Finding silence in the noise.</p>
         </div>
       </footer>
     </MotionConfig>
