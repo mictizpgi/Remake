@@ -166,20 +166,55 @@ export default function App() {
         </section>
 
         {/* ---------- the story, in Michael's own words, before any data ---------- */}
-        <section className="mx-auto w-[min(1120px,100%-32px)] pt-12 pb-2 sm:pt-16">
-          <div className="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12">
-            <div>
-              <h2 className="text-[length:var(--text-h2)] leading-snug">How we approached it</h2>
-              <p className="mt-2 text-[length:var(--text-label)] text-muted-foreground">Michael Ortiz, Portico Group</p>
+        <section aria-labelledby="approach" className="mt-12 border-y bg-card sm:mt-16">
+          <div className="mx-auto w-[min(1120px,100%-32px)] py-12 sm:py-16">
+            <h2 id="approach" className="max-w-[20ch] text-[length:var(--text-title)] leading-[1.08]">
+              Each department was doing its job. <span className="text-primary">The gaps were between them.</span>
+            </h2>
+
+            {/* the room-turn path from the original story; handoffs are where time was lost */}
+            <figure className="mt-10">
+              <figcaption className="text-[length:var(--text-label)] text-muted-foreground">
+                Every one of the hospital’s <b className="font-semibold text-foreground tabular">30,000</b> room turns a year runs through these five steps
+              </figcaption>
+              <ol className="mt-5 grid gap-0 sm:grid-cols-5">
+                {["Patient leaves", "Room flagged dirty", "Housekeeper assigned", "Room cleaned", "Next patient moves in"].map((step, i, all) => (
+                  <li key={step} className="relative flex items-center gap-3 pb-7 last:pb-0 sm:block sm:pb-0 sm:pr-3">
+                    {/* connector: dashed coral line = a handoff between people */}
+                    {i < all.length - 1 && (
+                      <>
+                        <span aria-hidden className="absolute top-9 bottom-0 left-[15px] border-l-2 border-dashed border-primary/70 sm:hidden" />
+                        <span aria-hidden className="absolute top-[15px] right-0 left-9 hidden border-t-2 border-dashed border-primary/70 sm:block" />
+                        <span className="absolute left-12 top-[38px] text-[length:var(--text-label)] font-medium text-primary sm:hidden">handoff</span>
+                        <span className="absolute top-[22px] right-0 left-9 hidden text-center text-[length:var(--text-label)] font-medium text-primary sm:block">handoff</span>
+                      </>
+                    )}
+                    <span className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-foreground bg-card font-serif text-[length:var(--text-body)] tabular">{i + 1}</span>
+                    <span className="font-medium sm:mt-4 sm:block sm:pr-4">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </figure>
+
+            <div className="mt-12 grid gap-8 border-t pt-8 md:grid-cols-2 md:gap-12">
+              <div className="min-w-0">
+                <h3 className="text-[length:var(--text-h2)]">The challenge</h3>
+                <p className="mt-3 max-w-[62ch] text-ink-2">
+                  At a busy medical center chosen as the pilot site, dirty rooms were sitting empty while patients waited for beds. None of this was a people problem.
+                </p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-[length:var(--text-h2)]">Our approach</h3>
+                <p className="mt-3 max-w-[62ch] text-ink-2">
+                  We didn’t add staff. We built a dashboard fed daily from the hospital’s records system, so everyone was looking at the same numbers. Then we got out of the conference room and into the department, and brought Nursing, bed control, case management, and transport to the table. We fixed the handoffs between Environmental Services, Nursing, and bed control, one small test at a time.
+                </p>
+              </div>
             </div>
-            <div className="grid max-w-[68ch] gap-4">
-              <p className="font-serif text-[length:var(--text-h2)] leading-[1.4]">
-                At a busy medical center chosen as the pilot site, dirty rooms were sitting empty while patients waited for beds. None of this was a people problem. Each department was doing its job. The gaps were between them.
-              </p>
-              <p className="text-ink-2">
-                So we didn’t add staff. We built a dashboard fed daily from the hospital’s records system, so everyone was looking at the same numbers. Then we got out of the conference room and into the department, and brought Nursing, bed control, case management, and transport to the table. We fixed the handoffs between Environmental Services, Nursing, and bed control, one small test at a time.
-              </p>
-            </div>
+
+            <p className="mt-8 flex items-center gap-3 text-[length:var(--text-label)] text-muted-foreground">
+              <span aria-hidden className="flex size-9 items-center justify-center rounded-full bg-foreground font-semibold text-background">MO</span>
+              <span><span className="font-medium text-foreground">Michael Ortiz</span> · Portico Group</span>
+            </p>
           </div>
         </section>
 
@@ -202,7 +237,7 @@ export default function App() {
                   </div>
                 ))}
                 <p className="mt-6 border-t pt-4 text-ink-2">
-                  The hospital turns over <b className="font-semibold text-foreground">30,000 rooms a year</b>, and its clean times were among the region’s longest too.
+                  Clean times here were among the region’s longest too.
                 </p>
               </CardContent>
             </Card>
