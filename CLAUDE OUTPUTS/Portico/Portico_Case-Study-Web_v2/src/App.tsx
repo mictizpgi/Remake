@@ -211,10 +211,6 @@ export default function App() {
               </div>
             </div>
 
-            <p className="mt-8 flex items-center gap-3 text-[length:var(--text-label)] text-muted-foreground">
-              <span aria-hidden className="flex size-9 items-center justify-center rounded-full bg-foreground font-semibold text-background">MO</span>
-              <span><span className="font-medium text-foreground">Michael Ortiz</span> · Portico Group</span>
-            </p>
           </div>
         </section>
 
