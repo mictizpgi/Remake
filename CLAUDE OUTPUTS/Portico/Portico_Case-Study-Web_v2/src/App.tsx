@@ -165,6 +165,24 @@ export default function App() {
           </dl>
         </section>
 
+        {/* ---------- the story, in Michael's own words, before any data ---------- */}
+        <section className="mx-auto w-[min(1120px,100%-32px)] pt-12 pb-2 sm:pt-16">
+          <div className="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12">
+            <div>
+              <h2 className="text-[length:var(--text-h2)] leading-snug">How we approached it</h2>
+              <p className="mt-2 text-[length:var(--text-label)] text-muted-foreground">Michael Ortiz, Portico Group</p>
+            </div>
+            <div className="grid max-w-[68ch] gap-4">
+              <p className="font-serif text-[length:var(--text-h2)] leading-[1.4]">
+                At a busy medical center chosen as the pilot site, dirty rooms were sitting empty while patients waited for beds. None of this was a people problem. Each department was doing its job. The gaps were between them.
+              </p>
+              <p className="text-ink-2">
+                So we didn’t add staff. We built a dashboard fed daily from the hospital’s records system, so everyone was looking at the same numbers. Then we got out of the conference room and into the department, and brought Nursing, bed control, case management, and transport to the table. We fixed the handoffs between Environmental Services, Nursing, and bed control, one small test at a time.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ---------- 1. the problem, as a comparison ---------- */}
         <Section title="Rooms here waited longer for a housekeeper than the regional average">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
@@ -206,10 +224,8 @@ export default function App() {
         </Section>
 
         {/* ---------- 2. gaps and fixes, one table ---------- */}
-        <Section title="Each department did its job; the delays sat between them, so we tested six changes">
-          <p className="mb-5 max-w-[68ch] text-ink-2">
-            We built a dashboard fed daily from the hospital’s records, then tested each change on the floor with Nursing, bed control, case management and transport.
-          </p>
+        <Section title="Six handoff gaps, and the change we tested for each">
+          
           <Card className="gap-0 overflow-hidden py-0 shadow-[var(--shadow-card)] sm:hidden">
             <ul className="divide-y">
               {fixes.map((f) => (
