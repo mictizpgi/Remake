@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study: Clean Rooms, Sooner | Portico Group</title>
+<meta name="description" content="How six small tests of change in a hospital’s environmental services department added 665 days of patient capacity a year.">
+<link rel="canonical" href="https://porticogroup.co/case-studies/hospital-evs-patient-flow.html">
+<link rel="icon" href="https://porticogroup.co/assets/img/portico-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens: same Portico brand, contrast tuned to WCAG AA ---------- */
+:root {
+  --navy: #1C2B4A;
+  --navy-deep: #131E35;
+  --teal: #14706E;          /* was #1A8C8A: 4.1:1 on white → 5.7:1 */
+  --teal-bright: #7FC4C2;   /* for use on navy only */
+  --teal-wash: #E6F0EF;
+  --coral: #B4472F;         /* was #CF5B42: 4.0:1 with white → 5.4:1 */
+  --coral-hover: #9E3D28;
+  --paper: #F3F5F4;         /* cool paper from the teal family, not default cream */
+  --surface: #FFFFFF;
+  --ink: #1C2B4A;
+  --ink-2: #39445C;
+  --muted: #5B6476;
+  --line: rgba(28, 43, 74, .12);
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  /* motion: strong ease-out, short durations, no bounce */
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -.015em; text-wrap: balance; }
+.wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; gap: .55em; min-height: 48px; padding: 0 24px; border-radius: 999px; font: 600 15px/1 var(--sans); text-decoration: none; white-space: nowrap;
+  transition: background-color .2s var(--ease-out), color .2s var(--ease-out), transform .16s var(--ease-out); }
+.btn:active { transform: scale(.97); }
+.btn-coral { background: var(--coral); color: #fff; }
+.btn-line { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.35); }
+.btn .arrow { transition: transform .2s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-coral:hover { background: var(--coral-hover); }
+  .btn-line:hover { box-shadow: inset 0 0 0 1.5px #fff; }
+  .btn:hover .arrow { transform: translateX(3px); }
+}
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s var(--ease-out); }
+.site-header.is-scrolled { border-bottom-color: var(--line); }
+.header-row { display: flex; align-items: center; gap: 32px; height: 76px; }
+.brand img { height: 38px; width: auto; }
+.nav { display: flex; gap: 28px; margin-left: auto; font-size: 15px; }
+.nav a { text-decoration: none; color: var(--ink-2); padding: 8px 0; }
+@media (hover: hover) { .nav a:hover { color: var(--ink); } }
+.header-cta { min-height: 42px; padding: 0 18px; font-size: 14px; }
+@media (max-width: 960px) { .nav { display: none; } .header-cta { margin-left: auto; } }
+
+/* ---------- Hero ---------- */
+.hero { padding: 40px 0 0; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font: 500 13px/1.4 var(--mono); color: var(--muted); }
+.crumbs a { text-decoration: none; color: var(--teal); }
+.crumbs span[aria-hidden] { opacity: .5; }
+.hero h1 { margin-top: 28px; font-size: clamp(44px, 7vw, 96px); line-height: .98; max-width: 11.5em; }
+.hero h1 em { font-style: normal; color: var(--teal); }
+.hero-sub { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: end; margin-top: 36px; }
+.lead { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.55; color: var(--ink-2); max-width: 36em; }
+@media (max-width: 760px) { .hero-sub { grid-template-columns: 1fr; gap: 24px; } }
+
+/* Stats: hairline grid instead of side-tab borders */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 56px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stats > div { padding: 28px 24px 28px 0; }
+.stats > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+.stat-num { font: 400 clamp(44px, 5vw, 72px)/1 var(--serif); letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat-num .unit { font-size: .55em; vertical-align: .35em; margin-left: .04em; }
+.stat-label { margin-top: 12px; font-size: 15px; line-height: 1.45; color: var(--muted); max-width: 15em; }
+@media (max-width: 860px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats > div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .stats > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+.hero-image { margin-top: 56px; border-radius: 20px; overflow: hidden; aspect-ratio: 21 / 9; background: #dfe5e4; }
+.hero-image img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px) { .hero-image { aspect-ratio: 4 / 3; border-radius: 14px; } }
+
+/* ---------- Body ---------- */
+.body { padding: 112px 0 120px; }
+.grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 96px; align-items: start; }
+@media (max-width: 960px) { .grid { grid-template-columns: 1fr; gap: 56px; } }
+
+.facts { position: sticky; top: 108px; }
+.facts dl { margin: 0; display: grid; }
+.facts dl > div { padding: 16px 0; border-top: 1px solid var(--line); }
+.facts dt { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.facts dd { margin: 6px 0 0; font-size: 15.5px; line-height: 1.5; }
+.facts .btn { margin-top: 24px; width: 100%; justify-content: center; }
+@media (max-width: 960px) { .facts { position: static; } .facts dl { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); column-gap: 32px; } }
+
+.story { max-width: 700px; }
+.chapter + .chapter { margin-top: 104px; }
+.chapter-head { display: grid; grid-template-columns: auto 1fr; gap: 0 14px; align-items: baseline; margin-bottom: 28px; }
+.chapter-no { font: 400 20px/1 var(--mono); color: var(--coral); }
+.chapter-kicker { font: 500 13px/1 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.chapter h2 { grid-column: 1 / -1; margin-top: 14px; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.05; }
+
+.prose > p { font-size: 18.5px; color: var(--ink-2); }
+.prose > * + * { margin-top: 18px; }
+.prose b { color: var(--ink); font-weight: 600; }
+
+/* Situation: compare wait times visually */
+.compare { margin-top: 32px; background: var(--surface); border-radius: 16px; padding: 28px; box-shadow: 0 0 0 1px var(--line); }
+.compare-h { font: 500 12px/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.c-row { display: grid; grid-template-columns: 120px 1fr 92px; gap: 16px; align-items: center; margin-top: 18px; font-size: 15px; }
+.c-track { height: 10px; border-radius: 99px; background: var(--teal-wash); overflow: hidden; }
+.c-track i { display: block; height: 100%; width: var(--w); border-radius: inherit; background: var(--navy); transform-origin: left; }
+.c-row.hl .c-track i { background: var(--coral); }
+.c-row b { font: 500 15px/1 var(--mono); text-align: right; }
+@media (max-width: 520px) { .c-row { grid-template-columns: 1fr auto; } .c-track { grid-column: 1 / -1; grid-row: 2; } }
+
+/* Problem list */
+.issues { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.issues li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 17px; color: var(--ink-2); }
+.issues li::before { content: ""; width: 8px; height: 8px; margin-top: 10px; border-radius: 2px; background: var(--coral); transform: rotate(45deg); }
+
+/* Action: six tests as an even grid with big numerals */
+.tests { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.tests li { background: var(--surface); padding: 26px 26px 28px; }
+.tests .t-no { font: 400 40px/1 var(--serif); color: var(--teal); }
+.tests h3 { margin-top: 18px; font: 600 17px/1.3 var(--sans); letter-spacing: 0; }
+.tests p { margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+@media (max-width: 600px) { .tests { grid-template-columns: 1fr; } }
+
+/* Result: figures */
+.figure { margin: 32px 0 0; background: var(--surface); border-radius: 16px; padding: 32px; box-shadow: 0 0 0 1px var(--line); }
+.fig-h { font: 500 12px/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.fig-h + * { margin-top: 18px; }
+.fig-block + .fig-block { margin-top: 36px; padding-top: 32px; border-top: 1px solid var(--line); }
+.sb-row { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: center; }
+.sb-row + .sb-row { margin-top: 10px; }
+.sb-label { font-size: 14px; color: var(--muted); }
+.sb-bar { display: flex; height: 36px; border-radius: 8px; overflow: hidden; gap: 2px; }
+.sb-bar i { width: var(--w); display: flex; align-items: center; padding-left: 10px; font: 500 13px/1 var(--mono); font-style: normal; color: #fff; white-space: nowrap; transform-origin: left; }
+.sb-bar i.tight { padding-left: 0; justify-content: center; font-size: 11px; }
+.s-stat { background: var(--coral); } .s-next { background: var(--navy); } .s-norm { background: var(--teal); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; }
+.pb-row { display: grid; grid-template-columns: 64px 1fr 72px; gap: 16px; align-items: center; }
+.pb-row + .pb-row { margin-top: 12px; }
+.pb-track { height: 14px; border-radius: 99px; background: var(--teal-wash); overflow: hidden; }
+.pb-track i { display: block; height: 100%; width: var(--w); border-radius: inherit; transform-origin: left; }
+.pb-before { background: #9AA3B2; } .pb-after { background: var(--teal); }
+.pb-row b { font: 400 30px/1 var(--serif); text-align: right; font-variant-numeric: tabular-nums; }
+.pb-row b small { font: 500 12px var(--mono); color: var(--muted); margin-left: 3px; }
+.figure figcaption { margin-top: 24px; font-size: 14px; color: var(--muted); }
+
+/* Year totals in tiles */
+.totals { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.totals div { background: var(--navy); color: #fff; border-radius: 14px; padding: 22px; }
+.totals .t-num { font: 400 38px/1 var(--serif); font-variant-numeric: tabular-nums; }
+.totals p:last-child { margin-top: 10px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.78); }
+@media (max-width: 600px) { .totals { grid-template-columns: 1fr; } }
+
+/* Pull quote, no side-tab */
+.pull { margin-top: 56px; padding: 40px 0 0; border-top: 1px solid var(--ink); }
+.pull p { font: 400 clamp(26px, 2.8vw, 34px)/1.25 var(--serif); }
+.pull p em { font-style: normal; color: var(--teal); }
+.pull cite { display: block; margin-top: 20px; font: 500 14px/1.4 var(--mono); font-style: normal; color: var(--muted); }
+
+/* ---------- CTA ---------- */
+.cta { background: var(--navy); color: #fff; padding: 104px 0; }
+.cta-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: end; }
+.cta h2 { font-size: clamp(40px, 5.2vw, 72px); line-height: 1; max-width: 10em; }
+.cta h2 em { font-style: normal; color: var(--teal-bright); }
+.cta p { margin-top: 20px; font-size: 18px; color: rgba(255,255,255,.8); max-width: 32em; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 860px) { .cta-inner { grid-template-columns: 1fr; } }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--navy-deep); color: rgba(255,255,255,.7); padding: 56px 0 32px; font-size: 14px; }
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.footer-brand { display: flex; align-items: center; gap: 24px; }
+.footer-brand .logo { height: 40px; width: auto; }
+.footer-brand .badge { height: 72px; width: auto; }
+.site-footer nav { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
+.site-footer nav a { text-decoration: none; }
+@media (hover: hover) { .site-footer nav a:hover { color: #fff; } }
+.footer-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); }
+.footer-base .tag { font-family: var(--serif); font-style: italic; color: var(--teal-bright); font-size: 16px; }
+.tm { font-size: 12px; opacity: .7; }
+
+/* ---------- Blur Fade (Magic UI pattern, vanilla) ---------- */
+.js .bf { opacity: 0; filter: blur(6px); transform: translateY(8px);
+  transition: opacity .5s var(--ease-out), filter .5s var(--ease-out), transform .5s var(--ease-out);
+  transition-delay: var(--d, 0ms); }
+.js .bf.in { opacity: 1; filter: blur(0); transform: none; }
+/* bars grow once their figure is in view */
+.js .grow { transform: scaleX(0); transition: transform .9s var(--ease-out); transition-delay: var(--d, 120ms); }
+.js .in .grow { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .bf { filter: none; transform: none; transition: opacity .3s linear; }
+  .js .grow { transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="wrap header-row">
+    <a class="brand" href="https://porticogroup.co/" aria-label="Portico Group home"><img src="https://porticogroup.co/assets/img/portico-logo.png" alt="Portico Group" width="471" height="131"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="https://porticogroup.co/#services">Services</a>
+      <a href="https://porticogroup.co/#industries">Industries</a>
+      <a href="https://porticogroup.co/#smartops">SmartOps Pro</a>
+      <a href="https://porticogroup.co/#results">Results</a>
+      <a href="https://porticogroup.co/insights/">Insights</a>
+      <a href="https://porticogroup.co/#about">About</a>
+    </nav>
+    <a class="btn btn-coral header-cta" href="https://zcal.co/michaelortiz/meet" target="_blank" rel="noopener">Book a free assessment</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <nav class="crumbs bf" aria-label="Breadcrumb">
+      <a href="https://porticogroup.co/#results">Results</a><span aria-hidden="true">/</span>
+      <span>Healthcare</span><span aria-hidden="true">/</span><span>Patient operations</span>
+    </nav>
+    <h1 class="bf" style="--d:60ms">Clean rooms, sooner. <em>Patients placed earlier.</em></h1>
+    <div class="hero-sub">
+      <p class="lead bf" style="--d:120ms">At a busy medical center chosen as the pilot site, dirty rooms were sitting empty while patients waited for beds. We didn’t add staff. We fixed the handoffs between Environmental Services, Nursing, and bed control, one small test at a time.</p>
+    </div>
+
+    <div class="stats">
+      <div class="bf" style="--d:180ms">
+        <p class="stat-num"><span class="ticker" data-to="15963">15,963</span></p>
+        <p class="stat-label">Hours of patient capacity gained per year</p>
+      </div>
+      <div class="bf" style="--d:240ms">
+        <p class="stat-num"><span class="ticker" data-to="665">665</span></p>
+        <p class="stat-label">Additional patient days</p>
+      </div>
+      <div class="bf" style="--d:300ms">
+        <p class="stat-num"><span class="ticker" data-to="1.3" data-decimals="1" data-prefix="$" data-suffix="M">$1.3M</span></p>
+        <p class="stat-label">Soft savings, annualized</p>
+      </div>
+      <div class="bf" style="--d:360ms">
+        <p class="stat-num"><span class="ticker" data-to="5000" data-prefix="~">~5,000</span></p>
+        <p class="stat-label">Hours per 100 beds, projected across the region</p>
+      </div>
+    </div>
+
+    <div class="hero-image bf" style="--d:200ms">
+      <img src="https://porticogroup.co/assets/img/hospital-wing.jpg" alt="Quiet hospital inpatient wing with a freshly made room, a cleaning cart, and a bed-status board at the nurses’ station" width="1536" height="1024">
+    </div>
+  </div>
+</section>
+
+<section class="body">
+  <div class="wrap grid">
+    <aside class="facts bf">
+      <dl>
+        <div><dt>Client</dt><dd>Major integrated health system</dd></div>
+        <div><dt>Scope</dt><dd>Environmental Services &amp; hospital flow. One medical center as the pilot, built as a model for the region</dd></div>
+        <div><dt>Partners</dt><dd>EVS · Nursing · Bed control · Case management · Transport</dd></div>
+        <div><dt>Approach</dt><dd>Data dashboard · Six pilot tests of change</dd></div>
+        <div><dt>Timeline</dt><dd>A few months, through a hospital-wide patient surge</dd></div>
+      </dl>
+      <a class="btn btn-coral" href="https://zcal.co/michaelortiz/meet" target="_blank" rel="noopener">Book a free assessment <span class="arrow" aria-hidden="true">→</span></a>
+    </aside>
+
+    <article class="story">
+      <section class="chapter">
+        <header class="chapter-head bf">
+          <span class="chapter-no">01</span><span class="chapter-kicker">Situation</span>
+          <h2>Beds were the bottleneck.</h2>
+        </header>
+        <div class="prose bf">
+          <p>This medical center turns over roughly <b class="num">30,000</b> rooms a year. Every one of those turns runs through Environmental Services (EVS): a patient leaves, the room is flagged dirty, a housekeeper is assigned, the room is cleaned, and the next patient moves in.</p>
+          <p>Across the region, that wait for a housekeeper averaged 1 hour and 13 minutes. Here it was 1 hour and 32. Clean times were among the longest in the region too.</p>
+        </div>
+        <figure class="compare bf" aria-label="Average wait for a housekeeper: region 1 hour 13 minutes, pilot site 1 hour 32 minutes">
+          <p class="compare-h">Average wait for a housekeeper</p>
+          <div class="c-row"><span>Region</span><div class="c-track"><i class="grow" style="--w:79%"></i></div><b>1h 13m</b></div>
+          <div class="c-row hl"><span>Pilot site</span><div class="c-track"><i class="grow" style="--w:100%;--d:220ms"></i></div><b>1h 32m</b></div>
+        </figure>
+      </section>
+
+      <section class="chapter">
+        <header class="chapter-head bf">
+          <span class="chapter-no">02</span><span class="chapter-kicker">Problem</span>
+          <h2>The work was hiding in the handoffs.</h2>
+        </header>
+        <div class="prose bf">
+          <p>Let me share what the data and the floor showed us...</p>
+        </div>
+        <ul class="issues bf">
+          <li>The bed board wasn’t watched often enough, so dirty rooms sat in the queue</li>
+          <li>Housekeepers arrived to find IV poles, trays, and meds still in the room</li>
+          <li>Rooms weren’t always flagged dirty when the patient left. 6,113 rooms sat “hidden” for 37 extra minutes on average</li>
+          <li>Discharges peaked at 11am, but the discharge cleaning crew started at 4pm</li>
+          <li>Urgent STAT requests pulled housekeepers out of rooms they were halfway through cleaning</li>
+        </ul>
+        <div class="prose bf" style="margin-top:24px">
+          <p>None of this was a people problem. Each department was doing its job. <b>The gaps were between them.</b></p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <header class="chapter-head bf">
+          <span class="chapter-no">03</span><span class="chapter-kicker">Action</span>
+          <h2>Six small tests of change.</h2>
+        </header>
+        <div class="prose bf">
+          <p>We built a dashboard fed daily from the hospital’s records system, so everyone was looking at the same numbers. Then we got out of the conference room and into the department, and brought Nursing, bed control, case management, and transport to the table.</p>
+        </div>
+        <ol class="tests">
+          <li class="bf"><span class="t-no">1</span><h3>Eyes on Board.</h3><p>EVS managers took turns checking the bed board about every 30 minutes, every shift.</p></li>
+          <li class="bf" style="--d:60ms"><span class="t-no">2</span><h3>Room Ready swarm.</h3><p>Nurses cleared patient items from the room before discharge, so housekeepers could start right away.</p></li>
+          <li class="bf"><span class="t-no">3</span><h3>Wristband trigger.</h3><p>Cutting the patient’s wristband became the cue to flag the room dirty.</p></li>
+          <li class="bf" style="--d:60ms"><span class="t-no">4</span><h3>Staggered shifts.</h3><p>Working with EVS leaders and union stewards, we moved discharge crew start times earlier to meet the peak.</p></li>
+          <li class="bf"><span class="t-no">5</span><h3>STAT assignments.</h3><p>EVS managers, who can see the whole floor, took over assigning urgent rooms.</p></li>
+          <li class="bf" style="--d:60ms"><span class="t-no">6</span><h3>Same-unit transfers.</h3><p>A simple approval step for in-unit room moves, which had cut them about 20% in an earlier pilot.</p></li>
+        </ol>
+      </section>
+
+      <section class="chapter">
+        <header class="chapter-head bf">
+          <span class="chapter-no">04</span><span class="chapter-kicker">Result</span>
+          <h2>Each fix stacked on the last.</h2>
+        </header>
+        <div class="prose bf">
+          <p>The wait for a housekeeper dropped <b>26 minutes</b>, and still held at 22 through the surge. Clean times came down <b>2 minutes</b> a room. On the pilot unit, rooms flagged late went from waiting 39 minutes to 21.</p>
+        </div>
+
+        <figure class="figure bf" aria-label="Room assignments by priority, before and after the pilots">
+          <div class="fig-block">
+            <p class="fig-h">Pilot site · Room assignments by priority</p>
+            <div>
+              <div class="sb-row"><span class="sb-label">Before</span>
+                <div class="sb-bar"><i class="s-stat grow" style="--w:10%">10%</i><i class="s-next grow" style="--w:12%">12%</i><i class="s-norm grow" style="--w:78%">78%</i></div></div>
+              <div class="sb-row"><span class="sb-label">After</span>
+                <div class="sb-bar"><i class="s-stat grow tight" style="--w:4%;--d:240ms">4%</i><i class="s-next grow" style="--w:21%;--d:240ms">21%</i><i class="s-norm grow" style="--w:75%;--d:240ms">75%</i></div></div>
+              <div class="legend"><span><i class="s-stat"></i>STAT (urgent): 10% → 4%</span><span><i class="s-next"></i>Next</span><span><i class="s-norm"></i>Normal</span></div>
+            </div>
+          </div>
+          <div class="fig-block">
+            <p class="fig-h">Rooms flagged late · Minutes waiting for a housekeeper</p>
+            <div>
+              <div class="pb-row"><span class="sb-label">Before</span><div class="pb-track"><i class="pb-before grow" style="--w:100%"></i></div><b><span class="ticker" data-to="39">39</span><small>min</small></b></div>
+              <div class="pb-row"><span class="sb-label">After</span><div class="pb-track"><i class="pb-after grow" style="--w:54%;--d:240ms"></i></div><b><span class="ticker" data-to="21">21</span><small>min</small></b></div>
+            </div>
+          </div>
+          <figcaption>Urgent requests fell from 10% of assignments to 4%, so fewer cleans were interrupted. Pilot unit data.</figcaption>
+        </figure>
+
+        <div class="prose bf" style="margin-top:32px">
+          <p>Added up across a year, that’s <b>15,963 hours of patient capacity</b>, or 665 more patient days, and more than <b>$1.3M in soft savings</b>. EVS also got back 1,514 hours of staff time, enough to clean about five more rooms a night, and STAT room requests fell <b>60%</b>, from 10% of assignments to 4%. That’s roughly 1,700 fewer interruptions a year.</p>
+        </div>
+
+        <div class="totals">
+          <div class="bf"><p class="t-num"><span class="ticker" data-to="1514">1,514</span></p><p>Hours of EVS staff time back, about five more rooms a night</p></div>
+          <div class="bf" style="--d:60ms"><p class="t-num"><span class="ticker" data-to="60" data-suffix="%">60%</span></p><p>Fewer STAT room requests, from 10% of assignments to 4%</p></div>
+          <div class="bf" style="--d:120ms"><p class="t-num"><span class="ticker" data-to="1700" data-prefix="~">~1,700</span></p><p>Fewer interruptions a year</p></div>
+        </div>
+
+        <div class="prose bf" style="margin-top:32px">
+          <p>Then we looked past the pilot. Applied across the health system’s region, the same results work out to about <b>5,000 hours of patient capacity for every 100 beds</b>. That gave leadership a model other medical centers could follow.</p>
+        </div>
+
+        <blockquote class="pull bf">
+          <p>All of this happened while a surge in patients was hitting the hospital hard. <em>Five of the six pilots stayed in place anyway.</em></p>
+          <cite>Small, steady changes hold up under pressure.</cite>
+        </blockquote>
+      </section>
+    </article>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap cta-inner">
+    <div class="bf">
+      <h2>Where is your capacity <em>hiding?</em></h2>
+      <p>Book a free 30-minute operational assessment. No pitch. Just an honest look at where you are and what to do next.</p>
+    </div>
+    <div class="cta-actions bf" style="--d:80ms">
+      <a class="btn btn-line" href="https://porticogroup.co/#results">See more results</a>
+      <a class="btn btn-coral" href="https://zcal.co/michaelortiz/meet" target="_blank" rel="noopener">Book your free assessment <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <div class="footer-brand">
+      <img class="logo" src="https://porticogroup.co/assets/img/logo-mono.svg" alt="Portico Group" width="180" height="50">
+      <img class="badge" src="https://porticogroup.co/assets/img/smartsheet-elite-partner.png" alt="Smartsheet Aligned Elite Solution Partner" width="104" height="104">
+    </div>
+    <nav aria-label="Footer">
+      <a href="https://porticogroup.co/#services">Services</a>
+      <a href="https://porticogroup.co/#industries">Industries</a>
+      <a href="https://porticogroup.co/#smartops">SmartOps Pro</a>
+      <a href="https://porticogroup.co/insights/">Insights</a>
+      <a href="https://porticogroup.co/#about">About</a>
+      <a href="https://porticogroup.co/#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/ortizmichael" target="_blank" rel="noopener" aria-label="Michael Ortiz on LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    </nav>
+  </div>
+  <div class="wrap footer-base">
+    <p>© 2026 Portico Group, Inc. · porticogroup.co · 714-501-8437 · <a href="https://porticogroup.co/privacy-policy.html">Privacy</a><br><span class="tm">Smartsheet is a trademark of Smartsheet Inc.</span></p>
+    <p class="tag">Finding silence in the noise.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('js');
+
+  // Header hairline once scrolled
+  const header = document.querySelector('.site-header');
+  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+  onScroll(); addEventListener('scroll', onScroll, { passive: true });
+
+  // Number Ticker (Magic UI pattern): counts up once, keeps the real value in the HTML for no-JS / SEO
+  const fmt = (v, el) => {
+    const dec = +(el.dataset.decimals || 0);
+    return (el.dataset.prefix || '') + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + (el.dataset.suffix || '');
+  };
+  const tick = el => {
+    if (el.dataset.done) return; el.dataset.done = 1;
+    const to = +el.dataset.to;
+    if (reduce) { el.textContent = fmt(to, el); return; }
+    const dur = 1600, t0 = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 4); // strong ease-out, settles without overshoot
+    const step = now => {
+      const t = Math.min(1, (now - t0) / dur);
+      el.textContent = fmt(to * ease(t), el);
+      if (t < 1) requestAnimationFrame(step);
+    };
+    el.textContent = fmt(0, el);
+    requestAnimationFrame(step);
+  };
+
+  // Blur Fade (Magic UI pattern): reveal once on enter
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.ticker').forEach(tick);
+    io.unobserve(e.target);
+  }), { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.bf').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
