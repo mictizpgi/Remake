@@ -1,94 +1,23 @@
-"use client"
+// Magic UI blur-fade, rebuilt in CSS so the page can be pre-rendered:
+// the motion version writes opacity:0 into server HTML, which leaves text invisible until JS runs.
+// Same look (6px blur, 6px rise, fade), strong ease-out; at rest the content is always visible.
+import type { CSSProperties, ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
-import { useRef } from "react"
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  type MotionProps,
-  type UseInViewOptions,
-  type Variants,
-} from "motion/react"
-
-type MarginType = UseInViewOptions["margin"]
-
-interface BlurFadeProps extends MotionProps {
-  children: React.ReactNode
+interface BlurFadeProps {
+  children: ReactNode
   className?: string
-  variant?: {
-    hidden: { y: number }
-    visible: { y: number }
-  }
+  delay?: number // seconds, like the original
+  // accepted for API compatibility with the Magic UI component; motion is set in CSS
   duration?: number
-  delay?: number
-  offset?: number
   direction?: "up" | "down" | "left" | "right"
-  inView?: boolean
-  inViewMargin?: MarginType
-  blur?: string
+  transition?: unknown
 }
 
-const getFilter = (v: Variants[string]) =>
-  typeof v === "function" ? undefined : v.filter
-
-export function BlurFade({
-  children,
-  className,
-  variant,
-  duration = 0.4,
-  delay = 0,
-  offset = 6,
-  direction = "down",
-  inView = false,
-  inViewMargin = "-50px",
-  blur = "6px",
-  ...props
-}: BlurFadeProps) {
-  const ref = useRef(null)
-  const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
-  const isInView = !inView || inViewResult
-  const defaultVariants: Variants = {
-    hidden: {
-      [direction === "left" || direction === "right" ? "x" : "y"]:
-        direction === "right" || direction === "down" ? -offset : offset,
-      opacity: 0,
-      filter: `blur(${blur})`,
-    },
-    visible: {
-      [direction === "left" || direction === "right" ? "x" : "y"]: 0,
-      opacity: 1,
-      filter: `blur(0px)`,
-    },
-  }
-  const combinedVariants = variant ?? defaultVariants
-
-  const hiddenFilter = getFilter(combinedVariants.hidden)
-  const visibleFilter = getFilter(combinedVariants.visible)
-
-  const shouldTransitionFilter =
-    hiddenFilter != null &&
-    visibleFilter != null &&
-    hiddenFilter !== visibleFilter
-
+export function BlurFade({ children, className, delay = 0 }: BlurFadeProps) {
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        exit="hidden"
-        variants={combinedVariants}
-        transition={{
-          delay: 0.04 + delay,
-          duration,
-          ease: "easeOut",
-          ...(shouldTransitionFilter ? { filter: { duration } } : {}),
-        }}
-        className={className}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className={cn("blur-fade", className)} style={{ "--bf-delay": `${0.04 + delay}s` } as CSSProperties}>
+      {children}
+    </div>
   )
 }

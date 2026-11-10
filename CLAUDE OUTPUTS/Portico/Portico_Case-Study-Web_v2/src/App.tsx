@@ -56,16 +56,15 @@ const mixConfig = {
 
 /* ---------- theme switch: follows the system until the reader picks ---------- */
 function useTheme() {
-  // the boot script in index.html already picked the theme (viewer setting, saved choice, then system)
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"))
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark)
-  }, [dark])
+  // Server and first client render agree (light); the boot script in index.html already set the class,
+  // so read it back after mount. Logos and icons switch with CSS, so nothing flashes.
+  const [dark, setDark] = useState(false)
+  useEffect(() => { setDark(document.documentElement.classList.contains("dark")) }, [])
   const toggle = () => {
-    setDark((d) => {
-      try { localStorage.setItem("theme", d ? "light" : "dark") } catch { /* ignore */ }
-      return !d
-    })
+    const next = !document.documentElement.classList.contains("dark")
+    document.documentElement.classList.toggle("dark", next)
+    try { localStorage.setItem("theme", next ? "dark" : "light") } catch { /* storage blocked */ }
+    setDark(next)
   }
   return { dark, toggle }
 }
@@ -88,15 +87,15 @@ export default function App() {
       <header className="sticky top-[env(safe-area-inset-top,0px)] z-20 border-b bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-[min(1120px,100%-32px)] items-center gap-6">
           <a href={SITE} aria-label="Portico Group home" className="shrink-0">
-            <img src={dark ? logoMono : logo} alt="Portico Group" className="h-8 w-auto" width={471} height={131} />
+            <img src={logo} alt="Portico Group" className="h-8 w-auto dark:hidden" width={471} height={131} /><img src={logoMono} alt="Portico Group" className="hidden h-8 w-auto dark:block" width={471} height={131} />
           </a>
           <nav aria-label="Main" className="ml-auto hidden gap-6 text-[length:var(--text-label)] text-muted-foreground md:flex">
             {NAV.map(([t, h]) => (
               <a key={t} href={`${SITE}${h}`} className="py-2 transition-colors hover:text-foreground">{t}</a>
             ))}
           </nav>
-          <Button variant="ghost" size="icon" onClick={toggle} aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} className="pressable ml-auto size-11 rounded-full md:ml-0">
-            {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+          <Button variant="ghost" size="icon" onClick={toggle} aria-label="Switch between light and dark mode" aria-pressed={dark} className="pressable ml-auto size-11 rounded-full md:ml-0">
+            <Moon className="size-5 dark:hidden" /><Sun className="hidden size-5 dark:block" />
           </Button>
           {/* site-wide action: same on every page */}
           <Button asChild className="pressable h-10 rounded-full px-4 text-[length:var(--text-label)] font-semibold">
@@ -173,7 +172,7 @@ export default function App() {
             </h2>
 
             {/* the room-turn path from the original story; handoffs are where time was lost */}
-            <figure className="mt-10">
+            <figure className="mt-10" aria-label="Room turnover path: patient leaves, room flagged dirty, housekeeper assigned, room cleaned, next patient moves in. Each step is a handoff between departments.">
               <figcaption className="text-[length:var(--text-label)] text-muted-foreground">
                 Every one of the hospital’s <b className="font-semibold text-foreground tabular">30,000</b> room turns a year runs through these five steps
               </figcaption>
@@ -361,7 +360,7 @@ export default function App() {
       <footer className="border-t">
         <div className="mx-auto flex w-[min(1120px,100%-32px)] flex-wrap items-center justify-between gap-6 pt-10 text-[length:var(--text-label)] text-muted-foreground">
           <div className="flex items-center gap-5">
-            <img src={dark ? logoMono : logo} alt="Portico Group" className="h-9 w-auto" width={471} height={131} />
+            <img src={logo} alt="Portico Group" className="h-9 w-auto dark:hidden" width={471} height={131} /><img src={logoMono} alt="Portico Group" className="hidden h-9 w-auto dark:block" width={471} height={131} />
             <img src={badge} alt="Smartsheet Aligned Elite Solution Partner" className="h-16 w-auto" width={104} height={104} />
           </div>
           <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-2">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ComponentPropsWithoutRef } from "react"
+import { useEffect, useLayoutEffect, useRef, type ComponentPropsWithoutRef } from "react"
 import { animate, useInView, useMotionValue, useReducedMotion } from "motion/react"
 
 import { cn } from "@/lib/utils"
@@ -47,6 +47,13 @@ export function NumberTicker({
     }
   }, [motionValue, isInView, delay, value, direction, startValue, reduce])
 
+  // Pre-rendered HTML carries the real number (for search engines and no-JS readers);
+  // after hydration, reset to the start value before paint so the count-up can run.
+  useLayoutEffect(() => {
+    if (!reduce && ref.current) ref.current.textContent = fmt(direction === "down" ? value : startValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(
     () =>
       springValue.on("change", (latest) => {
@@ -69,7 +76,7 @@ export function NumberTicker({
       )}
       {...props}
     >
-      {reduce ? fmt(value) : fmt(startValue)}
+      {fmt(value)}
     </span>
   )
 }
