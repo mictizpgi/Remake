@@ -13,8 +13,9 @@ function Results({ root }: { root: string }) {
   const [f, setF] = useState<Cat | "all">("all")
   const [all, setAll] = useState(false)
   const matching = home.results.filter((r) => f === "all" || r.cats.includes(f))
-  // the first screen of results shows the strongest six; filters always show every match
-  const shown = f === "all" && !all ? matching.slice(0, 6) : matching
+  // the first screen of results shows the strongest six; filters always show every match.
+  // Every card stays in the HTML (hidden, not removed) so search engines can follow every case study link.
+  const collapsed = f === "all" && !all
   return (
     <section id="results" className={`${wrap} scroll-mt-24 py-14 sm:py-16`}>
       <h2 className="text-[length:var(--text-h2)] leading-snug">Results from {home.results.length} engagements, in manufacturing, healthcare and supply chain</h2>
@@ -26,8 +27,12 @@ function Results({ root }: { root: string }) {
           </button>
         ))}
       </div>
+      {filters.map((x) => x.desc && (
+        <p key={x.key} hidden={f !== x.key} className="mt-4 max-w-[68ch] text-pretty text-ink-2">{x.desc}</p>
+      ))}
       <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((r) => {
+        {home.results.map((r) => {
+          const visible = matching.includes(r) && !(collapsed && matching.indexOf(r) >= 6)
           const body = (
             <>
               <span className="flex items-baseline justify-between gap-3">
@@ -40,7 +45,7 @@ function Results({ root }: { root: string }) {
           )
           const cls = "flex h-full flex-col rounded-xl border bg-card p-5 shadow-[var(--shadow-card)]"
           return (
-            <li key={r.kind + r.n}>
+            <li key={r.kind + r.n} hidden={!visible}>
               {r.href
                 ? <a href={`${root}${r.href}`} className={`group ${cls} transition-colors hover:border-primary/60`} aria-label={`${r.kind}: ${r.n}. Read the case study`}>{body}</a>
                 : <div className={cls}>{body}</div>}
@@ -193,7 +198,10 @@ export function HomePage({ root }: { root: string }) {
       <section id="about" className="scroll-mt-24 border-t">
         <div className={`${wrap} grid gap-10 py-14 sm:py-16 md:grid-cols-[220px_minmax(0,1fr)] lg:gap-14`}>
           <figure>
-            <img src={`${root}assets/img/${home.about.photo.src}`} alt={home.about.photo.alt} width={640} height={640} loading="lazy" className="aspect-square w-full max-w-[220px] rounded-2xl object-cover" />
+            {/* the photo file has a thin circle drawn into it; zoom it out of view and draw a clean one */}
+            <span className="block aspect-square w-full max-w-[220px] overflow-hidden rounded-full ring-1 ring-border">
+              <img src={`${root}assets/img/${home.about.photo.src}`} alt={home.about.photo.alt} width={640} height={640} loading="lazy" className="size-full scale-[1.06] object-cover" />
+            </span>
             <figcaption className="mt-3"><b className="font-semibold">Michael Ortiz</b><span className={`block ${label}`}>Founder & Principal</span></figcaption>
           </figure>
           <div className="min-w-0">

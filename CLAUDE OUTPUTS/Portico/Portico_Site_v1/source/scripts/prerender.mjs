@@ -75,6 +75,7 @@ function head(study, root) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <script>try{var nv=performance.getEntriesByType('navigation')[0];if(!location.hash&&(!nv||nv.type!=='back_forward')){history.scrollRestoration='manual';addEventListener('DOMContentLoaded',function(){scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})})}}catch(e){}</script>
     <script>var r=document.documentElement,v=r.getAttribute('data-theme'),t=null;try{t=localStorage.getItem('theme')}catch(e){}if((v||t)?(v||t)==='dark':matchMedia('(prefers-color-scheme: dark)').matches)r.classList.add('dark');</script>
     ${assetTags.map((tag) => tag.replace(/(src|href)="\.\/assets\//, `$1="${root}assets/`)).join("\n    ")}`
 }

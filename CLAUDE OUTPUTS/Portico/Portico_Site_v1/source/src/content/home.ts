@@ -4,13 +4,14 @@
  */
 export type Cat = "mfg" | "health" | "supply" | "pe" | "smartsheet"
 
-export const filters: { key: Cat | "all"; label: string }[] = [
+// industry descriptions are the current homepage's own wording
+export const filters: { key: Cat | "all"; label: string; desc?: string }[] = [
   { key: "all", label: "All" },
-  { key: "mfg", label: "Manufacturing" },
-  { key: "health", label: "Healthcare" },
-  { key: "supply", label: "Supply chain & distribution" },
-  { key: "pe", label: "PE-backed & high-growth" },
-  { key: "smartsheet", label: "Built on Smartsheet" },
+  { key: "mfg", label: "Manufacturing", desc: "Assembly, custom fabrication, maquiladora environments, and supply chain. Measurable gains in lead time, efficiency, and on-time delivery across US and Mexico operations." },
+  { key: "health", label: "Healthcare", desc: "Patient capacity, workforce readiness command centers, medication management, and enterprise performance dashboards for integrated health systems." },
+  { key: "supply", label: "Supply chain & distribution", desc: "Inventory management, S&OP planning, dual-sourcing, and distributor performance. From Fortune 100 consumer goods to high-growth brands." },
+  { key: "pe", label: "PE-backed & high-growth", desc: "Post-acquisition rigor and scalable systems. We help portfolio companies move from founder-dependent operations to repeatable, measurable processes." },
+  { key: "smartsheet", label: "Built on Smartsheet", desc: "Forms, automations, reports, and dashboards, designed with the people who run the work every day." },
 ]
 
 export interface ResultCard {
