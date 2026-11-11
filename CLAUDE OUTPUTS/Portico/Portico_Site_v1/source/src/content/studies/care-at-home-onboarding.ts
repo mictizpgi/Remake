@@ -11,13 +11,13 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "No new hire left behind.",
   },
-  audience: "healthcare HR and onboarding leaders",
+  audience: "HR and onboarding leaders",
   industry: ["Home health", "Built on Smartsheet"],
-  h1: "A Smartsheet onboarding engine finds every new hire automatically, and a person approves each one before the invitation goes out.",
+  h1: "Smartsheet now finds every new hire, and a person approves each invitation.",
   reasons: [
     { icon: "check", lead: "The right session", text: "every time: each welcome email is matched to the next scheduled orientation" },
     { icon: "chart", lead: "A dashboard", text: "shows confirmed hires and candidates still in the pipeline, side by side" },
-    { icon: "shield", lead: "No second source of truth", text: "clinical checklists stay in the training platform, not copied into Smartsheet" },
+    { icon: "shield", lead: "No second source of truth", text: "clinical checklists stay in the training platform; I recommended against copying them into Smartsheet" },
   ],
   headline: [
     { value: 0, text: "Daily", label: "pending-hire feed", tag: "pulled in automatically" },
@@ -36,7 +36,7 @@ const study: CaseStudy = {
       caption: "How a new hire moves through the onboarding engine",
       steps: ["Pending hires sync in", "Filtered to this division", "A person approves", "Welcome email to the hire", "Manager copied automatically"],
     },
-    challenge: "A home health division was inviting new hires to orientation by hand, from a separate tracker. Recruiting data lived in another system, so onboarding was always a step behind. People slipped through the gap between recruiting and day one.",
+    challenge: "A home health division was inviting new hires to orientation by hand, from a separate tracker. Recruiting data lived in another system, so onboarding was always a step behind. People slipped through the gap between recruiting and day one: one hire arrived without clearance, another started missing a required document, and anyone who missed orientation went onto yet another manual list.",
     approach: "I built an onboarding engine in Smartsheet that finds every eligible hire automatically, keeps a person in the loop, and sends the right invitation on time. Automation does the sorting, but a person signs off on each hire before an email goes out.",
   },
   facts: [
@@ -44,25 +44,11 @@ const study: CaseStudy = {
     ["Organization", "Home health division of a large integrated health system"],
     ["Platform", "Smartsheet, Data Shuttle, Automations, Dashboards"],
     ["Users", "Onboarding team, hiring managers, talent acquisition partners"],
+    ["Status", "Live and expanding"],
   ],
   sections: [
     {
-      title: "Orientation invitations went out by hand, so new hires slipped through",
-      main: [
-        {
-          type: "list",
-          items: [
-            "Invitations were sent by hand, from a tracker kept separately",
-            "Recruiting data lived in another system",
-            "One hire arrived without clearance. Another started missing a required document",
-            "Anyone who missed an orientation was tracked on yet another manual list",
-          ],
-        },
-      ],
-      side: [{ type: "facts" }],
-    },
-    {
-      title: "Rows are added and updated, never removed, so nobody drops off the list",
+      title: "Each part of the engine closes a gap where hires used to slip through",
       main: [
         {
           type: "table",
@@ -74,17 +60,17 @@ const study: CaseStudy = {
           ],
         },
       ],
-      side: [{ type: "text", html: "Status: <b>live and expanding</b>. Next, manual exceptions in the same flow." }],
+      side: [{ type: "facts" }],
     },
     {
-      title: "Clinical checklists stay in the training platform instead of being copied",
+      title: "The same pattern fits anywhere people move from one system to the next",
       main: [
-        { type: "text", html: "It would have been easy to copy them into Smartsheet too. I recommended against it. You don’t pull a source of truth into a second system just to make it <b>a second source of truth</b>." },
-        { type: "text", html: "The same pattern fits <b>new-hire orientation, contractor onboarding, and credentialing</b>: anywhere people come from one system and need to be guided, on time, through the next." },
+        { type: "text", html: "<b>New-hire orientation, contractor onboarding, and credentialing</b>: anywhere people come from one system and need to be guided, on time, through the next." },
       ],
     },
   ],
   closing: "Built to grow: next come the manual exceptions, then the 30/60/90-day check-ins.",
+  ctaQuestion: "Are new hires slipping through the cracks?",
 }
 
 export default study

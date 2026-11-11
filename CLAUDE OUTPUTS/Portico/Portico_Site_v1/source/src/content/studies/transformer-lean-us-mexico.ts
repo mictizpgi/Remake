@@ -11,19 +11,19 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "One language of Lean, on both sides of the border.",
   },
-  audience: "manufacturing owners and operations leaders",
+  audience: "manufacturing operations leaders",
   industry: ["Manufacturing", "Lean transformation"],
-  h1: "Teaching Lean in Spanish and English got a transformer maker’s Mexico plant running on one-piece flow.",
+  h1: "Bilingual Lean training got a Mexico transformer plant running on one-piece flow.",
   reasons: [
-    { icon: "users", lead: "Trained twice", text: "in Spanish for the team in Mexico, in English for leadership in California" },
-    { icon: "layers", lead: "One-piece flow", text: "each unit moves step to step without waiting in a pile" },
-    { icon: "down", lead: "Waste removed", text: "as we Leaned out the facility, after a quick floor assessment" },
+    { icon: "users", lead: "Both sides trained", text: "one program, in each team’s own language" },
+    { icon: "layers", lead: "No more piles", text: "work now flows one piece at a time" },
+    { icon: "down", lead: "Leaner floor", text: "waste cleared out before the first cell went in" },
   ],
   headline: [
     { value: 45, prefix: "−", suffix: "%", label: "lead time", tag: "from the first cell" },
     { value: 30, prefix: "+", suffix: "%", label: "labor efficiency", tag: "from the first cell" },
     { value: 10, suffix: " wks", label: "kickoff to results", tag: "start to finish" },
-    { value: 4, label: "more lean cells", tag: "built by the team on its own" },
+    { value: 4, label: "more lean cells", tag: "built by the team on its own, for other product families" },
   ],
   hero: {
     src: "ef2fd7ab.jpg",
@@ -37,18 +37,17 @@ const study: CaseStudy = {
       steps: ["Train in Spanish and English", "Assess the floor", "Lean out the facility", "Build the first cell", "Team builds more on its own"],
     },
     challenge: "Revenue had dipped, mostly with the seasons. The owner saw it as the right moment to invest in fixing the operational issues in the Mexico plant. Leadership and support teams sat in Southern California. The builders were across the border. Two teams, two languages, one operation.",
-    approach: "We built a Lean training program and ran it twice: in Spanish for the team in Mexico, and in English for leadership and support in California. In the plant, we assessed the floor quickly and Leaned out the facility, removing waste as we went. Then we designed and built a one-piece flow lean cell.",
+    approach: "We built a Lean training program and ran it twice: in Spanish for the team in Mexico, and in English for leadership and support in California. In the plant, we assessed the floor quickly and Leaned out the facility, removing waste as we went. Then we designed and built a one-piece flow lean cell, so each unit moved from step to step without waiting in a pile.",
   },
   facts: [
     ["Client", "Custom transformer manufacturer"],
     ["Size", "$40M revenue"],
     ["Locations", "Southern California HQ · maquiladora plant in Mexico"],
     ["Services", "Lean training · One-piece flow · Kanban"],
-    ["Timeline", "10 weeks"],
   ],
   sections: [
     {
-      title: "Everyone was busy, but orders were still late and inventory piled up",
+      title: "Everyone was busy, but the floor wasn’t set up for the work to flow",
       main: [
         {
           type: "list",
@@ -59,7 +58,7 @@ const study: CaseStudy = {
             "Builders spent a lot of their day walking the plant to find what they needed",
           ],
         },
-        { type: "text", html: "It was a <b>system problem</b>. The floor simply wasn’t set up for the work to flow." },
+        { type: "text", html: "None of this was a people problem. It was a <b>system problem</b>." },
       ],
       side: [{ type: "facts" }],
     },
@@ -83,12 +82,10 @@ const study: CaseStudy = {
           ],
         },
       ],
-      side: [
-        { type: "text", html: "The best part came after. The team in Mexico, on their own initiative, built <b>more one-piece flow cells</b> for other product families." },
-      ],
     },
   ],
   closing: "That’s what it looks like when it sticks.",
+  ctaQuestion: "Is your floor set up for the work to flow?",
 }
 
 export default study

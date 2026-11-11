@@ -82,4 +82,6 @@ export interface CaseStudy {
   facts: [string, string][] // Client / Scope / Partners / Timeline ... from the original sidebar
   sections: Section[] // 1–3
   closing?: string // one closing line in the client's words
+  /** the closing band's question, taken from the original page (it varies by study) */
+  ctaQuestion: string
 }

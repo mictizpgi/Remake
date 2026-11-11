@@ -110,6 +110,7 @@ const study: CaseStudy = {
     },
   ],
   closing: "Small, steady changes hold up under pressure.",
+  ctaQuestion: "Where is your capacity hiding?",
 }
 
 export default study

@@ -29,12 +29,12 @@ function DataSection({ s, study, root }: { s: Section; study: CaseStudy; root: s
 export function CaseStudyPage({ study, root }: { study: CaseStudy; root: string }) {
   const a = study.approach
   return (
-    <Layout root={root}>
+    <Layout root={root} question={study.ctaQuestion}>
       {/* ---------- first screen: header line, point, ask, numbers, reasons ---------- */}
       <section className={`${wrap} pt-6 pb-4`}>
         <p className="border-b pb-3 text-[length:var(--text-label)] text-muted-foreground">
           <a href={`${root}index.html#results`} className="text-foreground underline decoration-border hover:decoration-foreground">Case study</a>
-          {" · "}Portico Group · For {study.audience} · Book a call
+          {" · "}Portico Group · For {study.audience}
         </p>
 
         <div className="grid gap-8 pt-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">

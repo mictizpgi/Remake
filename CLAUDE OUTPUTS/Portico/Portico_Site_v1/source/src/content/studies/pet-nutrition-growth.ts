@@ -11,11 +11,11 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "The growth plan was ready. The operation wasn’t.",
   },
-  audience: "operations leaders at PE-backed growth companies",
+  audience: "operations leaders at growing companies",
   industry: ["Distribution", "Fresh pet nutrition"],
-  h1: "Fixing inventory, vendors and fulfillment let a young operations team carry a fresh pet food company’s growth.",
+  h1: "Fixing inventory, vendors and fulfillment let a young team carry the company’s growth.",
   reasons: [
-    { icon: "truck", lead: "One partner", text: "for packaging and shipping, replacing underperforming vendors and guaranteeing service on demand" },
+    { icon: "truck", lead: "One partner", text: "for packaging and shipping, replacing too many vendors (some not performing) and guaranteeing service on demand" },
     { icon: "layers", lead: "Kaizen + Kanban", text: "cleared out excess equipment and stock and helped the team own its warehouse space" },
     { icon: "users", lead: "Team coached", text: "as we worked, so the new processes stayed with them" },
   ],
@@ -23,7 +23,7 @@ const study: CaseStudy = {
     { value: 2, suffix: "×", label: "growth supported", tag: "year over year" },
     { value: 10, suffix: "%+", label: "savings", tag: "consolidated packaging and shipping partner" },
     { value: 5, prefix: "+3–", suffix: "%", label: "more saved", tag: "pre-bate and monthly rebates" },
-    { value: 1, label: "new 3PL partner", tag: "for e-commerce" },
+    { value: 1, label: "new 3PL partner", tag: "built to handle fast e-commerce growth" },
   ],
   hero: {
     src: "pet-fulfillment.jpg",
@@ -48,7 +48,7 @@ const study: CaseStudy = {
   ],
   sections: [
     {
-      title: "Growth would have broken the operation, so we fixed the basics first",
+      title: "We fixed the basics first, then the new partners cut packaging and shipping spend",
       main: [
         {
           type: "table",
@@ -57,25 +57,18 @@ const study: CaseStudy = {
             { a: "Inventory counts weren’t always done", bLead: "Full count", b: "so the numbers could be trusted" },
             { a: "Transfers between locations weren’t closed out", bLead: "Close-out process", b: "a simple step to close out transfers" },
             { a: "Supplies had no par levels or usage reports", bLead: "Par levels", b: "and usage reports to drive reordering" },
-            { a: "Too many vendors, and some weren’t performing", bLead: "Vendor consolidation", b: "one strategic packaging and shipping partner" },
-            { a: "E-commerce had no fulfillment partner built to scale", bLead: "New 3PL", b: "developed and managed to handle fast e-commerce growth" },
           ],
         },
-      ],
-      side: [{ type: "facts" }],
-    },
-    {
-      title: "The new partners cut packaging and shipping spend and gave e-commerce room to run",
-      main: [
         {
           type: "stats",
           items: [{ n: "~13–15%", tag: "together", label: "off the spend, from partner savings plus pre-bate and monthly rebates" }],
         },
-        { type: "text", html: "The 3PL operation gave e-commerce <b>room to run</b>." },
       ],
+      side: [{ type: "facts" }],
     },
   ],
   closing: "A strong foundation is what lets a business grow.",
+  ctaQuestion: "Is your operation ready for your growth plan?",
 }
 
 export default study

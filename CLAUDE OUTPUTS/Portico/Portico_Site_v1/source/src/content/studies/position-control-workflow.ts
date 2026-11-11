@@ -11,19 +11,19 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "Every position reviewed. The clear ones, fast.",
   },
-  audience: "health system finance leaders",
+  audience: "finance and HR leaders",
   industry: ["Built on Smartsheet", "Position control"],
-  h1: "A Smartsheet workflow let a health system review every position request, and fast-track the clear ones.",
+  h1: "Every position request now gets reviewed, and the clear ones move fast.",
   reasons: [
-    { icon: "check", lead: "Fast track", text: "for clear cases, approved in a single motion unless someone pulls a line" },
+    { icon: "check", lead: "Own rows only", text: "each submitting area sees just its flagged rows and exactly what to fix" },
     { icon: "users", lead: "Judgment time", text: "the committee spends its time on the requests that need it" },
-    { icon: "shield", lead: "Audit trail", text: "built into every decision, and each area sees exactly what it needs to fix" },
+    { icon: "shield", lead: "Audit trail", text: "built into every decision" },
   ],
   headline: [
-    { value: 100, suffix: "%", label: "of position requests reviewed", tag: "vs. spot checks before" },
+    { value: 100, suffix: "%", label: "of position requests reviewed", tag: "up from about 2%" },
     { value: 550, prefix: "~", label: "patient-care positions", tag: "in the first national submission" },
     { value: 1, label: "smart form routes each request", tag: "to the right review path" },
-    { value: 6, label: "executive votes per request", tag: "tallied and logged automatically" },
+    { value: 6, label: "executive votes per request", tag: "tallied, and logged in cell history" },
   ],
   hero: {
     src: "rpco-committee-room.jpg",
@@ -34,7 +34,7 @@ const study: CaseStudy = {
     accent: "The trick is knowing which ones need a conversation.",
     path: {
       caption: "One path in. The right path through.",
-      steps: ["Submit a smart form or bulk upload", "Two questions route it", "Triage flags what’s missing", "Committee votes live", "Approved positions submitted up"],
+      steps: ["Submit a form or bulk upload", "Fast track or full review", "Triage flags what’s missing", "Committee votes live", "Approved positions submitted up"],
     },
     challenge: "The region decided every new and replacement position would go through review, not just a small share. Overnight, a side task became a full workstream, carried by a small team on top of their day jobs.",
     approach: "We built the Smartsheet workflow that made that possible: smart intake, a fast track for the clear cases, and committee votes that record themselves. Errors go back to the source: one column spells out everything wrong with a request, and the fix belongs to the submitter, not the review team.",
@@ -47,7 +47,7 @@ const study: CaseStudy = {
   ],
   sections: [
     {
-      title: "Simple backfills waited in line with complex requests, so each intake problem got its own fix",
+      title: "Every intake problem the small team faced got its own fix",
       main: [
         {
           type: "table",
@@ -55,33 +55,12 @@ const study: CaseStudy = {
           rows: [
             { a: "Requests in different formats, often missing details", bLead: "Smart form", b: "Patient-care critical? Budgeted? Short form or full business case" },
             { a: "Some areas had backlogs of hundreds of positions", bLead: "Bulk upload", b: "Excel dropdowns for thousands of job codes; re-uploads update in place" },
-            { a: "Budgeted backfills waited behind complex new requests", bLead: "Consent block", b: "Clear cases reach the committee together, not line by line" },
-            { a: "Committee decisions lived in conversations and notes", bLead: "Live votes", b: "Executives vote on screen; cell history logs who and when" },
+            { a: "Budgeted backfills waited behind complex new requests", bLead: "Consent block", b: "One motion approves them all unless someone pulls a line" },
+            { a: "Committee decisions lived in conversations and notes", bLead: "Live votes", b: "The decision updates the moment the fourth vote agrees" },
           ],
         },
       ],
       side: [{ type: "facts" }],
-    },
-    {
-      title: "Review went from spot checks on about 2% of requests to every one",
-      main: [
-        {
-          type: "bars",
-          caption: "Share of position requests reviewed",
-          rows: [
-            { label: "Before", display: "~2%", width: 2 },
-            { label: "After", display: "Every request", width: 100, highlight: true },
-          ],
-        },
-      ],
-      side: [
-        {
-          type: "stats",
-          items: [
-            { n: "Fourth vote", tag: "decides", label: "the decision updates the moment it agrees" },
-          ],
-        },
-      ],
     },
     {
       title: "The same pattern fits any approval that’s outgrown email",
@@ -91,6 +70,7 @@ const study: CaseStudy = {
     },
   ],
   closing: "Fast where it can be. Careful where it counts.",
+  ctaQuestion: "Are your approvals stuck in inboxes?",
 }
 
 export default study

@@ -11,13 +11,13 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "Take the pressure off. Then fix the plant.",
   },
-  audience: "manufacturing supply chain leaders",
+  audience: "supply chain leaders",
   industry: ["Supply chain"],
-  h1: "Moving production to contract manufacturers kept a skincare maker’s shelves stocked while its own plant was fixed.",
+  h1: "Contract manufacturers kept a skincare maker’s shelves stocked while its plant was fixed.",
   reasons: [
-    { icon: "shield", lead: "Shelves stayed stocked", text: "while the home plant was being repaired" },
-    { icon: "clock", lead: "Expedited", text: "remediation of the facility and its operations, thanks to the breathing room" },
-    { icon: "users", lead: "Each product", text: "qualified at outside manufacturers by the supply chain team I led" },
+    { icon: "check", lead: "Decided with data", text: "cost structure, material availability, quality record, and proximity to forecast demand, to keep freight down" },
+    { icon: "layers", lead: "Supply and demand planned together", text: "SAP and inventory management kept product flowing across the plant and its partners" },
+    { icon: "chart", lead: "One clear picture", text: "a data model and dashboard, presented every week to the Board and senior executives" },
   ],
   headline: [
     { value: 49, prefix: "+", suffix: "%", label: "product availability", tag: "improvement" },
@@ -30,17 +30,14 @@ const study: CaseStudy = {
     alt: "Clean personal care filling lines running side by side with unlabeled bottles",
   },
   approach: {
-    thesis: "Take the pressure off.",
-    accent: "Then fix the plant.",
+    thesis: "Sometimes the fastest way to fix a plant",
+    accent: "is to stop asking it to do everything at once.",
     challenge: "A skincare manufacturer couldn’t keep its promises to customers while its own plant was being repaired. The home plant had to keep up with customer demand and fix its own operations at the same time. It couldn’t do both well.",
-    approach: "I led the supply chain team that moved production to outside manufacturers, so the plant could get well without the shelves going empty. The answer was to qualify products at third-party contract manufacturers. That would free up capacity so the plant could focus on getting healthy.",
+    approach: "The answer was to qualify products at third-party contract manufacturers. I led the supply chain team through qualifying each product at outside manufacturers. That would free up capacity so the plant could focus on getting healthy.",
   },
   facts: [
     ["Context", "Principal’s experience, as lead consultant before founding Portico"],
     ["Organization", "Fortune 100 skincare manufacturer"],
-    ["Role", "Led the supply chain team for the dual-sourcing initiative"],
-    ["Tools", "SAP · Demand and supply planning · Board-level dashboard"],
-    ["Timeline", "12-month plant remediation"],
   ],
   sections: [
     {
@@ -59,7 +56,7 @@ const study: CaseStudy = {
       side: [{ type: "facts" }],
     },
     {
-      title: "Part of the in-house portfolio moved to contract manufacturers so the plant could heal",
+      title: "The dual-sourcing program moved part of the in-house portfolio out of the home plant",
       main: [
         {
           type: "stack",
@@ -73,23 +70,9 @@ const study: CaseStudy = {
         },
       ],
     },
-    {
-      title: "Each product went to the partner that fit on cost, materials, quality and location",
-      main: [
-        {
-          type: "table",
-          head: ["What we needed", "How we did it"],
-          rows: [
-            { a: "The right partner for each product", bLead: "Decide with data", b: "cost structure, material availability, quality record, demand proximity" },
-            { a: "Product flowing across the plant and partners", bLead: "Plan together", b: "SAP, demand and supply planning, inventory management" },
-            { a: "One clear picture for the Board", bLead: "Weekly dashboard", b: "a data model presented to the Board and senior executives" },
-          ],
-        },
-      ],
-      side: [{ type: "quote", text: "Sometimes the fastest way to fix a plant is to stop asking it to do everything at once." }],
-    },
   ],
   closing: "Relieve the pressure first. Then fix what’s underneath.",
+  ctaQuestion: "Is your supply chain carrying too much on one plant?",
 }
 
 export default study

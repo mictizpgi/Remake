@@ -11,13 +11,13 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "A record that holds up, and reports that build themselves.",
   },
-  audience: "infrastructure program leaders",
+  audience: "program and project leaders",
   industry: ["Built on Smartsheet", "Land acquisition"],
-  h1: "Rebuilding a land acquisition program’s Smartsheet setup made the record hold up and the reports build themselves.",
+  h1: "A rebuilt Smartsheet setup made the land record hold up and the reports build themselves.",
   reasons: [
     { icon: "clock", lead: "No hand assembly", text: "of the twice-weekly client reports, often rebuilt after hours before" },
     { icon: "check", lead: "One set of names", text: "landowner names from three trackers consolidated, every decision logged" },
-    { icon: "shield", lead: "Clean revocation", text: "access sits in role-based Work App views and can be revoked cleanly" },
+    { icon: "shield", lead: "Clean revocation", text: "access lives in the Work App, so it can be revoked cleanly" },
   ],
   headline: [
     { value: 1000, suffix: "s", label: "land tracts under management", tag: "across multiple states" },
@@ -32,19 +32,15 @@ const study: CaseStudy = {
   approach: {
     thesis: "Fix the reporting first, so the pain stops.",
     accent: "Then rebuild underneath at a pace the team can absorb.",
-    path: {
-      caption: "From one register of record to a client report that builds itself",
-      steps: ["Register: one row per tract", "Project plans from one template", "Exceptions flagged by formula", "Role views where people work", "Roll-up: the client report as output"],
-    },
     challenge: "Every contact with a landowner is a legal record. On a program heading toward condemnation cases, those notes and their dates can become evidence. The setup, built fast under pressure, got the program moving, but couldn’t carry that weight.",
-    approach: "We re-architected it: one register of record, one project plan template, and role-based views where people actually work. Nothing went big-bang. The old environment keeps running, untouched, until the team is ready to retire it, and the two are reconciled before anything is switched off.",
+    approach: "We re-architected it: one register of record, one project plan template, and role-based views where people actually work. Nothing went big-bang: the old environment keeps running, untouched, until the team is ready to retire it, and the two are reconciled before anything is switched off. On the pilot tracts, the only differences were a couple of known quirks in the source data.",
   },
   facts: [
     ["Client", "National engineering and infrastructure firm"],
     ["Program", "Federal land acquisition across several states, two-year runway"],
     ["Platform", "Smartsheet · Work App · Dynamic views · Data Shuttle · Data Mesh · API"],
     ["Users", "Land agents · Analysts · QC · Document team · Program leads · Partners"],
-    ["Status", "Pilot built and validated, rolling out in phases. Old and new run side by side until the switch"],
+    ["Status", "Pilot built and validated, rolling out in phases"],
   ],
   sections: [
     {
@@ -55,7 +51,7 @@ const study: CaseStudy = {
           head: ["What was going wrong", "What we built"],
           rows: [
             { a: "Tract IDs typed by hand; one tract, many versions", bLead: "One register", b: "One row per tract; reporting and GIS read from it" },
-            { a: "A column for every milestone in one wide tracker", bLead: "Milestones as rows", b: "One project plan per project, from a single template" },
+            { a: "A column for every milestone in one wide tracker", bLead: "Project plans", b: "Milestones as rows, not columns" },
             { a: "Quality checks meant line-by-line review", bLead: "Exception queue", b: "Formulas flag what’s late, overdue, blocked, or missing" },
           ],
         },
@@ -64,7 +60,7 @@ const study: CaseStudy = {
       side: [{ type: "facts" }],
     },
     {
-      title: "Moving milestones to rows took each tracker far from the platform’s cell limit",
+      title: "Each tracker now stays far from the platform’s cell limit",
       main: [
         {
           type: "bars",
@@ -77,14 +73,9 @@ const study: CaseStudy = {
         { type: "text", html: "The old tracker was closing in on the limit before the program was <b>half</b> done. Now a new project is a new sheet, so capacity grows with the program." },
       ],
     },
-    {
-      title: "The new model rebuilt the client’s roll-up, and it matched the old files",
-      main: [
-        { type: "text", html: "Before anything replaced the old setup, the new model rebuilt the roll-up for the <b>pilot tracts</b>. It matched, apart from a couple of known quirks in the source data." },
-      ],
-    },
   ],
   closing: "Update once. Everything downstream follows.",
+  ctaQuestion: "Has your Smartsheet setup outgrown itself?",
 }
 
 export default study

@@ -13,10 +13,10 @@ const study: CaseStudy = {
   },
   audience: "manufacturing operations leaders",
   industry: ["Manufacturing", "Steel fabrication"],
-  h1: "Fixing how material moved, not adding people or equipment, got a growing steel tank maker shipping more jobs on time.",
+  h1: "Fixing how material moved got a steel tank maker shipping more jobs on time.",
   reasons: [
     { icon: "up", lead: "~30% more capacity", text: "projected from the new plant layout on its own, separate from the supply chain gains" },
-    { icon: "users", lead: "Their team ran it", text: "every recommendation came with the tools to carry it out" },
+    { icon: "users", lead: "Put to work", text: "by their own team, who took the plan and ran with it" },
     { icon: "check", lead: "Called back", text: "to design the layout for an expanding plant and support its setup" },
   ],
   headline: [
@@ -41,7 +41,6 @@ const study: CaseStudy = {
   },
   facts: [
     ["Client", "Bolted steel tank manufacturer"],
-    ["Our role", "Assessment, solutions, and tools. Implementation led by the client’s team"],
     ["Phase 1", "Supply chain assessment and solutions"],
     ["Phase 2", "New facility layout and setup"],
     ["Focus", "Procurement · Material handling · Inventory control · Plant layout"],
@@ -49,11 +48,11 @@ const study: CaseStudy = {
   ],
   sections: [
     {
-      title: "Only about one job in five shipped on time the year before",
+      title: "Lead times had stretched past the quote, and most jobs shipped late",
       main: [
         {
           type: "bars",
-          caption: "Jobs shipped in the year before the work began, of 301 (client’s own shipping report)",
+          caption: "Jobs shipped in the year before the work began, of 301: about one in five on time (client’s own shipping report)",
           rows: [
             { label: "Shipped on time", display: "65", width: 28, highlight: true },
             { label: "Late", display: "236", width: 100 },
@@ -84,18 +83,19 @@ const study: CaseStudy = {
       ],
     },
     {
-      title: "Then they asked us to lay out their expanding Houston-area plant",
+      title: "The Houston-area plant was laid out around how the work flows",
       main: [
         {
           type: "list",
-          items: ["Planned around traffic flow", "Short distances between steps", "Room for future equipment", "We supported the setup"],
+          items: ["Planned around traffic flow", "Short distances between steps", "Room for future equipment"],
         },
         { type: "text", html: "Results are <b>projections</b> from our analysis and execution plans, confirmed with the client after their team implemented them." },
       ],
-      side: [{ type: "quote", text: "We didn’t need to stay to make it stick. Their team owned the change, and the results were theirs." }],
+      side: [{ type: "quote", text: "We didn’t need to stay to make it stick." }],
     },
   ],
   closing: "The capacity was already in the building. We helped them find it.",
+  ctaQuestion: "Is growth outrunning your system?",
 }
 
 export default study

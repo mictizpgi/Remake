@@ -20,11 +20,11 @@ const study: CaseStudy = {
     dateModified: "2026-11-11",
     headline: "Move the whole operation. Keep the orders shipping.",
   },
-  audience: "operations and finance leaders planning a facility move",
+  audience: "leaders planning a move or big change",
   industry: ["Built on Smartsheet", "Facility relocation"],
-  h1: "One Smartsheet command center moved a whole warehouse and office on time, while orders kept shipping.",
+  h1: "One command center moved a warehouse and office on time, with orders still shipping.",
   reasons: [
-    { icon: "truck", lead: "Orders kept shipping", text: "from the new building while the old one was emptied and handed back" },
+    { icon: "truck", lead: "Orders kept shipping", text: "from the new building while the old one was emptied" },
     { icon: "money", lead: "A live budget", text: "every quote, bid and signed amount, with a low and high case, so the cash picture was always current" },
     { icon: "shield", lead: "One RAID log", text: "every risk, issue and decision logged with an owner and a date" },
   ],
@@ -42,10 +42,10 @@ const study: CaseStudy = {
     thesis: "A move is a hundred small projects that all have to land in the same week.",
     accent: "The work is keeping them on one page.",
     path: {
-      caption: "One plan, one budget, one weekly rhythm",
+      caption: "One command center for the whole move",
       steps: ["Plan", "Track", "Log", "Budget", "Decide"],
     },
-    challenge: "The old building was about twice the size the business needed, with a lease that still had a year to run. A new, better building was available, with incentives that only existed if the company moved inside the landlord’s window. Staying was not free: waiting meant more rent on unused space, then a decision at market rates with none of the incentives.",
+    challenge: "The old building was about twice the size the business needed, with a lease that still had a year to run. A new, better building was available, with incentives that only existed if the company moved inside the landlord’s window. Staying was not free: waiting meant more rent on unused space, then a decision at market rates with none of the incentives. Orders had to keep going out, with only one short, planned pause, and leadership needed to know, every week, whether the move still made financial sense.",
     approach: "We ran the move from one Smartsheet command center, so nobody finds out about a problem on moving day. We also built the board view of the move’s economics from the same budget tracker, and racking, network, and offices came online in sequence, tracked day by day.",
   },
   facts: [
@@ -53,11 +53,11 @@ const study: CaseStudy = {
     ["Scope", "Warehouse and office relocation, from lease to final inspection"],
     ["Platform", "Smartsheet · Dashboards · Reports · RAID log · Budget tracker"],
     ["Users", "CFO · Operations · Warehouse · IT · Vendors and contractors"],
-    ["Status", "Complete. Moved on schedule, with a net positive cash result"],
+    ["Status", "Complete"],
   ],
   sections: [
     {
-      title: "Dozens of moving parts had to land without stopping the business",
+      title: "The plan split the move into lanes, so each vendor’s work landed in one place",
       main: [
         {
           type: "table",
@@ -65,16 +65,14 @@ const study: CaseStudy = {
           rows: [
             { a: "Racking down in one building, up and inspected in the other", bLead: "Warehouse lane", b: "rack inspection and release, then shipping restarts" },
             { a: "Power, network, servers and security live before shipping restarted", bLead: "Office and IT lane", b: "server power circuit, network, Wi-Fi and scanners" },
-            { a: "Build-out, movers and storage each had their own email thread", bLead: "Lanes, not threads", b: "three lanes; each vendor’s work landed in one place" },
-            { a: "Orders had to keep going out, with one short, planned pause", bLead: "Critical path up top", b: "past due and days remaining on the first screen" },
-            { a: "Leadership needed to know weekly if the move still made sense", bLead: "Decisions on one page", b: "the calls needing an answer, with the cost of waiting" },
+            { a: "Build-out, movers and storage each had their own email thread", bLead: "Three lanes", b: "building and lease, warehouse and product, office and IT" },
           ],
         },
       ],
       side: [{ type: "facts" }],
     },
     {
-      title: "The dashboard opened on days to handback, rack sign-off, and anything past due",
+      title: "The numbers that matter came first, and each week’s decisions sat on one page",
       main: [
         {
           type: "table",
@@ -86,7 +84,7 @@ const study: CaseStudy = {
             { a: "Past due", b: "0" },
           ],
         },
-        { type: "text", html: "Each week, the CFO saw the <b>two or three</b> calls that needed an answer, like the sample decisions here. Simplified illustration." },
+        { type: "text", html: "Each week, the CFO saw the <b>two or three</b> calls that needed an answer, with the <b>cost of waiting</b> spelled out, like the sample decisions here. Simplified illustration." },
       ],
       side: [
         {
@@ -115,6 +113,7 @@ const study: CaseStudy = {
     },
   ],
   closing: "One plan. One budget. One honest weekly view.",
+  ctaQuestion: "Is a move or a big change coming up?",
 }
 
 export default study

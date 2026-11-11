@@ -13,7 +13,7 @@ const study: CaseStudy = {
   },
   audience: "manufacturing operations leaders",
   industry: ["Manufacturing", "Process equipment"],
-  h1: "Short Kaizen events with the people who do the work cut assembly time at a wastewater equipment maker and changed the mindset on the floor.",
+  h1: "Short Kaizen events with the floor team cut assembly time at an equipment maker.",
   reasons: [
     { icon: "layers", lead: "44% smaller", text: "seal cell area, and nearly all of the remaining time is value-added work" },
     { icon: "down", lead: "85% to 66%", text: "non-value-added time on the grinder line, as mapped in the value stream" },
@@ -33,23 +33,22 @@ const study: CaseStudy = {
     thesis: "So we didn’t start with a big program.",
     accent: "We started with two focused Kaizen events, with the people who actually do the work.",
     challenge: "The company was “idea-rich and resource-poor.” Everyone knew where the waste was. Nobody had the bandwidth to fix it. Leadership wanted continuous improvement, but a few hard years, thin bandwidth, and few champions had kept it on the wish list.",
-    approach: "Castings are now fully painted in one pass and staged where assembly uses them, replenished by a Kanban signal. In seal assembly, we replaced batch assembly with a compact cell and gravity-flow racks fed by Kanban.",
+    approach: "Each event brought together the people who actually do the work: assembly, paint, stockroom, engineering, and operations. We mapped the value stream first, then changed the flow on the floor: castings painted fully in one pass and staged where assembly uses them, and batch seal assembly replaced with a compact cell and gravity-flow racks fed by Kanban. Basic automation on the hydraulic press freed the operator to keep assembling while it cycles.",
   },
   facts: [
     ["Client", "Wastewater equipment manufacturer"],
     ["Events", "Kaizen 1: Painted parts Kanban · Kaizen 2: Seal assembly cell"],
-    ["Team", "Cross-functional: assembly, paint, stockroom, engineering, operations"],
     ["Methods", "Value stream mapping · Kanban · One-piece flow · Standard work"],
     ["Timeline", "Two 4-day events"],
   ],
   sections: [
     {
-      title: "Grinders went back to paint after assembly, and every coat meant a night of drying",
+      title: "Repainting kept grinders waiting, and moving around the plant",
       main: [
-        { type: "text", html: "Cast parts were painted on the <b>inside only</b>. The assembled grinder went back for its outside coat, some a third time after the drive was installed." },
         {
           type: "list",
           items: [
+            "Some grinders went back to paint a third time, after the drive was installed",
             "Every coat meant at least one night of drying, sometimes three",
             "Parts and grinders traveled 1,480 feet, about a quarter mile",
             "Moving heavy grinders was one of the riskiest jobs in the plant",
@@ -59,15 +58,15 @@ const study: CaseStudy = {
       side: [{ type: "facts" }],
     },
     {
-      title: "We painted parts once and built seals one at a time",
+      title: "The fixes took the waiting out of grinder and seal assembly",
       main: [
         {
           type: "table",
           head: ["What was going wrong", "What we changed"],
           rows: [
-            { a: "Grinders went back to paint, some a third time", bLead: "Painted parts Kanban", b: "Castings fully painted in one pass, staged at point of use" },
-            { a: "Seals built in batches of 100; half-finished seals sat out, grease exposed", bLead: "One-piece flow seal cell", b: "Compact cell with gravity-flow racks fed by Kanban" },
-            { a: "Operator waited over a minute per seal on the press pedal", bLead: "A smarter press", b: "Basic automation lets the operator keep assembling while it cycles" },
+            { a: "Castings painted inside only, so grinders went back to paint", bLead: "Painted parts Kanban", b: "paint once" },
+            { a: "Seals built in batches of 100; half-finished seals sat out, grease exposed", bLead: "One-piece flow seal cell", b: "build one at a time" },
+            { a: "Operator waited over a minute per seal on the press pedal", bLead: "A smarter press", b: "basic automation" },
           ],
         },
       ],
@@ -101,6 +100,7 @@ const study: CaseStudy = {
     },
   ],
   closing: "That’s the tipping point toward a Kaizen culture.",
+  ctaQuestion: "Idea-rich and resource-poor?",
 }
 
 export default study
