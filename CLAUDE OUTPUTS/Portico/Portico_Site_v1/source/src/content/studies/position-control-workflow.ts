@@ -16,7 +16,7 @@ const study: CaseStudy = {
   h1: "Every position request now gets reviewed, and the clear ones move fast.",
   reasons: [
     { icon: "check", lead: "Own rows only", text: "each submitting area sees just its flagged rows and exactly what to fix" },
-    { icon: "users", lead: "Judgment time", text: "the committee spends its time on the requests that need it" },
+    { icon: "users", lead: "Judgment where it counts", text: "the committee spends its time on the requests that need it" },
     { icon: "shield", lead: "Audit trail", text: "built into every decision" },
   ],
   headline: [

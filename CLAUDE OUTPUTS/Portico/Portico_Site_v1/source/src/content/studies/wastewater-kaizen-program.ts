@@ -15,7 +15,7 @@ const study: CaseStudy = {
   industry: ["Manufacturing", "Process equipment"],
   h1: "Short Kaizen events with the floor team cut assembly time at an equipment maker.",
   reasons: [
-    { icon: "layers", lead: "44% smaller", text: "seal cell area, and nearly all of the remaining time is value-added work" },
+    { icon: "layers", lead: "44% smaller", text: "the seal cell area, and nearly all of the remaining time is value-added work" },
     { icon: "down", lead: "85% to 66%", text: "non-value-added time on the grinder line, as mapped in the value stream" },
     { icon: "users", lead: "Everyone trained", text: "stockroom, paint, assembly, QC, and shipping learned the new flow together" },
   ],
@@ -95,7 +95,7 @@ const study: CaseStudy = {
         },
       ],
       side: [
-        { type: "quote", text: "The seal assemblers started the week wanting to keep things as they were, with little confidence the change would work. By the end, they were helping drive it, and believed in the new way." },
+        { type: "text", html: "<b>The seal assemblers</b> started the week wanting to keep things as they were, with little confidence the change would work. By the end, they were helping drive it, and believed in the new way." },
       ],
     },
   ],

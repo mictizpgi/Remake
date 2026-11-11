@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Built on Smartsheet", "Land acquisition"],
   h1: "A rebuilt Smartsheet setup made the land record hold up and the reports build themselves.",
   reasons: [
-    { icon: "clock", lead: "No hand assembly", text: "of the twice-weekly client reports, often rebuilt after hours before" },
+    { icon: "clock", lead: "No more hand assembly", text: "the twice-weekly client reports, often rebuilt after hours before, now build themselves" },
     { icon: "check", lead: "One set of names", text: "landowner names from three trackers consolidated, every decision logged" },
-    { icon: "shield", lead: "Clean revocation", text: "access lives in the Work App, so it can be revoked cleanly" },
+    { icon: "shield", lead: "Clean revocation", text: "access lives in the Work App, so it can be removed in one place" },
   ],
   headline: [
     { value: 1000, suffix: "s", label: "land tracts under management", tag: "across multiple states" },

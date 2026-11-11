@@ -41,7 +41,7 @@ export type Block =
   | { type: "stats"; items: { n: string; tag?: string; label: string }[] }
   /** an image already on the site, path under /assets/img/ */
   | { type: "image"; src: string; alt: string; caption?: string }
-  | { type: "list"; items: string[] }
+  | { type: "list"; title?: string; items: string[] }
   | { type: "text"; html: string }
   | { type: "quote"; text: string }
   /** the study's facts list (Client / Scope / Partners / Timeline); use once, usually as a side block */

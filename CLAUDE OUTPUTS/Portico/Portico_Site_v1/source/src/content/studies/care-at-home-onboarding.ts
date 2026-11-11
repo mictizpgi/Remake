@@ -15,8 +15,8 @@ const study: CaseStudy = {
   industry: ["Home health", "Built on Smartsheet"],
   h1: "Smartsheet now finds every new hire, and a person approves each invitation.",
   reasons: [
-    { icon: "check", lead: "The right session", text: "every time: each welcome email is matched to the next scheduled orientation" },
-    { icon: "chart", lead: "A dashboard", text: "shows confirmed hires and candidates still in the pipeline, side by side" },
+    { icon: "check", lead: "The right session, every time", text: "each welcome email is matched to the next scheduled orientation" },
+    { icon: "chart", lead: "One dashboard", text: "confirmed hires and candidates still in the pipeline, side by side" },
     { icon: "shield", lead: "No second source of truth", text: "clinical checklists stay in the training platform; I recommended against copying them into Smartsheet" },
   ],
   headline: [

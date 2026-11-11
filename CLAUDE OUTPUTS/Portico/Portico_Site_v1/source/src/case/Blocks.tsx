@@ -145,9 +145,12 @@ export function BlockView({ b, study, root }: { b: Block; study: CaseStudy; root
     case "quote": return <p className="font-serif text-[length:var(--text-h2)] leading-snug"><Html html={b.text} /></p>
     case "list":
       return (
-        <ul className="grid max-w-[68ch] gap-2 text-ink-2">
-          {b.items.map((i) => <li key={i} className="flex gap-3"><span aria-hidden className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-primary" /><Html html={i} /></li>)}
-        </ul>
+        <div className="grid max-w-[68ch] gap-3">
+          {b.title && <p className="font-semibold">{b.title}</p>}
+          <ul className="grid gap-2 text-ink-2">
+            {b.items.map((i) => <li key={i} className="flex gap-3"><span aria-hidden className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-primary" /><Html html={i} /></li>)}
+          </ul>
+        </div>
       )
     case "image":
       return (

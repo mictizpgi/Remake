@@ -57,7 +57,7 @@ export function CaseStudyPage({ study, root }: { study: CaseStudy; root: string 
                   <BlurFade key={r.lead} delay={0.12 + i * 0.05}>
                     <li className="flex items-start gap-3">
                       <Icon className="mt-0.5 size-5 shrink-0 text-good" strokeWidth={1.75} aria-hidden />
-                      <p className="text-ink-2"><b className="font-semibold text-foreground">{r.lead}</b> <Html html={r.text} /></p>
+                      <p className="text-ink-2"><b className="font-semibold text-foreground">{r.lead}:</b> <Html html={r.text} /></p>
                     </li>
                   </BlurFade>
                 )

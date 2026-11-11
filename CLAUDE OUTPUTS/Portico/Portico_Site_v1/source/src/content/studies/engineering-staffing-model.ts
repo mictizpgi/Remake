@@ -16,7 +16,7 @@ const study: CaseStudy = {
   h1: "A staffing model built from the work up gave leaders a number they could defend.",
   reasons: [
     { icon: "shield", lead: "A trail for every number", text: "the model’s answer, our review, and the site’s response, kept per task line" },
-    { icon: "check", lead: "Fixed for everyone", text: "where many sites changed the same line; an outside peer review checked the approach too" },
+    { icon: "check", lead: "Fixed for everyone", text: "lines that many sites changed were fixed for everyone; an outside peer review checked the approach too" },
     { icon: "users", lead: "Own centers only", text: "permission-controlled Smartsheet views show each leader just their medical centers" },
   ],
   headline: [

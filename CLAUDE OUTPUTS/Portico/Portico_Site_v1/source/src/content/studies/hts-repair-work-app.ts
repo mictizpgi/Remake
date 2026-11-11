@@ -25,8 +25,8 @@ const study: CaseStudy = {
   h1: "A repair shop is moving from stickers and spreadsheets to one Smartsheet app.",
   reasons: [
     { icon: "check", lead: "One smart form", text: "“report a problem” branches based on the answers, instead of forcing every field" },
-    { icon: "users", lead: "Same ticket details", text: "for technicians and the office, so they can talk about the same thing" },
-    { icon: "layers", lead: "Parts at the part level", text: "so the team knows exactly what a unit is waiting on" },
+    { icon: "users", lead: "Same ticket details", text: "technicians and the office see the same thing, so they can talk about it" },
+    { icon: "layers", lead: "Parts tracked one by one", text: "the team knows exactly what a unit is waiting on" },
   ],
   headline: [
     { value: 1, label: "Work App", tag: "for every unit" },

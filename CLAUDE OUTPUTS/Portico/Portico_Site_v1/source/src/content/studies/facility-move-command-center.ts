@@ -89,6 +89,7 @@ const study: CaseStudy = {
       side: [
         {
           type: "list",
+          title: "Sample decisions for the week",
           items: [
             "Approve the construction contract once the price is confirmed",
             "Confirm temporary storage during build-out",

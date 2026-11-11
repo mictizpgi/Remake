@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Distribution", "Fresh pet nutrition"],
   h1: "Fixing inventory, vendors and fulfillment let a young team carry the company’s growth.",
   reasons: [
-    { icon: "truck", lead: "One partner", text: "for packaging and shipping, replacing too many vendors (some not performing) and guaranteeing service on demand" },
-    { icon: "layers", lead: "Kaizen + Kanban", text: "cleared out excess equipment and stock and helped the team own its warehouse space" },
-    { icon: "users", lead: "Team coached", text: "as we worked, so the new processes stayed with them" },
+    { icon: "truck", lead: "One partner", text: "packaging and shipping from one vendor, replacing too many (some not performing), with service guaranteed on demand" },
+    { icon: "layers", lead: "Kaizen + Kanban", text: "excess equipment and stock cleared out, and the team owns its warehouse space" },
+    { icon: "users", lead: "Team coached", text: "we coached as we worked, so the new processes stayed with them" },
   ],
   headline: [
     { value: 2, suffix: "×", label: "growth supported", tag: "year over year" },
@@ -61,7 +61,7 @@ const study: CaseStudy = {
         },
         {
           type: "stats",
-          items: [{ n: "~13–15%", tag: "together", label: "off the spend, from partner savings plus pre-bate and monthly rebates" }],
+          items: [{ n: "~13–15%", label: "off packaging and shipping spend: partner savings plus pre-bate and monthly rebates, combined" }],
         },
       ],
       side: [{ type: "facts" }],

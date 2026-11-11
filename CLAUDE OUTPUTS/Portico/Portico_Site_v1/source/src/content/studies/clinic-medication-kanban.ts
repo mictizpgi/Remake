@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Healthcare", "Medication management"],
   h1: "Simple Kanban pulls stopped good medication going to waste across clinics.",
   reasons: [
-    { icon: "down", lead: "Stockpiling stopped", text: "once people trusted the supply, so fewer vials were wasted" },
+    { icon: "down", lead: "Stockpiling stopped", text: "people trusted the supply, so fewer vials were wasted" },
     { icon: "chart", lead: "Measured, not guessed", text: "savings identified up front from sourcing and procurement reports, then confirmed through usage tracking after rollout" },
-    { icon: "users", lead: "Built together", text: "with Pharmacy, Administration, Physicians, and Nursing, so the practice belonged to them" },
+    { icon: "users", lead: "Built together", text: "Pharmacy, Administration, Physicians, and Nursing shaped it, so the practice belonged to them" },
   ],
   headline: [
     { value: 25, prefix: "$", suffix: "M", label: "annualized savings", tag: "identified and achieved" },

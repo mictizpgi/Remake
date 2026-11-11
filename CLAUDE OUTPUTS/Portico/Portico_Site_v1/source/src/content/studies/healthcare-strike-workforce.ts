@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Healthcare workforce"],
   h1: "One Smartsheet system deployed thousands of replacement workers through a two-wave strike.",
   reasons: [
-    { icon: "users", lead: "About 1,000 employees", text: "worked in the system" },
+    { icon: "users", lead: "About 1,000 employees", text: "all working in the same system" },
     { icon: "check", lead: "One front door", text: "a single Work App link that sent each person only the work that was theirs" },
-    { icon: "clock", lead: "Comfortable within hours", text: "station leads, schedulers, and area leaders new to Smartsheet, because it looked familiar" },
+    { icon: "clock", lead: "Comfortable within hours", text: "station leads, schedulers, and area leaders new to Smartsheet found it familiar" },
   ],
   headline: [
     { value: 12000, suffix: "+", label: "contingent workers onboarded and deployed", tag: "across both waves" },

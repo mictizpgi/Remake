@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Healthcare", "Patient operations"],
   h1: "Fixing handoffs, not adding staff, got a hospital’s rooms cleaned and patients placed sooner.",
   reasons: [
-    { icon: "clock", lead: "26 min shorter", text: "wait for a housekeeper, and still 22 min shorter during a patient surge" },
+    { icon: "clock", lead: "26 min shorter", text: "the wait for a housekeeper, and still 22 min shorter during a patient surge" },
     { icon: "down", lead: "60% fewer", text: "urgent STAT requests, about 1,700 fewer interruptions a year" },
-    { icon: "users", lead: "1,514 hours", text: "of EVS staff time back a year, enough to clean about 5 more rooms a night" },
+    { icon: "users", lead: "1,514 hours", text: "EVS staff time back each year, enough to clean about 5 more rooms a night" },
   ],
   headline: [
     { value: 15963, label: "hours of patient capacity", tag: "per year" },

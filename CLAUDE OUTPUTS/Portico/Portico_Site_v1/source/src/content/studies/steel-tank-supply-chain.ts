@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Manufacturing", "Steel fabrication"],
   h1: "Fixing how material moved got a steel tank maker shipping more jobs on time.",
   reasons: [
-    { icon: "up", lead: "~30% more capacity", text: "projected from the new plant layout on its own, separate from the supply chain gains" },
-    { icon: "users", lead: "Put to work", text: "by their own team, who took the plan and ran with it" },
-    { icon: "check", lead: "Called back", text: "to design the layout for an expanding plant and support its setup" },
+    { icon: "up", lead: "~30% more capacity", text: "projected from the new plant layout alone, separate from the supply chain gains" },
+    { icon: "users", lead: "Put to work", text: "their own team took the plan and ran with it" },
+    { icon: "check", lead: "Called back", text: "asked to design the layout for an expanding plant and support its setup" },
   ],
   headline: [
     { value: 50, prefix: "+", suffix: "%", label: "on-time delivery", tag: "vs. before" },

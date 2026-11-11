@@ -15,9 +15,9 @@ const study: CaseStudy = {
   industry: ["Distribution", "Fulfillment network strategy"],
   h1: "Real freight data gave a board a clear East Coast fulfillment decision.",
   reasons: [
-    { icon: "chart", lead: "4 live bids", text: "priced on the same scope through a formal RFx" },
-    { icon: "truck", lead: "56 cities", text: "benchmarked for inbound freight costs, with rail and ocean routes compared" },
-    { icon: "check", lead: "One Southeast site", text: "pointed to by a heat map of East Coast orders, could reach most customers in a day or two" },
+    { icon: "chart", lead: "4 live bids", text: "all priced on the same scope through a formal RFx" },
+    { icon: "truck", lead: "56 cities", text: "inbound freight costs benchmarked, with rail and ocean routes compared" },
+    { icon: "check", lead: "One Southeast site", text: "a heat map of East Coast orders showed it could reach most customers in a day or two" },
   ],
   headline: [
     { value: 340, prefix: "~$", suffix: "K", label: "annual benefit", tag: "projected, leading option" },
@@ -73,6 +73,7 @@ const study: CaseStudy = {
       side: [
         {
           type: "list",
+          title: "Where the same analysis helps",
           items: ["Second-warehouse decisions", "3PL selection", "Carrier bids", "Any choice where freight, speed, and space pull in different directions"],
         },
       ],
