@@ -20,7 +20,7 @@ function Results({ root }: { root: string }) {
   return (
     <section id="results" className={`${wrap} scroll-mt-24 py-14 sm:py-16`}>
       <h2 className="text-[length:var(--text-h2)] leading-snug">Results from {home.results.length} engagements, in manufacturing, healthcare and supply chain</h2>
-      <div role="group" aria-label="Filter results" className="mt-5 flex flex-wrap gap-2">
+      <div id="industries" role="group" aria-label="Filter results by industry" className="mt-5 flex scroll-mt-28 flex-wrap gap-2">
         {filters.map((x) => (
           <button key={x.key} type="button" onClick={() => setF(x.key)} aria-pressed={f === x.key}
             className={`pressable min-h-10 rounded-full border px-4 text-[length:var(--text-label)] font-medium transition-colors ${f === x.key ? "border-foreground bg-foreground text-background" : "bg-card text-foreground hover:border-foreground/40"}`}>
