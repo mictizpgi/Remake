@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { BOOK, Layout } from "@/site/Layout"
 import type { CaseStudy, IconName, Section } from "@/content/types"
 import { BlockView, Html } from "./Blocks"
+import { relatedTo } from "@/content/related"
+import { ResultCard } from "@/site/ResultCard"
 
 const ICONS: Record<IconName, typeof Clock> = {
   clock: Clock, down: TrendingDown, up: TrendingUp, users: Users, money: Wallet,
@@ -135,6 +137,18 @@ export function CaseStudyPage({ study, root }: { study: CaseStudy; root: string 
 
       {study.closing && (
         <p className={`${wrap} pb-14 font-serif text-[length:var(--text-h2)]`}><Html html={study.closing} /></p>
+      )}
+
+      {/* ---------- related case studies: keeps readers going, and links the studies to each other ---------- */}
+      {relatedTo(study.slug).length > 0 && (
+        <section aria-labelledby="related" className="border-t">
+          <div className={`${wrap} py-12 sm:py-14`}>
+            <h2 id="related" className="text-[length:var(--text-h2)] leading-snug">Related case studies</h2>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedTo(study.slug).map((r) => <li key={r.href} className="last:sm:max-lg:col-span-2"><ResultCard r={r} root={root} /></li>)}
+            </ul>
+          </div>
+        </section>
       )}
     </Layout>
   )

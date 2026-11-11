@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { ResultCard } from "@/site/ResultCard"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { NumberTicker } from "@/components/ui/number-ticker"
 import { Button } from "@/components/ui/button"
@@ -33,23 +34,8 @@ function Results({ root }: { root: string }) {
       <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {home.results.map((r) => {
           const visible = matching.includes(r) && !(collapsed && matching.indexOf(r) >= 6)
-          const body = (
-            <>
-              <span className="flex items-baseline justify-between gap-3">
-                <span className="font-serif text-[length:var(--text-num)] leading-none tabular whitespace-nowrap">{r.n}</span>
-                {r.href && <ArrowUpRight aria-hidden className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />}
-              </span>
-              <span className="mt-3 block text-ink-2">{r.text}</span>
-              <span className={`mt-auto block pt-4 ${label}`}><span className="text-foreground">{r.kind}</span> · {r.client}</span>
-            </>
-          )
-          const cls = "flex h-full flex-col rounded-xl border bg-card p-5 shadow-[var(--shadow-card)]"
           return (
-            <li key={r.kind + r.n} hidden={!visible}>
-              {r.href
-                ? <a href={`${root}${r.href}`} className={`group ${cls} transition-colors hover:border-primary/60`} aria-label={`${r.kind}: ${r.n}. Read the case study`}>{body}</a>
-                : <div className={cls}>{body}</div>}
-            </li>
+            <li key={r.kind + r.n} hidden={!visible}><ResultCard r={r} root={root} /></li>
           )
         })}
       </ul>
