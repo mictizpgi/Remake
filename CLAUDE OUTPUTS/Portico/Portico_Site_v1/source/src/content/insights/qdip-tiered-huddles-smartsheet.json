@@ -1,0 +1,165 @@
+{
+ "slug": "qdip-tiered-huddles-smartsheet",
+ "category": "Lean & Smartsheet",
+ "h1": "Tiered daily huddles in Smartsheet: a QDIP board that runs itself.",
+ "lead": "Whiteboard huddles work in the room and disappear outside it. Here’s how to build a QDIP board in Smartsheet that the floor can update in seconds, that escalates on its own, and that leadership can read without walking the plant.",
+ "dateline": "November 2026 · 6 min read",
+ "image": {
+  "src": "shot-smartops-qdip-tier1.jpg",
+  "alt": "SmartOps Pro QDIP tier 1 dashboard in Smartsheet with quality, delivery, inventory and productivity status, a daily summary report, open items by supervisor, and quick links",
+  "caption": "A SmartOps Pro tier 1 board, live in Smartsheet. Names replaced.",
+  "label": "Smartsheet · QDIP Tier 1 Dashboard"
+ },
+ "takeaways": [
+  "QDIP tracks four things every shift: quality, delivery, inventory, and productivity. Add an S if safety belongs on the board.",
+  "Tiers turn a daily huddle into a daily management system. A problem the floor can’t fix moves up a level the same day.",
+  "In Smartsheet, the build is small: one entry form, one daily log, one open-items list, and one board per tier.",
+  "The rules matter more than the tool. Every red needs a reason and an owner, or the board turns into wallpaper."
+ ],
+ "faq": [
+  {
+   "q": "What does QDIP stand for?",
+   "a": "Quality, delivery, inventory, and productivity. Many sites add safety and call it SQDIP. Each letter gets a daily green or red call against a target, reviewed in a short huddle at the start of the shift."
+  },
+  {
+   "q": "Can Smartsheet replace a physical huddle board?",
+   "a": "It can, and it adds what a whiteboard can’t: history, trends, automatic escalation, and a view leadership can open from anywhere. Many teams keep the huddle at the same spot on the floor and simply put the Smartsheet dashboard on a TV there."
+  },
+  {
+   "q": "How long should a tier 1 huddle take?",
+   "a": "About ten to fifteen minutes. Cover yesterday’s results, today’s plan, and any problem the team can’t solve alone. Deeper problem-solving happens after the huddle, with only the people it involves."
+  }
+ ],
+ "faqTitle": "Common questions",
+ "related": {
+  "href": "index.html#smartops",
+  "tag": "Related product",
+  "title": "Meet SmartOps Pro",
+  "text": "The QDIP Suite is one part of SmartOps Pro, our operational intelligence suite built on Smartsheet, from floor huddles to executive dashboards."
+ },
+ "body": [
+  {
+   "type": "p",
+   "html": "Most plants I walk into already have a huddle board. It’s a whiteboard by the line, with a grid of letters and a marker on a string. On a good day, the team gathers at the start of the shift, colors in yesterday’s results, and talks through what went wrong."
+  },
+  {
+   "type": "p",
+   "html": "The trouble starts when the meeting ends. The notes get erased tomorrow. Nobody can see a trend. The supervisor who needs to escalate a problem has to find the right manager in person. And leadership only learns what happened by walking the floor or waiting for a weekly report."
+  },
+  {
+   "type": "p",
+   "html": "A digital board doesn’t replace the huddle. It makes what happens in the huddle last."
+  },
+  {
+   "type": "h2",
+   "text": "What QDIP measures"
+  },
+  {
+   "type": "list",
+   "items": [
+    "<b>Quality.</b> Did we make it right? Defects, scrap, rework, or customer complaints.",
+    "<b>Delivery.</b> Did we ship on time? Orders out the door against the plan.",
+    "<b>Inventory.</b> Do we have what we need, and not too much? Shortages, stockouts, or material waiting on the floor.",
+    "<b>Productivity.</b> Did we hit the plan with the hours we had? Output per labor hour, or units against target."
+   ]
+  },
+  {
+   "type": "p",
+   "html": "Many sites add S for safety and run SQDIP. Either way, each letter gets a simple daily call: green if the target was met, red if it wasn’t. The value isn’t in the color. It’s in the conversation a red forces."
+  },
+  {
+   "type": "h2",
+   "text": "Why tiers matter"
+  },
+  {
+   "type": "p",
+   "html": "A single huddle tells one team how it did. Tiered huddles connect the teams to the people who can remove what’s in their way. Each tier meets briefly, in order, every day."
+  },
+  {
+   "type": "steps",
+   "items": [
+    "<b>Tier 1, start of shift.</b> The frontline team and its lead. About ten minutes at the board. Yesterday’s results, today’s plan, and any problem the team can’t solve on its own.",
+    "<b>Tier 2, a couple of hours later.</b> Supervisors and the area manager. They review every tier 1 board, clear what they can, and assign owners to the rest.",
+    "<b>Tier 3, before midday.</b> Plant or site leadership. They see only what tier 2 couldn’t resolve: the cross-department issues, the capital asks, the decisions."
+   ]
+  },
+  {
+   "type": "p",
+   "html": "Run well, a problem spotted on the floor at 7 a.m. reaches someone with the authority to fix it before lunch. That’s the whole point."
+  },
+  {
+   "type": "h2",
+   "text": "Building it in Smartsheet"
+  },
+  {
+   "type": "p",
+   "html": "The build is smaller than most teams expect. Four pieces carry it."
+  },
+  {
+   "type": "steps",
+   "items": [
+    "<b>One entry form per area.</b> A short form the lead fills out on a phone or a shared tablet: a red or green call for each letter, a reason code for each red, and a note. If it takes more than a minute, people will skip it.",
+    "<b>One daily log.</b> Every form lands as a row in a single sheet, one row per area per day. That log is the history whiteboards never had, and it feeds every trend chart.",
+    "<b>One open-items list.</b> Each problem becomes a row with an owner, a due date, a status, and an escalate checkbox. Checking the box moves the item onto the next tier’s report automatically.",
+    "<b>One board per tier.</b> A dashboard on the TV by the line for tier 1, a roll-up across areas for tier 2, and a site view for tier 3. Each board reads from the same log and the same list, so every tier sees the same facts."
+   ]
+  },
+  {
+   "type": "p",
+   "html": "Automations do the rest. A reminder goes out if an area hasn’t posted by the start of its huddle. Owners get an alert when an item is assigned to them, and again when it goes past due."
+  },
+  {
+   "type": "callout",
+   "html": "The floor updates the board in under a minute. Leadership reads it from anywhere. Nobody rebuilds a report by hand."
+  },
+  {
+   "type": "h2",
+   "text": "Rules that keep it alive"
+  },
+  {
+   "type": "list",
+   "items": [
+    "Every red gets a reason and an owner before the huddle ends",
+    "If a team can’t fix it within a day, it escalates. No exceptions, and no blame for escalating",
+    "The huddle runs off the board. People talk about the work, not about updating the tool",
+    "Keep each tier to about fifteen minutes. Problem-solving happens after, with the right people",
+    "Close the loop. When tier 3 resolves an item, the team that raised it hears back",
+    "Review the trend weekly. A letter that’s red every Tuesday is a process problem, not a bad day"
+   ]
+  },
+  {
+   "type": "h2",
+   "text": "Where boards usually fail"
+  },
+  {
+   "type": "p",
+   "html": "Most failures look the same. The board tracks too many measures, so nothing stands out. Reds get recorded but nobody owns them, so the team stops believing anything will change. Leadership skips tier 3 for a few weeks, and escalations pile up with no one to receive them. Or entry is so slow that leads fill it out at the end of the week from memory."
+  },
+  {
+   "type": "p",
+   "html": "Every one of those is a design choice, and every one can be fixed. Fewer measures. An owner on every red. A standing tier 3 slot on leadership calendars. An entry form short enough to finish standing up."
+  },
+  {
+   "type": "h2",
+   "text": "A 30-day starting plan"
+  },
+  {
+   "type": "list",
+   "items": [
+    "<b>Week 1.</b> Pick one area. Agree on the letters, the target behind each one, and the reason codes for a red.",
+    "<b>Week 2.</b> Build the form, the daily log, the open-items list, and the tier 1 board. Test it with the lead who will use it.",
+    "<b>Week 3.</b> Run tier 1 every day. Fix whatever slows the entry down.",
+    "<b>Week 4.</b> Add tier 2 and the escalation step. Decide which area goes next, and when tier 3 joins."
+   ]
+  },
+  {
+   "type": "h2",
+   "text": "When to bring in help"
+  },
+  {
+   "type": "p",
+   "html": "A single area can usually be set up in house. Outside help earns its keep when you’re rolling tiers out across several sites, when the board has to pull from ERP or quality systems, or when the daily management habit itself needs coaching, not just the tool. The board is the easy part. The habit is the work."
+  }
+ ],
+ "ctaQuestion": "Want a huddle board your team will actually use?"
+}

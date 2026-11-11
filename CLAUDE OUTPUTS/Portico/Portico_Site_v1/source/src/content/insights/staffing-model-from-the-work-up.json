@@ -1,0 +1,90 @@
+{
+ "slug": "staffing-model-from-the-work-up",
+ "category": "Workforce planning",
+ "h1": "Staff from the work, not a ratio: how to build a staffing model leaders can defend.",
+ "lead": "Square-footage ratios are easy to quote and hard to defend. Here’s how to size a team from the work it actually does, check the answer two ways, and get every site to stand behind it.",
+ "dateline": "November 2026 · 7 min read",
+ "image": {
+  "src": "esm-central-plant.jpg",
+  "alt": "Clean hospital central plant room with chillers, color-coded pipes, and a dashboard screen"
+ },
+ "takeaways": [
+  "Ratios hide what drives staffing: building age, equipment, travel between buildings, construction support, and round-the-clock coverage.",
+  "Size the team two ways and reconcile them: bottom-up from the work, and top-down from a floor-area benchmark.",
+  "Find the one assumption that swings the answer, and measure it before you refine anything else.",
+  "Let every site check its own numbers, line by line. That review turns a model into an answer people will defend."
+ ],
+ "body": [
+  {"type": "p", "html": "Most staffing conversations I’m asked to join start with a ratio: so many engineers per square foot, so many staff per bed. Ratios are easy to quote and easy to budget. They are almost impossible to defend when a site pushes back."},
+  {"type": "p", "html": "The trouble is that two buildings of the same size can need very different teams. One is new and simple. The other is decades old, spread across a campus, in the middle of construction, and staffed around the clock. A ratio treats them the same. The work does not."},
+  {"type": "h2", "text": "What a ratio can’t see"},
+  {"type": "list", "items": [
+   "<b>Building age.</b> Older plants need more maintenance per square foot, not less.",
+   "<b>Equipment.</b> The assets in a building, and how often each needs preventive maintenance, set most of the planned work.",
+   "<b>Travel between buildings.</b> A spread-out campus loses time to walking and driving that a single tower never does.",
+   "<b>Construction support.</b> Active projects pull engineers into shutdowns, inspections, and tie-ins.",
+   "<b>Round-the-clock coverage.</b> Some roles must be filled every hour of every day, whether work orders come in or not."
+  ]},
+  {"type": "p", "html": "A model that can’t account for these will be wrong in both directions: too lean at the complex sites, and too generous at the simple ones."},
+  {"type": "h2", "text": "Size it twice, then compare"},
+  {"type": "p", "html": "The most useful habit I know is to never trust one method. Build the number two independent ways and look at where they agree."},
+  {"type": "steps", "items": [
+   "<b>Bottom-up, from the work.</b> Take a full year of actual work orders, planned maintenance and service requests, multiply by measured time per task, and divide by the hours a technician is actually available. That gives a staffing floor for each building, site, and region.",
+   "<b>Top-down, from a benchmark.</b> Run a floor-area benchmark, such as the ASHE task-line method, on the same sites. It gives an independent answer that doesn’t depend on how well work is logged.",
+   "<b>Reconcile.</b> Where the two methods agree, you have a number you can defend. Where they don’t, you have found either a data problem or a real difference worth understanding."
+  ]},
+  {"type": "p", "html": "Be clear about what the bottom-up number is. It is a <b>floor for field labor</b>. It doesn’t include supervision, rounds that aren’t tied to a work order, projects, on-call, or administration. Real staffing sits above it by design."},
+  {"type": "h2", "text": "Find the assumption that swings the answer"},
+  {"type": "p", "html": "Every model has one input that moves the result more than all the others. In facilities staffing it is usually the time per task for unplanned work: the service requests that arrive every day and rarely carry a labor time in the system."},
+  {"type": "p", "html": "While that number is a placeholder, it can swing the answer by half. So measure it before you polish anything else. Pull actual labor hours for the work that has them, weight them to your own mix of request types, and replace the guess. Then say plainly which numbers are measured and which are still assumptions."},
+  {"type": "h2", "text": "The gap above the model isn’t idle time"},
+  {"type": "p", "html": "Once you have a work-based number, compare it with the people in the field today. The model will explain most field labor, but not all of it. The rest is the residual: drive time, rounds, standby, scheduling, vendor management, and work on things with no asset record, such as parking structures and gates."},
+  {"type": "p", "html": "Don’t treat the residual as slack to cut. It is a dial leadership sets on purpose, and two signals help set it: <b>overtime</b> and <b>on-time preventive maintenance</b>."},
+  {"type": "list", "items": [
+   "<b>Stretched.</b> Fully explained by the model and running high overtime, but still finishing maintenance on time. The site is buying coverage with overtime.",
+   "<b>Falling behind.</b> Maintenance slipping past its due dates. The site is short.",
+   "<b>Real buffer.</b> Room in the model, low overtime, and maintenance on time."
+  ]},
+  {"type": "p", "html": "Where the work comes from matters too. If almost every request arrives from outside the team, after something has already gone wrong, the operation is running reactive. You can’t staff your way out of that. Size the standing team to what your best sites do, not to today’s average, and fund the programs that move work from reactive to planned: rounding, zone maintenance, and preventive work."},
+  {"type": "h2", "text": "Let every site check its own numbers"},
+  {"type": "p", "html": "A model built at headquarters is an opinion. A model that each site has reviewed line by line is an answer."},
+  {"type": "p", "html": "Give every site its own workbook and ask it to accept or correct each task line. Keep a trail on every line: the model’s answer, your review, and the site’s response. In one rollout across <b>40 medical centers</b>, <b>78%</b> of task lines came back unchanged in the first round. Where many sites changed the same line, we fixed that line for everyone."},
+  {"type": "p", "html": "Then test the model where nobody can argue with history. On a new 278,000-square-foot tower with no staffing history at all, the model came in at <b>7.3 frontline staff</b> from building inputs alone. An independent expert estimate, made before the model ran, said about 8."},
+  {"type": "bars", "caption": "New tower, no staffing history · frontline staff", "rows": [
+   {"label": "Model", "width": 91, "display": "7.3", "highlight": true},
+   {"label": "Expert", "width": 100, "display": "~8", "highlight": false}
+  ], "note": "The expert estimate was made before the model ran. Building inputs alone got within one person."},
+  {"type": "h2", "text": "Deliver it where people work"},
+  {"type": "p", "html": "A staffing model that lives in one analyst’s spreadsheet won’t last. Keep the heavy lifting in workbooks built for volume, and deliver the results where leaders already work. I used Smartsheet reports and dashboards, with permission-controlled views so each leader sees only their own sites."},
+  {"type": "p", "html": "Then keep it current. Refresh the work data on a set rhythm, keep the asset inventory accurate, and treat every site’s correction as an improvement to the model, not a challenge to it."},
+  {"type": "callout", "html": "When sites own their numbers, the model stops being a headquarters opinion and becomes a shared answer."},
+  {"type": "h2", "text": "Where to start"},
+  {"type": "list", "items": [
+   "<b>Pull a year of work orders</b> and the asset inventory they belong to.",
+   "<b>Measure time per task</b> for the work that has labor data, and flag what is still assumed.",
+   "<b>Run a floor-area benchmark</b> on the same sites and compare the two answers.",
+   "<b>Send each site its own workbook</b> and track every change."
+  ]}
+ ],
+ "faqTitle": "Common questions",
+ "faq": [
+  {"q": "Isn’t a square-footage ratio good enough for budgeting?", "a": "It is a reasonable starting point for one simple building. Across many sites it breaks down, because age, equipment, travel, construction, and round-the-clock coverage vary far more than floor area does. A work-based model explains those differences instead of averaging them away."},
+  {"q": "What if our work-order data is incomplete?", "a": "Most is. Use what is measured, label what is assumed, and fix the one input that moves the answer most first. Then check the result against a floor-area benchmark. Where the two methods agree, the gaps in the data matter less than they seem."},
+  {"q": "Will a staffing model just lead to cuts?", "a": "Not necessarily. In my experience the total is often close; the bigger issue is how staff are spread between sites and how much of the work is reactive. A good model shows where to rebalance and which programs would reduce the reactive load."}
+ ],
+ "related": {
+  "href": "case-studies/engineering-staffing-model.html",
+  "tag": "Case study · Facilities engineering",
+  "title": "A staffing model every site could stand behind.",
+  "text": "Engineering staffing for 40 medical centers, sized from the work up, checked by every site, and delivered through Smartsheet."
+ },
+ "ctaQuestion": "Is your staffing based on the work, or a ratio?",
+ "seo": {
+  "title": "Staff From the Work, Not a Ratio: A Staffing Model Leaders Can Defend | Portico Group",
+  "description": "How to size a facilities or operations team from the work it actually does, check it against a floor-area benchmark, and get every site to stand behind the number.",
+  "image": "esm-central-plant.jpg",
+  "keywords": ["Staffing model", "Facilities staffing", "Engineering staffing", "ASHE staffing method", "Workforce planning", "Healthcare facilities"],
+  "datePublished": "2026-11-11",
+  "dateModified": "2026-11-11"
+ }
+}
