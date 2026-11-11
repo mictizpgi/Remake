@@ -67,12 +67,12 @@ export function HomePage({ root }: { root: string }) {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:gap-12">
           <div>
             <BlurFade delay={0}>
-              <h1 className="text-[length:clamp(36px,5.2vw,60px)] leading-[1.02]">
+              <h1 className="text-[length:var(--text-title)] leading-[1.05]">
                 {home.h1} <span className="text-primary">{home.h1Accent}</span>
               </h1>
             </BlurFade>
             <BlurFade delay={0.06}>
-              <p className="mt-5 max-w-[52ch] text-[length:18px] text-ink-2">{home.lead}</p>
+              <p className="mt-5 max-w-[52ch] text-ink-2">{home.lead}</p>
             </BlurFade>
             <BlurFade delay={0.1}>
               <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -131,7 +131,7 @@ export function HomePage({ root }: { root: string }) {
                   {i < a.steps.length - 1 && <span aria-hidden className="hidden h-0 flex-1 border-t-2 border-dashed border-primary/70 lg:block" />}
                 </span>
                 <h3 className="mt-4 font-semibold">{s.t}</h3>
-                <p className="mt-1.5 text-ink-2">{s.d}</p>
+                <p className="mt-1.5 text-pretty text-ink-2">{s.d}</p>
               </li>
             ))}
           </ol>
@@ -140,7 +140,7 @@ export function HomePage({ root }: { root: string }) {
             {a.services.map((s) => (
               <div key={s.t} className="flex flex-col rounded-xl border bg-background p-5">
                 <h3 className="text-[length:var(--text-h2)] leading-snug">{s.t}</h3>
-                <p className="mt-2 text-ink-2">{s.d}</p>
+                <p className="mt-2 text-pretty text-ink-2">{s.d}</p>
                 <p className={`mt-4 ${label}`}>{s.tags.join(" · ")}</p>
                 <a href={s.link.href.startsWith("#") ? s.link.href : `${root}${s.link.href}`}
                   className="mt-auto inline-flex items-center gap-1.5 pt-4 font-semibold text-primary underline-offset-4 hover:underline">
@@ -198,11 +198,11 @@ export function HomePage({ root }: { root: string }) {
           </figure>
           <div className="min-w-0">
             <h2 className="max-w-[24ch] text-[length:var(--text-title)] leading-[1.08]">{home.about.title}</h2>
-            {home.about.paras.map((p) => <p key={p} className="mt-4 max-w-[64ch] text-ink-2">{p}</p>)}
+            {home.about.paras.map((p) => <p key={p} className="mt-4 max-w-[58ch] text-pretty text-ink-2">{p}</p>)}
             <ul className="mt-6 grid gap-2">
               {home.about.points.map((p) => <li key={p} className="flex gap-3"><span aria-hidden className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-primary" />{p}</li>)}
             </ul>
-            <p className={`mt-6 max-w-[64ch] ${label}`}>{home.about.name}</p>
+            <p className={`mt-6 max-w-[58ch] text-pretty ${label}`}>{home.about.name}</p>
           </div>
         </div>
       </section>

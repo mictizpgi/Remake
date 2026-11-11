@@ -1,6 +1,6 @@
 /**
  * Homepage content. Every line comes from the current porticogroup.co homepage;
- * only the structure changed (11 sections → 6, case studies listed once, industries become filters).
+ * only the structure changed (fewer sections, case studies listed once, industries become filters).
  */
 export type Cat = "mfg" | "health" | "supply" | "pe" | "smartsheet"
 
@@ -30,7 +30,7 @@ export const home = {
     { n: "25+", label: "years running operations" },
     { n: "100+", label: "client engagements" },
     { n: "EN · ES", label: "US/Mexico experience" },
-    { n: "1", label: "principal on every engagement, no junior handoffs" },
+    { n: "1", label: "principal-led, no junior handoffs" },
   ],
   hero: { src: "hero.jpg", alt: "A manufacturing floor at night, with an operations dashboard on the wall" },
 
@@ -85,7 +85,7 @@ export const home = {
     { n: "$2M", kind: "Inventory", text: "Inventory relief through demand planning, with a 25% gain in project management productivity.", client: "$150M+ skincare company", cats: ["supply"] },
     { n: "−30%", kind: "Process equipment", text: "Grinder assembly labor, with 1 to 2 days faster turnaround and a 40% faster seal cell, through Lean and Kanban.", client: "Wastewater equipment manufacturer", cats: ["mfg", "pe"], href: "case-studies/wastewater-kaizen-program.html" },
     { n: "+30 pts", kind: "Customer experience", text: "NPS improvement from an operations and customer service initiative across US airport locations.", client: "Major national car rental company", cats: ["supply"] },
-    { n: "~85%", kind: "Land acquisition", text: "Fewer columns per tracker after a multi-state program was re-architected around one tract register, one plan template, and role-based views.", client: "Engineering firm", cats: ["smartsheet"], href: "case-studies/land-acquisition-program.html" },
+    { n: "~85%", kind: "Land acquisition", text: "Fewer columns per tracker, cut from more than 200 to a few dozen, after a multi-state program was re-architected around one tract register, one plan template, and role-based views.", client: "Engineering firm", cats: ["smartsheet"], href: "case-studies/land-acquisition-program.html" },
     { n: "1", kind: "Enterprise projects", text: "Standard project kit, launched by Control Center, with every project rolling up to one portfolio view. In progress.", client: "Engineering firm", cats: ["smartsheet"], href: "case-studies/enterprise-project-control-center.html" },
     { n: "+$890K", kind: "Facility move", text: "Net cash from a full warehouse and office move run from one Smartsheet command center. Finished on time, and orders kept shipping.", client: "Consumer products company", cats: ["supply", "smartsheet"], href: "case-studies/facility-move-command-center.html" },
     { n: "~95M", kind: "Repair operations", text: "Formula references engineered out of a Work App that follows every repair from driver pickup to billing.", client: "Home medical equipment repair", cats: ["smartsheet"], href: "case-studies/hts-repair-work-app.html" },
