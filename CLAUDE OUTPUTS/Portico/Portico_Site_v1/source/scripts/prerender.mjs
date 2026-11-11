@@ -6,7 +6,7 @@
 //   --preview  leaves out the Google Analytics tag (for review links, so test visits aren't counted)
 import fs from "node:fs"
 import path from "node:path"
-import { renderStudy, studies } from "../dist-ssr/entry-server.js"
+import { renderHome, renderStudy, studies } from "../dist-ssr/entry-server.js"
 
 const PREVIEW = process.argv.includes("--preview")
 const SITE = "https://porticogroup.co"
@@ -100,4 +100,30 @@ for (const study of studies) {
 `
   fs.writeFileSync(path.join(OUT, "case-studies", `${study.slug}.html`), page)
   console.log("built", `case-studies/${study.slug}.html`, `${Math.round(page.length / 1024)} KB`)
+}
+
+// ---------- homepage: keeps the live homepage's own title, description, share tags and structured data ----------
+{
+  const live = fs.readFileSync("../live/index.html", "utf8")
+  const seo = live.slice(live.indexOf("<title>"), live.indexOf('<link rel="icon"')).trim()
+  const ga = PREVIEW ? "" : `<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA}"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA}');</script>
+    `
+  const shared = head(studies[0], "").split("<link rel=\"icon\"")[1]
+  const page = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    ${ga}${seo}
+    <link rel="icon"${shared}
+  </head>
+  <body>
+    <div id="root" data-page="home" data-root="">${renderHome("")}</div>
+  </body>
+</html>
+`
+  fs.writeFileSync(path.join(OUT, "index.html"), page)
+  console.log("built", "index.html", `${Math.round(page.length / 1024)} KB`)
 }
