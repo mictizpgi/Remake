@@ -6,7 +6,7 @@
 //   --preview  leaves out the Google Analytics tag (for review links, so test visits aren't counted)
 import fs from "node:fs"
 import path from "node:path"
-import { articles, renderArticle, renderHome, renderInsightsIndex, renderStudy, studies } from "../dist-ssr/entry-server.js"
+import { articles, renderArticle, renderHome, renderInsightsIndex, renderPrivacy, renderStudy, studies } from "../dist-ssr/entry-server.js"
 
 const PREVIEW = process.argv.includes("--preview")
 const SITE = "https://porticogroup.co"
@@ -204,4 +204,29 @@ for (const study of studies) {
   const seo = `${top}\n    <script type="application/ld+json">${JSON.stringify(ld, null, 1).replace(/</g, "\\u003c")}</script>`
   fs.writeFileSync(path.join(OUT, "insights", "index.html"), page(seo, "insights", renderInsightsIndex(root)))
   console.log("built", "insights/index.html")
+}
+
+// ---------- privacy notice: live head kept exactly; body text kept exactly ----------
+{
+  const ga = PREVIEW ? "" : `<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA}"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA}');</script>
+    `
+  const live = fs.readFileSync("../live-now/privacy-policy.html", "utf8")
+  const seo = live.slice(live.indexOf("<title>"), live.indexOf('<link rel="icon"')).trim()
+  const shared = head(studies[0], "").split("<link rel=\"icon\"")[1]
+  fs.writeFileSync(path.join(OUT, "privacy-policy.html"), `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    ${ga}${seo}
+    <link rel="icon"${shared}
+  </head>
+  <body>
+    <div id="root" data-page="privacy" data-root="">${renderPrivacy("")}</div>
+  </body>
+</html>
+`)
+  console.log("built", "privacy-policy.html")
 }

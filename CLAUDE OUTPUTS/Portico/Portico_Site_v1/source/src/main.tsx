@@ -7,6 +7,7 @@ import { CaseStudyPage } from "./case/CaseStudyPage"
 import { HomePage } from "./home/HomePage"
 import { ArticlePage } from "./insights/ArticlePage"
 import { InsightsIndexPage } from "./insights/InsightsIndexPage"
+import { LegalPage } from "./legal/LegalPage"
 
 // Each page is pre-rendered (scripts/prerender.mjs); attach to it for the animations, filters, chart hover and theme switch.
 const el = document.getElementById("root")!
@@ -15,6 +16,7 @@ const root = el.dataset.root ?? ""
 const mount = (node: React.ReactNode) => hydrateRoot(el, <StrictMode>{node}</StrictMode>)
 if (page === "home") mount(<HomePage root={root} />)
 else if (page === "insights") mount(<InsightsIndexPage root={root} />)
+else if (page === "privacy") mount(<LegalPage root={root} />)
 else if (page.startsWith("insight:")) {
   const a = articleBySlug(page.slice(8))
   if (a) mount(<ArticlePage a={a} root={root} />)
