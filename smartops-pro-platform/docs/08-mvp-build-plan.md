@@ -103,7 +103,7 @@ This proves the hardest and riskiest part of the platform before any portal poli
 | **Template hardening takes longer than planned** | Medium | Medium | It is Smartsheet work in your own area of expertise, and it is valuable even without the platform. |
 | **Written permission to host client users is not on file** | Low, by your account | High for the Managed tier | Get it in writing before the pilot. Connected tier is the fallback and is already designed. |
 | **A client user creates items and becomes a billable seat on Portico's plan** | Medium | Low to medium | Share as Editor only. Turn off auto-upgrade. Review provisional members before each true-up. |
-| **Smartsheet changes the API** (it retired the `VIEWER` access value in October 2026) | Medium over a year | Medium | All Smartsheet calls go through one internal module. Subscribe to the API changelog. |
+| **Smartsheet changes the API** (it removed the per-asset sharing endpoints in June 2026) | Medium over a year | Medium | All Smartsheet calls go through one internal module. Subscribe to the API changelog. |
 | **Rate limits when many clients share Portico's one token** | Low at MVP scale | Medium | One sheet read per client per sync. A shared limiter in the Smartsheet module. Document 3 has the arithmetic. |
 | **Solo operator: you are the only person who can run it** | Certain | Medium | Managed services only, a runbook, and every operational action available as a button in the console. |
 | **A healthcare client enters patient information** | Low | High | Healthcare clients are Connected only, form notice, contract language (document 5, section 5.6). Since Connected is not in the MVP, healthcare clients wait for it. |

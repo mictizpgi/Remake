@@ -47,7 +47,7 @@ In the Managed tier the platform can enforce this, because Portico owns the work
 | Smartsheet, Managed | One workspace per client. Shares are per workspace, never at folder or account level. Client users are never added to a Portico-wide group. |
 | Smartsheet, Connected | The workspace lives in the client's account. The platform holds a token that reaches only what that client authorized. |
 | Links | The portal shows only links from `instance_assets` rows the user's client owns. Smartsheet's own sharing is the second lock: a leaked link still needs a share to open. |
-| Dashboards | Shared to named users. Not published with "anyone with the link", because a published link has no isolation at all. |
+| Dashboards | Shared to named users. Not published with "anyone with the link", because a published link needs no login and has no isolation at all. |
 | Testing | Automated cross-tenant test on every deploy: client A's session must get zero rows of client B from every table and every portal route. |
 
 ## 5.5 Secrets

@@ -6,7 +6,7 @@
 
 | | 5 clients | 25 clients | 100 clients |
 |---|---|---|---|
-| **Platform run cost per month** | **about $47** | **about $47 to $67** | **about $115 to $195** |
+| **Platform run cost per month** | **about $47** | **about $47 to $73** | **about $95 to $195** |
 | Target in the brief | under $100 | | |
 | Managed-tier Smartsheet licenses (separate) | $0 added per client | $0 added per client | $0 added per client |
 
@@ -25,7 +25,7 @@ The target of under $100 per month at 5 to 10 clients is met with room to spare.
 | Sentry (errors) | Developer, then Team | $0 | $0 to $26 | $26 | Free is one user. Move to Team when a contractor joins or volume grows. |
 | Uptime check | Free tier | $0 | $0 | $0 | |
 | Domain | | about $2 | about $2 | about $2 | A subdomain of smartopspro.io costs nothing extra. |
-| **Total** | | **about $47** | **about $47 to $73** | **about $115 to $195** | |
+| **Total** | | **about $47** | **about $47 to $73** | **about $95 to $195** | |
 
 ## 9.3 The one cost that depends on a design choice
 
@@ -37,7 +37,7 @@ The job runner is the only line that jumps, and it jumps because of how often me
 | Every hour in business hours, every six hours otherwise | about 28,000 | $0 |
 | Every two hours, plus a "refresh now" button in the portal | about 36,000 | $0 |
 
-**Recommendation:** business-hours cadence plus a refresh button. A 30-day Challenge does not need overnight freshness, and the button covers the moment a client wants to see a number move. That keeps the 100-client total near $115 per month.
+**Recommendation:** business-hours cadence plus a refresh button. A 30-day Challenge does not need overnight freshness, and the button covers the moment a client wants to see a number move. That keeps the 100-client total near $95 per month.
 
 If the platform outgrows the free allowance anyway, Trigger.dev at $10 to $50 per month is a drop-in alternative, because provisioning state is kept in the platform's own tables (document 1, section 1.6).
 
