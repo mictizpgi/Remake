@@ -1,0 +1,822 @@
+<title>Venti Ore Italian</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column (max 860px). A 10-stop route line on top; each block is a
+   timetable row that opens into learn / from your Spanish / resource / 15-minute check. */
+:root{
+  --bg:#F3F6F9; --surface:#FFFFFF; --ink:#15233B; --muted:#56637C; --line:#D8DEE8;
+  --accent:#1D5BCB; --accent-ink:#FFFFFF; --accent-soft:#E4ECFB;
+  --same:#1B7A4B; --same-soft:#E1F2E8; --diff:#8A5A00; --diff-soft:#FAEFD6; --trap:#B0302B; --trap-soft:#FAE5E3;
+  --display:"Titillium Web","Segoe UI",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1524; --surface:#172035; --ink:#E7ECF5; --muted:#9BA8C0; --line:#2B3756;
+  --accent:#86ADFF; --accent-ink:#0E1524; --accent-soft:#1D2C4F;
+  --same:#62CC95; --same-soft:#143224; --diff:#E6B656; --diff-soft:#372C12; --trap:#F18D87; --trap-soft:#3B1B1A;
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0E1524; --surface:#172035; --ink:#E7ECF5; --muted:#9BA8C0; --line:#2B3756;
+  --accent:#86ADFF; --accent-ink:#0E1524; --accent-soft:#1D2C4F;
+  --same:#62CC95; --same-soft:#143224; --diff:#E6B656; --diff-soft:#372C12; --trap:#F18D87; --trap-soft:#3B1B1A;
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.it{font-weight:600}
+.es{font-style:italic;color:var(--muted)}
+.can-speak .it:not(.ns){cursor:pointer;text-decoration:underline dotted var(--accent);text-underline-offset:3px}
+.can-speak .it:not(.ns):hover{color:var(--accent)}
+.scroll{overflow-x:auto}
+
+/* header */
+.top{padding-block:28px 14px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.top h1{font-size:38px;font-weight:700;letter-spacing:-.01em}
+.top h1 small{display:block;font-family:var(--body);font-size:16px;font-weight:400;color:var(--muted);letter-spacing:0;margin-top:8px;max-width:46ch;line-height:1.45}
+.who{display:flex;align-items:center;gap:8px;font-size:14.5px;color:var(--muted)}
+.who a{font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:999px}
+
+/* tabs */
+.tabsbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{font-family:var(--display);font-weight:600;font-size:16px;color:var(--muted);text-decoration:none;padding:12px 12px 10px;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+main{padding-block:22px 80px}
+.view{display:flex;flex-direction:column;gap:22px}
+.lede{color:var(--muted);max-width:65ch}
+
+/* summary + route */
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:16px}
+.sumrow{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline}
+.sumrow b{font-family:var(--display);font-size:24px;font-variant-numeric:tabular-nums}
+.sumrow span{color:var(--muted);font-size:14.5px}
+.route{display:flex;align-items:center}
+.route .seg{flex:1;height:3px;background:var(--line);min-width:4px}
+.route .seg.on{background:var(--accent)}
+.stop{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--surface);font-family:var(--display);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;color:var(--muted);cursor:pointer;padding:0}
+.stop.part{border-color:var(--accent);color:var(--accent)}
+.stop.done{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+@media (max-width:420px){.stop{width:24px;height:24px;font-size:11px}}
+.split{display:flex;flex-direction:column;gap:8px}
+.splitbar{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px}
+.splitbar i{display:block}
+.s1{background:var(--muted)} .s2{background:var(--accent)} .s3{background:var(--diff)} .s4{background:var(--same)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;color:var(--muted);list-style:none;margin:0;padding:0}
+.legend li::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--k)}
+.hint{font-size:14.5px;color:var(--muted)}
+.speakhint{display:none}.can-speak .speakhint{display:block}
+.namebar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--accent-soft);border-radius:var(--r);padding:12px 14px;font-size:14.5px}
+.namebar a{font-weight:600}
+
+/* blocks */
+.blocks{display:flex;flex-direction:column;gap:10px}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.block>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:center;padding:14px 16px}
+.block>summary::-webkit-details-marker{display:none}
+.bnum{font-family:var(--display);font-weight:700;font-size:24px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.6em}
+.btitle{min-width:0}
+.btitle h3{font-size:19px;font-weight:700}
+.btitle span{font-size:14.5px;color:var(--muted)}
+.pill{font-family:var(--display);font-weight:600;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.part{border-color:var(--accent);color:var(--accent)}
+.pill.done{border-color:var(--same);background:var(--same-soft);color:var(--same)}
+.block[open]>summary{border-bottom:1px solid var(--line)}
+.bbody{padding:18px 16px 20px;display:flex;flex-direction:column;gap:24px}
+.outcome{font-size:16px;max-width:65ch}
+.sec{display:flex;flex-direction:column;gap:12px}
+.sec>h4{font-size:16px;font-weight:700;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.sec>h4 small{font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted)}
+.items{display:flex;flex-direction:column;gap:14px;list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+.item input[type=checkbox]{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
+.item>div{min-width:0;display:flex;flex-direction:column;gap:4px}
+.item label{font-weight:600;cursor:pointer}
+.item p{max-width:68ch}
+.item input:checked+div>label{color:var(--muted)}
+.bridge{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:start}
+.tag{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:2px 9px;border-radius:5px;white-space:nowrap;justify-self:start}
+.tag.same{background:var(--same-soft);color:var(--same)} .tag.diff{background:var(--diff-soft);color:var(--diff)} .tag.trap{background:var(--trap-soft);color:var(--trap)}
+.bridge p{min-width:0;max-width:66ch}
+@media (max-width:520px){.bridge{grid-template-columns:1fr;gap:4px}.bridge p{margin-bottom:10px}.tag{justify-self:start}}
+.res{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:4px;background:var(--bg)}
+.res a{font-family:var(--display);font-weight:700;font-size:17px}
+.res p{font-size:14.5px;color:var(--muted);max-width:66ch}
+details.ans{margin-top:4px}
+details.ans>summary{cursor:pointer;color:var(--accent);font-size:14.5px;font-weight:600}
+details.ans>div{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:15px}
+.qa{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;font-size:15px}
+.pass{font-size:13px;color:var(--muted)}
+
+/* practice partner */
+.rp{display:none;border-top:1px solid var(--line);padding-top:18px;flex-direction:column;gap:10px}
+.can-chat .rp{display:flex}
+.rp h4{font-size:16px}
+.rp-log{display:flex;flex-direction:column;gap:8px}
+.msg{max-width:88%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px}
+.msg.a{background:var(--accent-soft);align-self:flex-start}
+.msg.u{background:var(--bg);border:1px solid var(--line);align-self:flex-end}
+.msg.err{background:var(--trap-soft);color:var(--trap);align-self:flex-start}
+.hear{display:none;align-self:flex-start;font-size:13px;margin-top:-4px}
+.can-speak .hear{display:inline-block}
+.rp-form{display:flex;gap:8px}
+.rp-form input{flex:1;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.btn{font-family:var(--display);font-weight:600;font-size:15px;padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.link{border:0;background:none;color:var(--accent);padding:0;text-decoration:underline;font-family:var(--body);font-weight:500}
+.btn:disabled{opacity:.5;cursor:default}
+.rp-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* spanish tab */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.cols>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cols ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:15px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel>h2{font-size:24px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{font-family:var(--display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:600;padding:6px 14px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 14px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+.words{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px 18px;font-size:15px}
+.words li{display:flex;flex-wrap:wrap;gap:0 8px;align-items:baseline}
+.words .es{font-size:14px}
+.panel h3{font-size:16px;margin-top:6px}
+
+/* family */
+.board{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.board li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.board li:last-child{border-bottom:0}
+.pname{font-family:var(--display);font-weight:700;font-size:17px;overflow-wrap:anywhere}
+.pname small{font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted);margin-left:8px}
+.pnum{font-size:14.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pbar{grid-column:1/-1;display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.pbar i{height:8px;border-radius:2px;background:var(--line)}
+.pbar i.part{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.pbar i.done{background:var(--accent)}
+.empty{color:var(--muted);padding:6px 0}
+.field{display:flex;flex-direction:column;gap:6px;max-width:420px}
+.field label{font-size:14.5px;font-weight:600}
+.field input,.field select{padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);width:100%}
+.inline{display:flex;gap:8px;flex-wrap:wrap}
+.inline input{flex:1;min-width:140px}
+.status{font-size:13px;color:var(--muted)}
+#copyOut{width:100%;min-height:64px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+
+/* missing */
+.miss{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px 28px}
+.miss>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.miss h3{font-size:17px}
+.miss p{font-size:15px}
+.cut{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px;max-width:68ch}
+
+#stopAudio{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14.5px;font-weight:600;z-index:19;max-width:calc(100% - 32px);text-align:center}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Venti Ore<small>Conversational Italian in 20 hours, starting from the Spanish you already speak.</small></h1>
+    <div class="who">Tracking <a href="#family" id="whoChip">Add your name</a></div>
+  </header>
+</div>
+<div class="tabsbar"><nav class="wrap tabs" aria-label="Sections">
+  <a href="#plan" data-tab="plan">The plan</a>
+  <a href="#spanish" data-tab="spanish">Spanish head start</a>
+  <a href="#family" data-tab="family">Family</a>
+  <a href="#missing" data-tab="missing">What's missing</a>
+</nav></div>
+
+<main class="wrap">
+<section class="view" id="view-plan">
+  <div class="summary">
+    <div class="sumrow">
+      <div><b id="sumBlocks">0 / 10</b> <span>blocks done</span></div>
+      <div><b id="sumHours">0 / 20</b> <span>hours</span></div>
+      <div><span id="sumNext"></span></div>
+    </div>
+    <div class="route" id="route" aria-label="The ten blocks"></div>
+    <div class="split">
+      <div class="eyebrow">How every two-hour block runs</div>
+      <div class="splitbar" aria-hidden="true"><i class="s1" style="flex:10"></i><i class="s2" style="flex:40"></i><i class="s3" style="flex:55"></i><i class="s4" style="flex:15"></i></div>
+      <ul class="legend">
+        <li style="--k:var(--muted)">10 min: redo the last block's check, aloud</li>
+        <li style="--k:var(--accent)">40 min: the notes here, read aloud</li>
+        <li style="--k:var(--diff)">55 min: the one resource</li>
+        <li style="--k:var(--same)">15 min: the check</li>
+      </ul>
+    </div>
+  </div>
+  <div class="namebar" id="nameBar" hidden>Add your name so your progress shows on the family board. <a href="#family">Add name</a></div>
+  <p class="hint speakhint">Tap any underlined Italian phrase to hear it.</p>
+  <div class="blocks" id="blocks"></div>
+</section>
+
+<section class="view" id="view-spanish" hidden>
+  <p class="lede">Italian and Spanish share about 82% of their vocabulary by Ethnologue's lexical similarity measure, and most of the grammar has the same skeleton. You are not starting from zero. You are converting.</p>
+  <div class="panel">
+    <div class="cols">
+      <div><span class="tag same" style="align-self:flex-start">Free with your Spanish</span><ul id="colFree"></ul></div>
+      <div><span class="tag diff" style="align-self:flex-start">Has to be learned</span><ul id="colNew"></ul></div>
+      <div><span class="tag trap" style="align-self:flex-start">Where Spanish misleads you</span><ul id="colTrap"></ul></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Conversion rules</h2>
+    <p class="lede">Sound changes that hold often enough to guess with. Try the rule, say the word, and watch the listener's face.</p>
+    <div class="scroll"><table id="tblConv"><thead><tr><th>Spanish</th><th>Italian</th><th>Examples</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h2>Grammar map</h2>
+    <div class="scroll"><table id="tblGram"><thead><tr><th>What</th><th>Spanish</th><th>Italian</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h2>False friends</h2>
+    <p class="lede">Words that look Spanish and mean something else.</p>
+    <div class="scroll"><table id="tblFalse"><thead><tr><th>Italian</th><th>Means</th><th>Looks like</th><th>For that, say</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h2>Words Spanish won't give you</h2>
+    <p class="lede">The everyday words with no Spanish cousin. These are worth flashcards; the cognates are not.</p>
+    <div id="wordGroups"></div>
+  </div>
+</section>
+
+<section class="view" id="view-family" hidden>
+  <div class="panel">
+    <h2>Family board</h2>
+    <ul class="board" id="board"></ul>
+    <p class="status" id="boardNote"></p>
+  </div>
+  <div class="panel">
+    <h2>You</h2>
+    <div class="field"><label for="nameInput">Your name</label><input id="nameInput" type="text" maxlength="24" autocomplete="given-name" placeholder="e.g. Papà"></div>
+    <div class="field" id="switchField" hidden><label for="whoSelect">Tracking on this device as</label><select id="whoSelect"></select></div>
+    <p class="status" id="syncStatus">Saved on this device.</p>
+    <div class="inline"><button class="btn ghost" id="copyBtn" type="button">Copy my progress</button><button class="btn link" id="removeBtn" type="button" hidden>Remove this person from this device</button></div>
+    <textarea id="copyOut" readonly hidden aria-label="Your progress, ready to copy"></textarea>
+  </div>
+  <div class="panel">
+    <h2>Sharing one device</h2>
+    <p class="lede">If two of you study on the same phone or laptop, add the second person here and switch between names above.</p>
+    <form class="field inline" id="addForm"><input id="addInput" type="text" maxlength="24" placeholder="Name" aria-label="Name of the person to add"><button class="btn" type="submit">Add person</button></form>
+  </div>
+  <p class="hint">Progress saves on each person's own device. People who can edit this page also sync to the board above, so everyone sees each other. Anyone else can send their line to the family chat with Copy my progress.</p>
+</section>
+
+<section class="view" id="view-missing" hidden>
+  <p class="lede">Twenty hours is enough to get you talking. It is not the whole job. These are the pieces a ten-block plan leaves out, and they decide whether the Italian is still there in spring.</p>
+  <div class="panel"><div class="miss" id="missGrid"></div></div>
+  <div class="panel">
+    <h2>Cut on purpose</h2>
+    <p class="lede">Things a full course teaches that this plan skips, so the twenty hours go where conversations happen.</p>
+    <ul class="cut" id="cutList"></ul>
+  </div>
+  <div class="panel">
+    <h2>Tools worth having</h2>
+    <ul class="cut" id="toolList"></ul>
+  </div>
+</section>
+</main>
+
+<button class="btn" id="stopAudio" type="button" hidden>Stop audio</button>
+<div id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const fmt=s=>s.replace(/\[\[(~?)([^\]]+)\]\]/g,(m,n,x)=>'<span class="it'+(n?' ns':'')+'" lang="it">'+x+'</span>').replace(/\{\{([^}]+)\}\}/g,'<span class="es" lang="es">$1</span>');
+
+/* ---------- content ---------- */
+const LT={name:`Language Transfer: Introduction to Italian`,url:`https://www.languagetransfer.org/`};
+const CBI={name:`Coffee Break Italian, Season 1`,url:`https://coffeebreaklanguages.com/`};
+const EASY={name:`Easy Italian`,url:`https://www.easy-languages.org/easy-italian`};
+
+const BLOCKS=[
+{title:`Read it, say it`,it:`I suoni`,
+ out:`After this block you can read any Italian word aloud and turn Spanish words you already know into Italian ones.`,
+ learn:[
+  [`Keep your vowels`,`The five vowels are your Spanish vowels. Keep them pure and pronounce every one: [[aereo]], [[paura]], [[buono]], [[pieno]].`],
+  [`The c and g flip`,`Before e and i, Italian c is the Spanish ch sound: [[cena]], [[ciao]], [[amici]]. To get the hard k sound, Italian adds an h: [[che]], [[chi]], [[amiche]]. So Italian [[che]] sounds like Spanish {{que}}, and Italian [[ce]] sounds like Spanish {{che}}. G works the same way: [[gelato]] and [[giorno]] are soft like English j, while [[spaghetti]] and [[ghiaccio]] are hard.`],
+  [`Four new letter groups`,`<b>gn</b> is your ñ: [[bagno]], [[gnocchi]]. <b>gli</b> is close to the traditional ll: [[figlia]], [[famiglia]]. <b>sce</b> and <b>sci</b> are English sh: [[pesce]], [[uscita]]. <b>z</b> is ts or dz: [[grazie]], [[pizza]], [[zero]].`],
+  [`Small letters that behave differently`,`H is always silent: [[ho]], [[hanno]]. V is a real v, never b: [[vino]], [[vivere]]. In [[qui]], [[questo]], [[guerra]] and [[guida]] the u is pronounced.`],
+  [`Double consonants are real`,`Hold a doubled consonant about twice as long. It changes the word: [[sete]] thirst, [[sette]] seven; [[casa]] house, [[cassa]] till; [[nono]] ninth, [[nonno]] grandfather; [[pala]] shovel, [[palla]] ball. The one to get right: [[anno]] is year, and with a single n it is anus.`],
+  [`Stress`,`Italian only writes an accent on a final vowel: [[città]], [[caffè]], [[perché]]. Words stressed three syllables from the end get no mark, where Spanish would write one: [[macchina]], [[telefono]], [[tavolo]], [[sabato]], [[parlano]]. Learn those by ear.`],
+  [`The conversion rules`,`Open the Spanish head start tab and read the conversion table aloud twice. It turns thousands of words you know into Italian: {{nación}} → [[nazione]], {{noche}} → [[notte]], {{hijo}} → [[figlio]], {{plaza}} → [[piazza]].`]],
+ same:`Vowels, rhythm, the rolled r and most consonants carry over untouched. You will sound better on day one than most English speakers do after a year.`,
+ diff:`The c and g spelling is flipped, doubled consonants matter, z is ts, and there is no th sound and no jota.`,
+ trap:`Reading [[che]] the Spanish way. Skipping the u in [[qui]] and [[guerra]]. Saying [[anno]] with a single n.`,
+ res:{...LT,what:`Tracks 1 to 7. Free audio, no account needed. Pause and answer out loud every time the teacher asks. The tracks build in their own order and will not match each block line for line: they train you to build sentences, and the notes here cover the block's topic.`},
+ check:[
+  {t:`Read this aloud and record it on your phone. If audio works on your device, tap the sentence to hear it and compare.`,body:`[[Gli amici di mia figlia mangiano gnocchi e pesce a cena, poi prendono un gelato alla ciliegia e chiacchierano in piazza.]]`,pass:`Pass: soft ce and ci, hard che and chi, clear gli and gn, and held doubles in gnocchi, chiacchierano and piazza.`},
+  {t:`Turn these into Italian without looking: {{nación, universidad, posible, hijo, lluvia, noche, plaza, escuela, tiempo, puerta, llave, mejor}}.`,ans:`[[nazione]], [[università]], [[possibile]], [[figlio]], [[pioggia]], [[notte]], [[piazza]], [[scuola]], [[tempo]], [[porta]], [[chiave]], [[migliore]]`,pass:`Pass: 9 of 12.`},
+  {t:`Say each pair so a listener could tell them apart: sete and sette, casa and cassa, nono and nonno, pala and palla. Then say these with the right stress: macchina, telefono, città, perché, sabato, parlano, parliamo.`,ans:`MAC-chi-na, te-LE-fo-no, cit-TÀ, per-CHÉ, SA-ba-to, PAR-la-no, par-LIA-mo`,pass:`Pass: all seven stresses right.`}],
+ scene:`a word game. Give the learner one common Spanish word at a time whose Italian cousin follows a regular sound change (for example noche, hijo, plaza, estación, puerta) and ask them to guess the Italian word. Confirm or correct, then give the next word`},
+
+{title:`First conversations`,it:`Piacere!`,
+ out:`After this block you can greet people, introduce yourself and your family, choose between tu and Lei, and rescue a conversation when you get lost.`,
+ learn:[
+  [`Greetings`,`[[Ciao]] is hello and goodbye for people you call tu. [[Buongiorno]] until mid-afternoon, [[buonasera]] after. [[Salve]] is a safe neutral hello. [[Buonanotte]] only when someone is going to bed. Leaving: [[arrivederci]], [[a dopo]], [[a domani]], [[a presto]].`],
+  [`Essere and avere`,`[[sono, sei, è, siamo, siete, sono]] and [[ho, hai, ha, abbiamo, avete, hanno]]. Say both sets until they come out without thinking.`],
+  [`Introduce yourself`,`[[Mi chiamo…]] [[Sono di…]] [[Abito a…]] [[Ho due figli.]] [[Mia figlia studia in Italia.]] [[Siamo qui in vacanza.]]`],
+  [`Tu or Lei`,`Tu for family, children and your daughter's friends. Lei for waiters, shopkeepers, hotel staff and older strangers, with the verb in the third person, exactly like {{usted}}. [[Come stai?]] becomes [[Come sta?]] [[Scusa]] becomes [[Scusi]]. [[Di dove sei?]] becomes [[Di dov'è?]] For any group, use [[voi]].`],
+  [`Courtesy kit`,`[[Per favore]], [[grazie mille]], [[prego]] (you're welcome, go ahead, after you), [[scusi]], [[mi dispiace]], [[permesso]] (squeezing past someone), [[piacere]] (nice to meet you), [[volentieri]] (gladly).`],
+  [`Rescue phrases`,`[[Non ho capito.]] [[Può ripetere, per favore?]] [[Più piano, per favore.]] [[Come si dice in italiano?]] [[Cosa vuol dire?]] [[Sto imparando l'italiano.]] [[Parlo spagnolo.]]`]],
+ same:`Tú and usted map straight onto tu and Lei. Subject pronouns drop, questions are just intonation, and {{no}} before the verb becomes [[non]]. {{Me llamo}} is [[mi chiamo]].`,
+ diff:`Possession and age use [[avere]], not tener: {{tengo dos hijos}} → [[ho due figli]]. [[Essere]] covers most of estar: {{estoy cansado}} → [[sono stanco]], {{estamos en Roma}} → [[siamo a Roma]]. [[Stare]] survives in [[Come stai?]] and [[Sto bene]].`,
+ trap:`[[Lei]] also means she. [[Ciao]] to a shopkeeper is too familiar, so open with [[buongiorno]]. [[Tenere]] exists but means to hold.`,
+ res:{...CBI,what:`Lessons 1 to 5, the greetings and introductions lessons, about 20 minutes each. Free on the Coffee Break site or any podcast app. Repeat every phrase aloud in the pauses.`},
+ check:[
+  {t:`Introduce yourself for 60 seconds, aloud, no notes. Cover your name, where you are from, where you live, your family, and why you are learning.`,ans:`A model to adapt: [[Buongiorno! Mi chiamo Marco. Sono di Boston e abito a Chicago. Ho due figli. Mia figlia studia in Italia. Sto imparando l'italiano per parlare con lei. Parlo spagnolo, quindi capisco un po'.]]`,pass:`Pass: 60 seconds without stopping to look anything up.`},
+  {t:`Say each line twice, first with tu, then with Lei.`,qa:[[`¿Cómo estás?`,`Come stai? · Come sta?`],[`¿De dónde eres?`,`Di dove sei? · Di dov'è?`],[`¿Cómo te llamas?`,`Come ti chiami? · Come si chiama?`],[`Perdona.`,`Scusa. · Scusi.`],[`¿Tienes hijos?`,`Hai figli? · Ha figli?`]],pass:`Pass: all five in both registers.`},
+  {t:`Translate out loud, fast.`,qa:[[`Tengo dos hijos.`,`Ho due figli.`],[`Estoy cansado.`,`Sono stanco.`],[`No entendí. ¿Puede repetir?`,`Non ho capito. Può ripetere?`],[`Mi hija estudia en Italia.`,`Mia figlia studia in Italia.`],[`Estamos en Roma.`,`Siamo a Roma.`],[`¿Cómo se dice esto en italiano?`,`Come si dice questo in italiano?`]],pass:`Pass: 5 of 6.`}],
+ scene:`a café in Bologna. You are Giulia, the mother of the learner's daughter's Italian roommate, meeting the learner for the first time. Start formally with Lei, then after two or three exchanges suggest switching to tu ("Possiamo darci del tu?")`},
+
+{title:`The verb engine`,it:`I verbi`,
+ out:`After this block you can say what you and others do, want, can and have to do, with the verbs that carry most conversations.`,
+ learn:[
+  [`Regular present`,`[[parlo, parli, parla, parliamo, parlate, parlano]]. [[prendo, prendi, prende, prendiamo, prendete, prendono]]. [[dormo, dormi, dorme, dormiamo, dormite, dormono]]. Three shortcuts: tu always ends in -i, noi always ends in -iamo, and the loro form keeps the stress on the stem.`],
+  [`The -isc- verbs`,`Some -ire verbs add -isc- in four forms: [[capisco, capisci, capisce, capiamo, capite, capiscono]]. Same for [[finire]] and [[preferire]].`],
+  [`Five irregulars`,`Andare: [[vado, vai, va, andiamo, andate, vanno]]. Fare: [[faccio, fai, fa, facciamo, fate, fanno]]. Venire: [[vengo, vieni, viene, veniamo, venite, vengono]]. Dire: [[dico, dici, dice, diciamo, dite, dicono]]. Sapere: [[so, sai, sa, sappiamo, sapete, sanno]].`],
+  [`Want, can, must`,`Volere: [[voglio, vuoi, vuole, vogliamo, volete, vogliono]]. Potere: [[posso, puoi, può, possiamo, potete, possono]]. Dovere: [[devo, devi, deve, dobbiamo, dovete, devono]]. Add an infinitive and you have a sentence: [[Posso entrare?]] [[Devo andare.]] [[Vuoi venire con noi?]]`],
+  [`The polite forms`,`[[Vorrei]] ({{quisiera}}), [[potrei]] ({{podría}}), [[mi piacerebbe]] ({{me gustaría}}). You will say [[vorrei]] more than any other verb form on the trip.`],
+  [`Question words`,`[[chi]], [[cosa]], [[dove]], [[quando]], [[come]], [[quanto]], [[quale]], and [[perché]], which means both {{por qué}} and {{porque}}.`],
+  [`Right now`,`[[Sto mangiando.]] [[Stiamo arrivando.]] [[Cosa stai facendo?]] Stare plus -ando or -endo, like estar plus gerundio. Italians use it less than you do. The plain present is often enough.`]],
+ same:`Three conjugations, six persons, dropped pronouns, modal plus infinitive, estar plus gerundio, and the saber and conocer split ([[sapere]], [[conoscere]]) all work the way you expect.`,
+ diff:`No -s on the tu form: {{hablas}} → [[parli]]. One noi ending for every verb. And [[voi]] is the everyday plural you all over Italy, with its own endings: [[parlate]], [[prendete]], [[dormite]].`,
+ trap:`{{Voy a comer}} does not carry over. [[Vado a mangiare]] means you are physically walking off to eat. For plans, use the present with a time word: [[Domani mangio con mia figlia.]] Also, {{esperar}} splits into [[aspettare]] (wait) and [[sperare]] (hope), and {{salir}} is [[uscire]], while [[salire]] means to go up.`,
+ res:{...LT,what:`Tracks 8 to 14. Keep answering aloud before the student on the recording does.`},
+ check:[
+  {t:`Conjugate aloud, all six persons, under ten seconds each: andare, fare, volere, potere, capire.`,ans:`[[vado, vai, va, andiamo, andate, vanno]]<br>[[faccio, fai, fa, facciamo, fate, fanno]]<br>[[voglio, vuoi, vuole, vogliamo, volete, vogliono]]<br>[[posso, puoi, può, possiamo, potete, possono]]<br>[[capisco, capisci, capisce, capiamo, capite, capiscono]]`,pass:`Pass: four of the five verbs with no slip.`},
+  {t:`Translate out loud.`,qa:[[`¿Puedo entrar?`,`Posso entrare?`],[`Tenemos que irnos.`,`Dobbiamo andare.`],[`¿Qué quieres hacer?`,`Cosa vuoi fare?`],[`No sé dónde está.`,`Non so dov'è.`],[`Mañana voy a comer con mi hija.`,`Domani mangio con mia figlia.`],[`¿Entienden?`,`Capite?`],[`Quisiera un café.`,`Vorrei un caffè.`],[`Estoy esperando el tren.`,`Sto aspettando il treno.`]],pass:`Pass: 6 of 8.`},
+  {t:`Talk for two minutes about your normal weekday using at least eight different verbs. Record it.`,ans:`A start: [[La mattina faccio colazione e vado al lavoro. Lavoro fino alle cinque. La sera preparo la cena, parlo con la mia famiglia e guardo un film. Il sabato esco con gli amici.]]`,pass:`Pass: eight verbs, two minutes.`}],
+ scene:`a friendly chat. You are Luca, a new Italian friend. Ask the learner about their normal week: what they do, what they want to do, what they can and must do. Keep to the present tense`},
+
+{title:`Nouns and the little words`,it:`Articoli e preposizioni`,
+ out:`After this block your plurals, articles and preposition-plus-article combinations are right often enough that nobody stumbles over them.`,
+ learn:[
+  [`Plurals change the vowel`,`-o becomes -i: [[libro, libri]]. -a becomes -e: [[casa, case]]. -e becomes -i: [[notte, notti]]. Words ending in an accent or a consonant do not change: [[città]], [[caffè]], [[bar]].`],
+  [`The`,`Masculine: [[il libro, i libri]]. Before s plus consonant, or z: [[lo studente, gli studenti]], [[lo zaino]]. Before a vowel: [[l'amico, gli amici]]. Feminine: [[la casa, le case]], [[l'amica, le amiche]].`],
+  [`A and an`,`[[un libro]], [[uno studente]], [[una casa]], [[un'amica]].`],
+  [`Prepositions fuse with the article`,`A, di, da, in and su all fuse. With il: [[al, del, dal, nel, sul]]. With la: [[alla, della, dalla, nella, sulla]]. With i: [[ai, dei, dai, nei, sui]]. With le: [[alle, delle, dalle, nelle, sulle]]. With l': [[~all', dell', dall', nell', sull']]. You already do this with {{al}} and {{del}}.`],
+  [`My, your, our`,`Italian puts the article in front: [[il mio libro]], [[la mia amica]], [[i miei amici]], [[le mie cose]], [[il tuo]], [[il suo]], [[il nostro]], [[il vostro]], [[il loro]]. The exception you need most: no article with one family member. [[mia figlia]], [[mio marito]], [[mia moglie]], [[tuo padre]]. In the plural it comes back: [[i miei figli]].`],
+  [`There is, there are`,`[[C'è]] and [[ci sono]] are {{hay}}, singular and plural. [[C'è un bar qui vicino?]] [[Ci sono due treni.]]`],
+  [`Liking things`,`Exactly like gustar. [[Mi piace il caffè.]] [[Mi piacciono i gelati.]] [[Ti piace?]] [[Non mi piace.]]`]],
+ same:`Gender matches Spanish most of the time, adjectives agree and follow the noun, and [[piacere]] is gustar with the same backwards logic.`,
+ diff:`No -s plurals. Seven forms of the where Spanish has four. Every common preposition fuses with the article. Possessives take an article. And there is no personal a: {{llamo a mi hija}} → [[chiamo mia figlia]].`,
+ trap:`Cognates that switch gender: [[il latte]], [[il sale]], [[il miele]], [[il sangue]], [[il fiore]] and [[il conto]] are masculine, and [[la domenica]] is feminine. And it is [[mia figlia]], with no article.`,
+ res:{...LT,what:`Tracks 15 to 21.`},
+ check:[
+  {t:`Give the plural, article included: il ragazzo, la ragazza, lo studente, l'amico, l'amica, la notte, il caffè, la città, lo zaino, il problema.`,ans:`[[i ragazzi]], [[le ragazze]], [[gli studenti]], [[gli amici]], [[le amiche]], [[le notti]], [[i caffè]], [[le città]], [[gli zaini]], [[i problemi]]`,pass:`Pass: 8 of 10.`},
+  {t:`Fuse them: a + il ristorante, in + la borsa, di + gli amici, da + il medico, su + il tavolo, a + la stazione, di + l'albergo.`,ans:`[[al ristorante]], [[nella borsa]], [[degli amici]], [[dal medico]], [[sul tavolo]], [[alla stazione]], [[dell'albergo]]`,pass:`Pass: 6 of 7.`},
+  {t:`Translate out loud.`,qa:[[`Mi hija y sus amigas.`,`Mia figlia e le sue amiche.`],[`¿Hay un baño?`,`C'è un bagno?`],[`Me gustan los helados.`,`Mi piacciono i gelati.`],[`Mis hijos están en casa.`,`I miei figli sono a casa.`],[`Llamo a mi mujer.`,`Chiamo mia moglie.`],[`La leche está en la mesa.`,`Il latte è sul tavolo.`]],pass:`Pass: 5 of 6.`}],
+ scene:`an outdoor market. You are a fruit and vegetable seller. Ask what the learner would like, what they like, how many, and offer alternatives, so they have to use articles, plurals and mi piace`},
+
+{title:`Eating and drinking`,it:`Al bar, al ristorante`,
+ out:`After this block you can order coffee and a full meal, deal with prices, mention an allergy and pay.`,
+ learn:[
+  [`Numbers and prices`,`[[uno, due, tre, quattro, cinque, sei, sette, otto, nove, dieci]]. [[undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove, venti]]. [[trenta, quaranta, cinquanta, sessanta, settanta, ottanta, novanta, cento]]. The tens drop their vowel before uno and otto: [[ventuno]], [[ventotto]]. A price: [[dodici euro e cinquanta]].`],
+  [`Ordering formulas`,`[[Vorrei…]] [[Prendo…]] [[Per me…]] [[Avete…?]] [[Un tavolo per quattro, per favore.]] [[Cosa mi consiglia?]]`],
+  [`At the bar`,`[[Un caffè]] is an espresso. In busy bars you pay at the [[cassa]] first and take the [[scontrino]], the receipt, to the counter. Standing [[al banco]] costs less than sitting [[al tavolo]].`],
+  [`Reading the menu`,`[[antipasti]], [[primi]] (pasta, risotto, soup), [[secondi]] (meat or fish), [[contorni]] (sides, ordered separately), [[dolci]]. [[Acqua naturale]] or [[frizzante]]. [[Il coperto]] is a per-person cover charge. [[Il conto, per favore.]] [[Posso pagare con la carta?]]`],
+  [`Needs`,`[[Sono allergico alle noci.]] [[Sono vegetariana.]] [[Senza glutine.]] [[C'è carne dentro?]]`],
+  [`Reactions`,`[[Buonissimo!]] [[Era tutto ottimo.]] [[Basta così, grazie.]] [[Ancora un po' di pane, per favore.]] [[Buon appetito!]] [[Cin cin!]]`]],
+ same:`Numbers, {{quisiera}} → [[vorrei]], {{la cuenta}} → [[il conto]], and most food words are close cousins: [[pane]], [[vino]], [[carne]], [[pesce]], [[sale]], [[frutta]].`,
+ diff:`You order with [[prendere]]: [[Prendo un caffè.]] Meals are [[colazione]], [[pranzo]] and [[cena]]. Everyday table words are new: [[forchetta]], [[coltello]], [[cucchiaio]], [[bicchiere]], [[formaggio]], [[uovo]].`,
+ trap:`False friends at the table. [[Burro]] is butter. [[Aceto]] is vinegar, and oil is [[olio]]. [[Caldo]] means hot. [[Vaso]] is a jar, and a drinking glass is a [[bicchiere]]. [[Gamba]] is a leg, and shrimp are [[gamberi]]. [[Largo]] is wide, and a longer, weaker coffee is [[un caffè lungo]].`,
+ res:{...CBI,what:`Lessons 11, 12 and 13: ordering drinks in a café, ordering in a restaurant, and eating in a restaurant.`},
+ check:[
+  {t:`Play both sides of a restaurant visit aloud, from the door to the bill: ask for a table, order a main dish and water, ask for one recommendation, compliment the food, ask to pay by card.`,ans:`[[Buonasera, un tavolo per due, per favore.]]<br>[[Cosa mi consiglia?]]<br>[[Per me gli spaghetti alle vongole e un'insalata.]]<br>[[Una bottiglia di acqua frizzante.]]<br>[[Era tutto buonissimo.]]<br>[[Il conto, per favore. Posso pagare con la carta?]]`,pass:`Pass: the whole visit with no English or Spanish.`},
+  {t:`Say these aloud: 7,50 € · 18 € · 23,80 € · 46 € · 99 € · 115 €.`,ans:`[[sette euro e cinquanta]] · [[diciotto euro]] · [[ventitré euro e ottanta]] · [[quarantasei euro]] · [[novantanove euro]] · [[centoquindici euro]]`,pass:`Pass: 5 of 6 without hesitating.`},
+  {t:`What does each one really mean? burro, aceto, caldo, vaso, gamba, largo, pranzo, coperto.`,ans:`butter · vinegar · hot · jar or vase · leg · wide · lunch · cover charge`,pass:`Pass: 7 of 8.`}],
+ scene:`a trattoria in Rome. You are the waiter. Greet the learner with Lei, seat them, take the order course by course, recommend one dish when asked, and bring the bill at the end`},
+
+{title:`Getting around`,it:`In giro`,
+ out:`After this block you can buy a train ticket, ask for and follow directions, tell the time, check in, and say what is wrong when something is.`,
+ learn:[
+  [`A, in, da`,`A with cities: [[Sono a Roma.]] [[Vado a Firenze.]] In with countries and regions: [[in Italia]], [[in Toscana]]. Da with people: [[Vado da mia figlia]] means to my daughter's place. Transport takes in: [[in treno]], [[in macchina]], [[in autobus]], but [[a piedi]].`],
+  [`Directions`,`[[Dov'è la stazione?]] [[Come arrivo al Duomo?]] [[Sempre dritto]], [[a destra]], [[a sinistra]], [[la seconda a destra]], [[vicino]], [[lontano]], [[davanti a]], [[dietro]], [[accanto a]], [[all'angolo]], [[fino al semaforo]].`],
+  [`Trains`,`[[Un biglietto per Firenze, per favore.]] [[Solo andata]] or [[andata e ritorno]]. [[A che ora parte?]] [[Da che binario?]] [[Devo cambiare?]] [[È in ritardo.]] Paper regional tickets must be stamped before you board: [[convalidare]]. On the departures board, [[sciopero]] means strike.`],
+  [`Time and days`,`[[Che ore sono?]] [[Sono le tre e mezza.]] [[È l'una.]] [[Alle otto.]] [[oggi, domani, dopodomani, ieri]]. [[lunedì, martedì, mercoledì, giovedì, venerdì, sabato, domenica]]. Timetables use the 24-hour clock: [[le diciassette e venti]].`],
+  [`Hotel`,`[[Ho una prenotazione.]] [[La colazione è inclusa?]] [[A che ora è il check-out?]] [[Non funziona il wifi.]] [[Posso lasciare qui le valigie?]]`],
+  [`When something goes wrong`,`[[Mi sono perso.]] A woman says [[Mi sono persa.]] [[Ho perso il portafoglio.]] [[Ho bisogno di aiuto.]] [[Dov'è la farmacia più vicina?]] [[Non mi sento bene.]] The emergency number is 112.`]],
+ same:`Telling time has the same shape: {{son las tres}} → [[sono le tre]], {{es la una}} → [[è l'una]]. The days of the week line up, and {{ir en tren}} is [[andare in treno]].`,
+ diff:`Spanish {{en}} splits: [[a Roma]] but [[in Italia]]. And [[da]] has no Spanish twin: from ([[Vengo da Madrid]]), at someone's place ([[da Maria]]), and since ([[Studio italiano da un mese]]).`,
+ trap:`[[Salire]] is to get on, [[scendere]] to get off, [[uscire]] to go out. [[Camera]] is a room. [[Fermata]] is a stop, and a signature is [[firma]]. [[Subito]] means right away. [[Presto]] is soon or early, and [[pronto]] is ready, or hello on the phone.`,
+ res:{...CBI,what:`Lessons 7, 8, 18 and 19: asking where things are, places in town, understanding directions, and public transport.`},
+ check:[
+  {t:`Buy a ticket aloud, both sides: destination, one way or return, departure time, platform, whether you change.`,ans:`[[Buongiorno. Un biglietto per Venezia, andata e ritorno, per favore.]]<br>[[A che ora parte il prossimo treno?]]<br>[[Da che binario?]]<br>[[Devo cambiare?]]<br>[[Grazie, buona giornata.]]`,pass:`Pass: all five questions asked cleanly.`},
+  {t:`Give directions aloud from your front door to the nearest café, in at least five steps.`,ans:`A start: [[Esci di casa e vai a sinistra. Vai sempre dritto fino al semaforo. Gira a destra. Il bar è accanto alla farmacia, davanti alla banca.]]`,pass:`Pass: five steps a stranger could follow.`},
+  {t:`Say these times: 7:15 · 13:30 · 9:45 · 21:00 · 12:00.`,ans:`[[le sette e un quarto]] · [[l'una e mezza]] or [[le tredici e trenta]] · [[le dieci meno un quarto]] · [[le nove di sera]] or [[le ventuno]] · [[mezzogiorno]]`,pass:`Pass: 4 of 5.`}],
+ scene:`the ticket office at Firenze Santa Maria Novella station. You are the ticket clerk. Sell the learner a ticket (ask destination, one way or return, time), tell them the platform, then answer one question about how to walk to a place nearby`},
+
+{title:`Talking about the past`,it:`Il passato`,
+ out:`After this block you can say what you did today, yesterday and last week, and ask your daughter how her day went.`,
+ learn:[
+  [`The everyday past`,`Present of avere plus a participle: [[ho mangiato]], [[hai visto]], [[abbiamo comprato]]. Participles: -are gives -ato, -ere gives -uto, -ire gives -ito. [[parlato]], [[venduto]], [[dormito]].`],
+  [`The essere verbs`,`Verbs of movement and change use essere, and the participle agrees like an adjective: [[sono andato]], [[è andata]], [[siamo arrivati]]. The core list: [[andare, venire, arrivare, partire, uscire, entrare, tornare, restare, nascere]], plus essere itself ([[sono stato]]) and every reflexive ([[mi sono svegliato]]).`],
+  [`Twelve irregular participles`,`[[fatto]], [[detto]], [[visto]], [[preso]], [[messo]], [[scritto]], [[letto]], [[aperto]], [[chiuso]], [[bevuto]], [[venuto]], [[stato]].`],
+  [`The imperfetto`,`For background, habits and descriptions. [[ero, eri, era, eravamo, eravate, erano]]. Regular verbs: [[parlavo, parlavi, parlava, parlavamo, parlavate, parlavano]]. [[Quando ero piccolo…]] [[C'era molta gente.]] [[Faceva caldo.]]`],
+  [`Time markers`,`[[ieri]], [[stamattina]], [[ieri sera]], [[la settimana scorsa]], [[due giorni fa]], [[già]], [[non ancora]], [[mai]], [[appena]].`]],
+ same:`The imperfetto is your imperfecto, with the same uses: {{hablaba}} → [[parlavo]]. The compound past is built like {{he comido}}. Many irregular participles are cousins: {{hecho}} → [[fatto]], {{dicho}} → [[detto]], {{escrito}} → [[scritto]], {{abierto}} → [[aperto]].`,
+ diff:`In conversation the compound past does the work of both {{comí}} and {{he comido}}: [[ho mangiato]]. The one-word past lives in books and parts of the south, so skip it. Spanish only has haber, while Italian picks between avere and essere. {{Hace dos días}} → [[due giorni fa]].`,
+ trap:`{{He ido}} is [[sono andato]], with essere. {{He estado}} is [[sono stato]]. {{Me gustó}} is [[mi è piaciuto]], because piacere takes essere.`,
+ res:{...LT,what:`Tracks 22 to 28.`},
+ check:[
+  {t:`Tell your yesterday aloud in eight sentences. Use at least three essere verbs and one imperfetto.`,ans:`A model: [[Ieri mi sono svegliato alle sette. Ho fatto colazione e sono andato al lavoro. Faceva freddo. A pranzo ho mangiato un panino. Sono tornato a casa alle sei. Ho preparato la cena e ho chiamato mia figlia. Abbiamo parlato per mezz'ora. Sono andato a letto presto.]]`,pass:`Pass: eight sentences, auxiliaries right.`},
+  {t:`Avere or essere? Say the io form of the past: mangiare, andare, vedere, arrivare, fare, uscire, dire, tornare, prendere, restare, svegliarsi, scrivere.`,ans:`[[ho mangiato]], [[sono andato]], [[ho visto]], [[sono arrivato]], [[ho fatto]], [[sono uscito]], [[ho detto]], [[sono tornato]], [[ho preso]], [[sono restato]], [[mi sono svegliato]], [[ho scritto]]`,pass:`Pass: 10 of 12.`},
+  {t:`Translate out loud.`,qa:[[`Ayer fuimos al mercado y compramos fruta.`,`Ieri siamo andati al mercato e abbiamo comprato frutta.`],[`¿Qué hiciste hoy?`,`Cosa hai fatto oggi?`],[`Hacía frío.`,`Faceva freddo.`],[`Llegué hace dos días.`,`Sono arrivato due giorni fa.`],[`¿Ya has comido?`,`Hai già mangiato?`],[`Me gustó mucho.`,`Mi è piaciuto molto.`]],pass:`Pass: 5 of 6.`}],
+ scene:`a chat over coffee. You are Chiara, an Italian friend of the learner's daughter. Ask what the learner did yesterday, last weekend and on their last holiday, with follow-up questions, so they must use the past`},
+
+{title:`Talking with your daughter`,it:`In famiglia`,
+ out:`After this block you can hold a ten-minute catch-up call in Italian: ask about her day, react, tell her you miss her, and say goodnight properly.`,
+ learn:[
+  [`Catch-up questions`,`[[Com'è andata oggi?]] [[Cosa hai fatto di bello?]] [[Come ti trovi lì?]] [[Come vanno le lezioni?]] [[Hai fatto amicizia?]] [[Cosa hai mangiato?]] [[Sei stanca?]] [[Raccontami tutto.]]`],
+  [`Missing someone`,`[[Mi manchi]] is how you say I miss you. It works like piacere: you are missing to me. [[Ci manchi tanto.]] [[Ti manca casa?]]`],
+  [`Affection`,`[[Ti voglio bene]] is the I love you for family and friends. [[Sono fiero di te.]] A mother says [[Sono fiera di te.]] [[Non vedo l'ora di vederti.]] [[Un abbraccio.]] [[Buonanotte, tesoro.]] [[Sogni d'oro.]]`],
+  [`Object pronouns`,`[[mi, ti, lo, la, ci, vi, li, le]] go before the verb or hook onto an infinitive. [[Ti chiamo domani.]] [[Posso chiamarti?]] [[Non lo so.]] [[La vedo sabato.]] To him is [[gli]] and to her is [[le]]: [[Le scrivo stasera.]]`],
+  [`Reacting`,`[[Davvero?]] [[Che bello!]] [[Che peccato!]] [[Meno male!]] [[Bravissima!]] [[Dai!]] [[Magari!]] [[Boh.]] Before an exam you say [[In bocca al lupo!]] and she answers [[Crepi!]] To hold the floor while you think: [[allora]], [[quindi]], [[cioè]], [[comunque]], [[secondo me]].`],
+  [`Routine and feelings`,`[[Mi sveglio alle sette.]] [[Mi diverto molto.]] [[Come ti senti?]] [[Mi sento bene.]] [[Sono un po' stanco.]] [[Ho fame.]] [[Ho sonno.]]`],
+  [`Texting`,`[[Tutto bene?]] [[Fammi sapere.]] [[A dopo!]] [[Ci sentiamo stasera.]] [[Baci.]] Italians shorten ti voglio bene to tvb.`]],
+ same:`Object pronouns sit where yours do. Reflexives follow the same logic: {{me levanto}} → [[mi alzo]]. Whole idioms carry over: {{no veo la hora}} → [[non vedo l'ora]], {{menos mal}} → [[meno male]], {{tengo hambre}} → [[ho fame]].`,
+ diff:`{{Te extraño}} flips into [[mi manchi]], with the person you miss as the subject. Spanish {{le}} splits by gender: [[gli]] for him, [[le]] for her.`,
+ trap:`[[Ti amo]] is for romantic partners, so to your daughter say [[ti voglio bene]]. [[Sono eccitato]] has a sexual ring, so say [[non vedo l'ora]]. [[Imbarazzata]] means embarrassed, and pregnant is [[incinta]].`,
+ res:{...EASY,what:`Street interviews with Italian and English subtitles on screen. Watch two episodes on family or daily life. Cover the English line on the first pass, and shadow three answers you like out loud.`},
+ check:[
+  {t:`Call your daughter, or send her a two-minute voice memo, entirely in Italian. Ask at least five questions and tell her one thing you did this week.`,pass:`Pass: you stayed in Italian for the whole thing.`},
+  {t:`Translate out loud, pronoun in the right place.`,qa:[[`Llamo a mi hija mañana. La llamo mañana.`,`La chiamo domani.`],[`Te echo de menos.`,`Mi manchi.`],[`No lo sé.`,`Non lo so.`],[`¿Puedes ayudarme?`,`Puoi aiutarmi?`],[`Nos vemos el sábado.`,`Ci vediamo sabato.`],[`Le escribo esta noche (a ella).`,`Le scrivo stasera.`]],pass:`Pass: 5 of 6.`},
+  {t:`React aloud in Italian to each piece of news: she passed her exam, her train was cancelled, she found her lost wallet, she has an exam tomorrow, she might visit Sicily, she asks if you are coming in spring.`,ans:`[[Bravissima! Sono fiero di te.]] · [[Che peccato!]] · [[Meno male!]] · [[In bocca al lupo!]] · [[Che bello!]] · [[Sì! Non vedo l'ora.]]`,pass:`Pass: six reactions without a pause.`}],
+ scene:`a video call. You are the learner's daughter, a university student spending a semester in Italy, and the learner is your parent. You have agreed to speak only Italian on this call. Tell them a little about your day, classes, friends and food, and ask about home`},
+
+{title:`Plans, opinions, ci and ne`,it:`Progetti`,
+ out:`After this block you can make plans for the trip, give an opinion, compare things, and stop tripping over the two little words Spanish does not have.`,
+ learn:[
+  [`The future`,`The present plus a time word is enough for most plans: [[Domani andiamo a Siena.]] The real future is close to yours: [[parlerò, parlerai, parlerà, parleremo, parlerete, parleranno]]. Irregular stems: [[sarò]], [[avrò]], [[andrò]], [[farò]], [[verrò]], [[potrò]], [[dovrò]], [[vedrò]].`],
+  [`Making plans`,`[[Che programmi hai?]] [[Cosa facciamo sabato?]] [[Ti va di mangiare fuori?]] [[Perché non andiamo al mare?]] [[Ci vediamo alle otto davanti al Duomo.]] [[D'accordo.]] [[Va bene.]] [[Volentieri!]] [[Mi dispiace, non posso.]]`],
+  [`Ci`,`Ci stands for a place already mentioned. [[Ci vado domani.]] [[Ci sono stato.]] Set phrases: [[Ci vuole un'ora]] (it takes an hour), [[Ci penso io]] (I'll take care of it), [[Non ci credo]].`],
+  [`Ne`,`Ne stands for of it or of them, and Italian does not let you drop it. [[Ne voglio due.]] [[Quanti ne vuoi?]] [[Che ne pensi?]] [[Ne vale la pena.]] [[Me ne vado.]]`],
+  [`Opinions and comparisons`,`[[Secondo me…]] [[Mi sembra caro.]] [[Preferisco il treno.]] [[È meglio.]] [[È peggio.]] [[Roma è più grande di Firenze.]] [[È bellissimo.]] [[Sono d'accordo.]] [[Dipende.]]`],
+  [`Polite requests`,`[[Potrebbe aiutarmi?]] [[Mi potrebbe dire dov'è la stazione?]] [[Sarebbe possibile cambiare tavolo?]] [[Dovrei essere a Roma alle cinque.]]`],
+  [`Commands you will hear`,`[[Guarda!]] [[Senti…]] [[Aspetta!]] [[Vieni!]] [[Dimmi.]] [[Andiamo!]] From staff, in the Lei form: [[Prego, si accomodi.]] [[Mi dica.]] [[Senta, scusi…]]`]],
+ same:`Future and conditional endings rhyme with yours: {{hablaré}} → [[parlerò]], {{podría}} → [[potrei]]. And {{-ísimo}} is [[~-issimo]].`,
+ diff:`Ci and ne have no Spanish equivalent. Where Spanish leaves a gap, Italian fills it: {{quiero dos}} → [[ne voglio due]], {{voy mañana}} → [[ci vado domani]]. In comparisons {{que}} is usually [[di]]: [[più alto di me]].`,
+ trap:`{{Voy a llamar}} again: say [[Chiamo domani]] or [[Chiamerò]]. {{Me voy}} is [[Me ne vado]]. {{Se tarda una hora}} is [[Ci vuole un'ora]]. And ci also means us: [[Ci vediamo]].`,
+ res:{...LT,what:`Tracks 29 to 35. Tracks 36 to 45 are your first week of keep-warm after block 10.`},
+ check:[
+  {t:`Plan a Saturday in Italy with your daughter, aloud, in six sentences: one suggestion, one time and place, one opinion, one comparison.`,ans:`A model: [[Sabato andiamo a Siena in treno. Ci vuole un'ora e mezza. Ti va di pranzare in piazza? Secondo me è meglio partire presto. Siena è più piccola di Firenze, ma è bellissima. Ci vediamo alle otto in stazione.]]`,pass:`Pass: all four ingredients in six sentences.`},
+  {t:`Ci or ne? Say the full sentence.`,qa:[[`Quanti biglietti vuoi? ___ voglio due.`,`Ne voglio due.`],[`Vai a Roma? Sì, ___ vado domani.`,`Sì, ci vado domani.`],[`Quanto tempo ___ vuole?`,`Quanto tempo ci vuole?`],[`Che ___ pensi?`,`Che ne pensi?`],[`___ sono due treni la mattina.`,`Ci sono due treni la mattina.`],[`È tardi, me ___ vado.`,`È tardi, me ne vado.`]],qaLang:`it`,pass:`Pass: 5 of 6.`},
+  {t:`Translate out loud.`,qa:[[`Voy a llamar a mi hija mañana.`,`Domani chiamo mia figlia.`],[`¿Te apetece un helado?`,`Ti va un gelato?`],[`Se tarda una hora.`,`Ci vuole un'ora.`],[`Es más grande que Roma.`,`È più grande di Roma.`],[`¿Podría ayudarme?`,`Potrebbe aiutarmi?`],[`Nos vemos a las ocho.`,`Ci vediamo alle otto.`]],pass:`Pass: 5 of 6.`}],
+ scene:`planning a day out. You are Marta, an Italian friend. Plan next Saturday together with the learner: propose things, ask their opinion, compare options, and agree a time and a meeting place`},
+
+{title:`Put it together`,it:`La prova generale`,
+ out:`This block is a dress rehearsal: thirty minutes of real conversation, a list of your gaps, and a routine that keeps the Italian alive until you land.`,
+ learn:[
+  [`Thirty minutes with a native speaker`,`Book a tutor, or use your daughter. Italian only. Cover who you are, your family, the trip plan, and what you did this week. Ask for corrections at the end, not during.`],
+  [`Three one-minute scripts`,`Write and rehearse three short monologues until they are automatic: who I am, our trip plan, a story from last week. These are the islands you swim between in a real conversation.`],
+  [`Listening at full speed`,`Watch one Easy Italian episode with the subtitles covered, then again reading the Italian line. Note what you missed. Your reading is far ahead of your ear, and this closes the gap.`],
+  [`Talking around a gap`,`[[Come si chiama la cosa per aprire le bottiglie?]] [[È come una sedia, ma più grande.]] [[È il contrario di caro.]] When you are stuck, say the Spanish word with Italian sounds and ask [[Si dice così?]] It works more often than not.`],
+  [`Your gap list`,`Write ten things you wanted to say and could not. Look them up. Those ten sentences are your first flashcards.`],
+  [`The keep-warm routine`,`Decide now what happens between the end of this plan and the trip. Fifteen minutes a day beats two hours on Sunday. The What's missing tab has a routine you can copy.`]],
+ same:`Your comprehension runs far ahead of your speaking. Trust it, and guess from Spanish when you listen and read.`,
+ diff:`Real speech is fast, vowels run together, and regional accents vary. A waiter in Naples and a professor in Milan will not sound alike.`,
+ trap:`Itañol. Spanish gets you understood, and then the errors harden. The five to hunt: {{tengo}} for [[ho]], plurals in -s, {{voy a}} plus infinitive, the personal a, and Spanish little words slipping in, such as {{muy}} for [[molto]], {{pero}} for [[ma]], {{también}} for [[anche]], {{y}} for [[e]] and {{hay}} for [[c'è]].`,
+ res:{name:`italki: a 30-minute session with an Italian community tutor`,url:`https://www.italki.com/`,what:`Community tutors cost less than professional teachers and are right for conversation practice. Tell the tutor in advance that you speak Spanish and want to talk, not study grammar.`},
+ check:[
+  {t:`Right after the conversation, be honest. Tick this only if you managed all four: you introduced yourself and your family, asked five questions, told one story in the past, and recovered at least once without switching to English or Spanish.`,pass:`If one is missing, book a second session before ticking.`},
+  {t:`Fix the itañol. Say each one in clean Italian.`,qa:[[`Tengo dos hijos.`,`Ho due figli.`],[`Los amigos de mi hija son muy simpáticos.`,`Gli amici di mia figlia sono molto simpatici.`],[`Voy a comer con ella mañana.`,`Domani mangio con lei.`],[`Llamo a mi hija.`,`Chiamo mia figlia.`],[`Hay un problema, pero estoy bien.`,`C'è un problema, ma sto bene.`],[`También me gusta el vino.`,`Mi piace anche il vino.`]],pass:`Pass: 6 of 6.`},
+  {t:`Put the keep-warm routine in your calendar: a daily fifteen-minute slot, and a standing weekly call with your daughter that starts in Italian.`,pass:`Pass: both are on the calendar.`}],
+ scene:`a relaxed conversation. You are Paolo, a friendly neighbour in the Italian town where the learner is staying. Chat about anything: who they are, their family, why they are in Italy, what they did this week, what they plan to do. Change topic every few turns`}
+];
+
+const FREE=[`The sound system: five vowels, rolled r, syllable rhythm`,`Gender, agreement and adjective order`,`The verb system: six persons, three conjugations, dropped pronouns`,`Tú and usted thinking, which maps to tu and Lei`,`The imperfect, reflexives and gustar-type verbs`,`Thousands of cognates, once you know the conversion rules`];
+const NEW=[`Seven forms of the, and prepositions that fuse with them`,`Plurals made by changing the vowel`,`Choosing avere or essere in the past`,`Ci and ne`,`The preposition da`,`Doubled consonants`,`A few hundred everyday words with no Spanish cousin`];
+const TRAPS=[`Tener for possession: Italian uses avere`,`Estar for states and location: Italian mostly uses essere`,`Ir a plus infinitive for the future`,`The personal a`,`Plurals in -s`,`False friends such as burro, salire and guardare`,`Esperar, which splits into aspettare and sperare`];
+
+const CONV=[
+ [`-ción`,`-zione`,`{{nación}} → [[nazione]], {{estación}} → [[stazione]], {{información}} → [[informazione]]`],
+ [`-dad`,`-tà`,`{{ciudad}} → [[città]], {{universidad}} → [[università]], {{verdad}} → [[verità]]`],
+ [`-mente`,`-mente`,`{{normalmente}} → [[normalmente]], {{finalmente}} → [[finalmente]]`],
+ [`-or, -al, -ón, -ble`,`-ore, -ale, -one, -bile`,`{{color}} → [[colore]], {{normal}} → [[normale]], {{limón}} → [[limone]], {{posible}} → [[possibile]]`],
+ [`ue`,`o, uo`,`{{puerta}} → [[porta]], {{fuerte}} → [[forte]], {{bueno}} → [[buono]], {{fuego}} → [[fuoco]], {{nuevo}} → [[nuovo]]`],
+ [`ie`,`e`,`{{tiempo}} → [[tempo]], {{siempre}} → [[sempre]], {{fiesta}} → [[festa]], {{tierra}} → [[terra]], {{bien}} → [[bene]]`],
+ [`h-`,`f-`,`{{hacer}} → [[fare]], {{hijo}} → [[figlio]], {{harina}} → [[farina]], {{hierro}} → [[ferro]], {{hambre}} → [[fame]], {{horno}} → [[forno]]`],
+ [`ll-`,`pi-, chi-, fi-`,`{{lluvia}} → [[pioggia]], {{lleno}} → [[pieno]], {{llamar}} → [[chiamare]], {{llave}} → [[chiave]], {{llama}} → [[fiamma]]`],
+ [`pl, cl, fl, bl`,`pi, chi, fi, bi`,`{{plaza}} → [[piazza]], {{plato}} → [[piatto]], {{claro}} → [[chiaro]], {{flor}} → [[fiore]], {{blanco}} → [[bianco]]`],
+ [`ch`,`tt`,`{{noche}} → [[notte]], {{leche}} → [[latte]], {{ocho}} → [[otto]], {{hecho}} → [[fatto]], {{dicho}} → [[detto]]`],
+ [`ct, pt`,`tt`,`{{doctor}} → [[dottore]], {{octubre}} → [[ottobre]], {{perfecto}} → [[perfetto]], {{aceptar}} → [[accettare]]`],
+ [`j`,`gli`,`{{hijo}} → [[figlio]], {{mejor}} → [[migliore]], {{ajo}} → [[aglio]], {{consejo}} → [[consiglio]], {{hoja}} → [[foglia]]`],
+ [`j`,`cchi`,`{{ojo}} → [[occhio]], {{viejo}} → [[vecchio]], {{espejo}} → [[specchio]], {{oreja}} → [[orecchio]]`],
+ [`ñ`,`gn`,`{{baño}} → [[bagno]], {{señor}} → [[signore]], {{montaña}} → [[montagna]], {{sueño}} → [[sogno]]. Exception: {{año}} → [[anno]]`],
+ [`es + consonant`,`s + consonant`,`{{escuela}} → [[scuola]], {{estudiar}} → [[studiare]], {{español}} → [[spagnolo]], {{especial}} → [[speciale]]`],
+ [`d, g, b between vowels`,`t, c, p`,`{{vida}} → [[vita]], {{amigo}} → [[amico]], {{saber}} → [[sapere]], {{lado}} → [[lato]], {{hablado}} → [[parlato]]`],
+ [`b`,`v`,`{{haber}} → [[avere]], {{caballo}} → [[cavallo]], {{probar}} → [[provare]], {{hablaba}} → [[parlava]]`],
+ [`x`,`s, ss`,`{{examen}} → [[esame]], {{máximo}} → [[massimo]], {{exacto}} → [[esatto]], {{extranjero}} → [[straniero]]`]
+];
+const GRAM=[
+ [`Formal you`,`usted + third person`,`Lei + third person`,`same`],
+ [`Plural you`,`ustedes, vosotros`,`voi, everywhere`,`diff`],
+ [`To have`,`tener`,`avere (tenere is to hold)`,`trap`],
+ [`To be`,`ser, estar`,`essere takes most of estar; stare is narrow`,`diff`],
+ [`There is`,`hay`,`c'è, ci sono`,`diff`],
+ [`Plurals`,`-s`,`change the last vowel`,`diff`],
+ [`Possessives`,`mi casa`,`la mia casa, but mia figlia`,`diff`],
+ [`Everyday past`,`comí, he comido`,`ho mangiato for both`,`diff`],
+ [`Past auxiliary`,`haber`,`avere or essere`,`diff`],
+ [`Imperfect`,`hablaba`,`parlavo`,`same`],
+ [`Near future`,`voy a comer`,`mangio domani, mangerò`,`trap`],
+ [`Personal a`,`veo a María`,`vedo Maria`,`trap`],
+ [`Liking`,`me gusta, me gustan`,`mi piace, mi piacciono`,`same`],
+ [`Missing someone`,`te extraño`,`mi manchi`,`trap`],
+ [`Por and para`,`two words`,`per for most of both`,`same`],
+ [`Muy and mucho`,`two words`,`molto for both`,`same`],
+ [`Why and because`,`por qué, porque`,`perché for both`,`same`],
+ [`Negation`,`no + verb`,`non + verb`,`same`],
+ [`Of it, there`,`left out`,`ne, ci`,`diff`],
+ [`Subjunctive`,`no creo que sea`,`non credo che sia`,`same`]
+];
+const FALSE=[
+ [`burro`,`butter`,`burro`,`asino`],[`aceto`,`vinegar`,`aceite`,`olio`],[`caldo`,`hot`,`caldo`,`brodo`],
+ [`salire`,`to go up, get on`,`salir`,`uscire`],[`guardare`,`to look at, watch`,`guardar`,`conservare`],
+ [`largo`,`wide`,`largo`,`lungo`],[`vaso`,`jar, vase`,`vaso`,`bicchiere`],[`gamba`,`leg`,`gamba`,`gambero`],
+ [`camera`,`room`,`cámara`,`macchina fotografica`],[`subito`,`right away`,`súbito`,`all'improvviso`],
+ [`pronto`,`ready; hello on the phone`,`pronto`,`presto`],[`tovaglia`,`tablecloth`,`toalla`,`asciugamano`],
+ [`imbarazzata`,`embarrassed`,`embarazada`,`incinta`],[`topo`,`mouse`,`topo`,`talpa`],[`seta`,`silk`,`seta`,`fungo`],
+ [`officina`,`repair shop`,`oficina`,`ufficio`],[`contestare`,`to dispute`,`contestar`,`rispondere`],
+ [`sembrare`,`to seem`,`sembrar`,`seminare`],[`equipaggio`,`crew`,`equipaje`,`bagaglio`],
+ [`prima`,`before, first`,`prima`,`cugina`],[`loro`,`they, their`,`loro`,`pappagallo`],[`cura`,`care, treatment`,`cura`,`prete`],
+ [`nudo`,`naked`,`nudo`,`nodo`],[`autista`,`driver`,`autista`,`autistico`],[`fermare`,`to stop`,`firmar`,`firmare`],
+ [`tenere`,`to hold`,`tener`,`avere`],[`andare`,`to go`,`andar`,`camminare`]
+];
+const WORDS=[
+ [`Little words`,[[`anche`,`también`],[`ancora`,`todavía, otra vez`],[`adesso`,`ahora`],[`oggi`,`hoy`],[`ieri`,`ayer`],[`domani`,`mañana`],[`mai`,`nunca`],[`subito`,`enseguida`],[`forse`,`quizás`],[`quindi`,`así que`],[`ma, però`,`pero`],[`niente`,`nada`],[`qualcosa`,`algo`],[`nessuno`,`nadie`],[`qualcuno`,`alguien`],[`troppo`,`demasiado`],[`abbastanza`,`bastante`],[`ecco`,`aquí está`],[`piano`,`despacio`],[`insieme`,`juntos`],[`dopo`,`después`],[`prima`,`antes`],[`ogni`,`cada`],[`stesso`,`mismo`],[`vicino`,`cerca`],[`lontano`,`lejos`],[`fuori`,`fuera`]]],
+ [`Verbs`,[[`mangiare`,`comer`],[`parlare`,`hablar`],[`prendere`,`tomar, coger`],[`trovare`,`encontrar`],[`cercare`,`buscar`],[`guardare`,`mirar`],[`lavorare`,`trabajar`],[`chiedere`,`pedir, preguntar`],[`mettere`,`poner`],[`lasciare`,`dejar`],[`portare`,`llevar, traer`],[`sbagliare`,`equivocarse`],[`dimenticare`,`olvidar`],[`chiudere`,`cerrar`],[`arrivare`,`llegar`],[`tornare`,`volver`],[`diventare`,`volverse`],[`piangere`,`llorar`],[`alzarsi`,`levantarse`],[`scegliere`,`elegir`],[`spegnere`,`apagar`],[`riuscire`,`lograr`],[`avere bisogno di`,`necesitar`],[`bisogna`,`hay que`]]],
+ [`People and things`,[[`ragazzo, ragazza`,`chico, chica`],[`bambino`,`niño`],[`donna`,`mujer`],[`moglie`,`esposa`],[`fratello, sorella`,`hermano, hermana`],[`giorno`,`día`],[`mattina`,`mañana`],[`sera`,`tarde, noche`],[`tavolo`,`mesa`],[`sedia`,`silla`],[`letto`,`cama`],[`finestra`,`ventana`],[`strada`,`calle`],[`macchina`,`coche`],[`negozio`,`tienda`],[`soldi`,`dinero`],[`lavoro`,`trabajo`],[`valigia`,`maleta`],[`forchetta`,`tenedor`],[`bicchiere`,`vaso`],[`formaggio`,`queso`],[`prosciutto`,`jamón`],[`fragola`,`fresa`],[`mela`,`manzana`],[`pomodoro`,`tomate`],[`asciugamano`,`toalla`]]],
+ [`Describing`,[[`brutto`,`feo`],[`piccolo`,`pequeño`],[`stanco`,`cansado`],[`arrabbiato`,`enfadado`],[`pulito`,`limpio`],[`sporco`,`sucio`],[`giusto`,`correcto`],[`sbagliato`,`equivocado`],[`vuoto`,`vacío`],[`veloce`,`rápido`],[`comodo`,`cómodo, práctico`],[`gentile`,`amable`]]]
+];
+const MISS=[
+ [`A real person to talk to`,`Notes, audio and checks are all rehearsal. Aim for at least three live conversations before you fly: the session in block 10 and two more. Your daughter counts, and so does a tutor.`],
+ [`A calendar, not a cram`,`Twenty hours in one week fades fast. One block a week takes ten weeks, and two a week takes five. Put the blocks on a calendar today and count back from your flight.`],
+ [`A keep-warm routine until spring`,`Once the ten blocks are done, keep fifteen minutes a day: finish Language Transfer tracks 36 to 45, watch one Easy Italian episode a week, review flashcards, and open every call with your daughter in Italian.`],
+ [`Your ear`,`Reading will feel easy within days because of Spanish. Listening will not. Italian at full speed is the part that takes the most hours, so put Italian audio in your commute from week one.`],
+ [`Flashcards for the non-cognates`,`Do not waste cards on words Spanish hands you. Make cards only for the list on the Spanish head start tab and for your own gap sentences, as whole sentences, ten new ones a day at most.`],
+ [`Your daughter as coach`,`Ask her for three things: the first ten minutes of each call in Italian, one correction per call and no more, and the ten phrases she hears every day where she lives.`],
+ [`An honest ceiling`,`With Spanish behind you, twenty focused hours get you through cafés, trains, hotels and slow one-on-one conversations. A fast dinner with her friends, phone calls with strangers and jokes take hundreds of hours more.`],
+ [`Manners that change what you say`,`Say buongiorno when you walk into any shop. Use Lei with staff. Cappuccino is a morning drink. Dinner starts around eight, many shops close mid-afternoon, and nobody expects a tip.`],
+ [`Phone setup`,`Add the Italian keyboard so accents and autocorrect work. Download Italian for offline use in your translator app. Install a train app and set it to Italian for free daily practice. Save 112.`],
+ [`Where she lives`,`Italian sounds different from city to city, and every region has a few words of its own. Ask her which ones she has picked up, and learn five facts about her city in Italian.`],
+ [`Family members without Spanish`,`The Spanish notes are your shortcut, not theirs. Anyone starting from English alone should plan on roughly double the time per block and can skip the From your Spanish boxes.`],
+ [`A weekly itañol check`,`Record yourself for one minute each week and listen for Spanish leaking in. It is the main risk for Spanish speakers: you are understood so easily that nobody corrects you.`]
+];
+const CUT=[
+ `The subjunctive. You will recognize it from Spanish when you hear it. For opinions, say secondo me and you avoid it.`,
+ `The one-word past (passato remoto). It lives in novels and in parts of the south.`,
+ `Double pronouns such as glielo and me lo. Say the noun instead.`,
+ `Formal commands beyond the set phrases in block 9.`,
+ `Writing. Spelling accents and doubles correctly matters for texts to your daughter, and she will forgive you.`
+];
+const TOOLS=[
+ `<a href="https://forvo.com/" target="_blank" rel="noopener">Forvo</a>: native speakers pronouncing any word you look up.`,
+ `<a href="https://www.wordreference.com/" target="_blank" rel="noopener">WordReference</a>: Italian to Spanish dictionary and a verb conjugator.`,
+ `<a href="https://apps.ankiweb.net/" target="_blank" rel="noopener">Anki</a>: free spaced-repetition flashcards.`,
+ `<a href="https://www.easyitalian.fm/" target="_blank" rel="noopener">The Easy Italian podcast</a>: slow, natural conversation for the commute.`
+];
+
+/* ---------- ids ---------- */
+BLOCKS.forEach((b,i)=>{b.n=i+1;b.lids=b.learn.map((x,j)=>'b'+b.n+'l'+j);b.cids=b.check.map((x,j)=>'b'+b.n+'c'+j);});
+const KNOWN=new Set(BLOCKS.flatMap(b=>b.lids.concat(b.cids)));
+
+/* ---------- state ---------- */
+const LS='venti-ore.v1';
+const rid=()=>Math.random().toString(36).slice(2,10);
+function load(){try{const s=JSON.parse(localStorage.getItem(LS));if(s&&Array.isArray(s.people)&&s.people.length){s.removed=Array.isArray(s.removed)?s.removed:[];return s}}catch(e){}return null}
+function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+let state=load()||{people:[{id:rid(),name:'',ticks:{},t:0}],active:null,removed:[]};
+if(!state.people.some(p=>p.id===state.active))state.active=state.people[0].id;
+const me=()=>state.people.find(p=>p.id===state.active)||state.people[0];
+function stat(ticks,b){const l=b.lids.filter(id=>ticks[id]).length,c=b.cids.filter(id=>ticks[id]).length;return{done:c===b.cids.length,any:l+c>0}}
+function totals(ticks){let d=0;const per=BLOCKS.map(b=>{const s=stat(ticks,b);if(s.done)d++;return s});return{done:d,per}}
+function cleanPerson(p,id){const ticks={};if(p&&p.ticks&&typeof p.ticks==='object')for(const k of Object.keys(p.ticks))if(KNOWN.has(k)&&p.ticks[k])ticks[k]=1;return{id:id,name:typeof(p&&p.name)==='string'?p.name.slice(0,24):'',ticks:ticks,t:Number(p&&p.t)||0}}
+
+/* ---------- render: plan ---------- */
+function taskHtml(b,c,j){
+  const id=b.cids[j];let h='<li class="item"><input type="checkbox" id="'+id+'"><div><label for="'+id+'">'+fmt(c.t)+'</label>';
+  if(c.body)h+='<p>'+fmt(c.body)+'</p>';
+  if(c.qa){h+='<ul class="qa">'+c.qa.map(q=>'<li>'+(c.qaLang==='it'?'<span class="it ns" lang="it">'+q[0]+'</span>':'<span class="es" lang="es">'+q[0]+'</span>')+'</li>').join('')+'</ul>';
+    h+='<details class="ans"><summary>Show answers</summary><div><ul class="qa">'+c.qa.map(q=>'<li><span class="it" lang="it">'+q[1]+'</span></li>').join('')+'</ul></div></details>';}
+  if(c.ans)h+='<details class="ans"><summary>Show answers</summary><div>'+fmt(c.ans)+'</div></details>';
+  if(c.pass)h+='<p class="pass">'+c.pass+'</p>';
+  return h+'</div></li>';
+}
+function blockHtml(b){
+  return '<details class="block" id="b'+b.n+'"><summary><span class="bnum">'+String(b.n).padStart(2,'0')+'</span><span class="btitle"><h3>'+b.title+'</h3><span lang="it">'+b.it+'</span></span><span class="pill" data-pill="'+b.n+'">2 h</span></summary><div class="bbody">'
+  +'<p class="outcome">'+b.out+'</p>'
+  +'<div class="sec"><h4>What to learn <small>about 40 minutes, aloud</small></h4><ul class="items">'+b.learn.map((l,j)=>'<li class="item"><input type="checkbox" id="'+b.lids[j]+'"><div><label for="'+b.lids[j]+'">'+l[0]+'</label><p>'+fmt(l[1])+'</p></div></li>').join('')+'</ul></div>'
+  +'<div class="sec"><h4>From your Spanish</h4><div class="bridge"><span class="tag same">Same</span><p>'+fmt(b.same)+'</p><span class="tag diff">Different</span><p>'+fmt(b.diff)+'</p><span class="tag trap">Trap</span><p>'+fmt(b.trap)+'</p></div></div>'
+  +'<div class="sec"><h4>One resource <small>about 55 minutes</small></h4><div class="res"><a href="'+b.res.url+'" target="_blank" rel="noopener">'+b.res.name+'</a><p>'+b.res.what+'</p></div></div>'
+  +'<div class="sec"><h4>15-minute check <small>three tasks, five minutes each. Tick each one you pass.</small></h4><ul class="items">'+b.check.map((c,j)=>taskHtml(b,c,j)).join('')+'</ul></div>'
+  +'<div class="rp" data-b="'+b.n+'"><h4>Practice partner</h4><p class="hint">Type a short conversation in Italian with Claude playing a part for this block. It corrects you as you go and points out mistakes that come from Spanish.</p><div class="rp-log" aria-live="polite"></div><form class="rp-form" hidden><input id="rp-in-'+b.n+'" type="text" autocomplete="off" autocapitalize="sentences" lang="it" placeholder="Scrivi in italiano…" aria-label="Your reply in Italian"><button class="btn" type="submit">Send</button></form><div class="rp-actions"><button class="btn ghost rp-start" type="button">Start the scene</button></div></div>'
+  +'</div></details>';
+}
+$('#blocks').innerHTML=BLOCKS.map(blockHtml).join('');
+$('#route').innerHTML=BLOCKS.map((b,i)=>(i?'<span class="seg" data-seg="'+b.n+'"></span>':'')+'<button class="stop" type="button" data-stop="'+b.n+'" aria-label="Block '+b.n+': '+b.title+'">'+b.n+'</button>').join('');
+
+/* ---------- render: spanish + missing ---------- */
+const li=a=>a.map(x=>'<li>'+x+'</li>').join('');
+$('#colFree').innerHTML=li(FREE);$('#colNew').innerHTML=li(NEW);$('#colTrap').innerHTML=li(TRAPS);
+$('#tblConv tbody').innerHTML=CONV.map(r=>'<tr><td><span class="es">'+r[0]+'</span></td><td><b>'+r[1]+'</b></td><td>'+fmt(r[2])+'</td></tr>').join('');
+const VERD={same:'Same',diff:'Different',trap:'Trap'};
+$('#tblGram tbody').innerHTML=GRAM.map(r=>'<tr><td>'+r[0]+'</td><td><span class="es" lang="es">'+r[1]+'</span></td><td><span class="it ns" lang="it">'+r[2]+'</span></td><td><span class="tag '+r[3]+'">'+VERD[r[3]]+'</span></td></tr>').join('');
+$('#tblFalse tbody').innerHTML=FALSE.map(r=>'<tr><td><span class="it" lang="it">'+r[0]+'</span></td><td>'+r[1]+'</td><td><span class="es" lang="es">'+r[2]+'</span></td><td><span class="it" lang="it">'+r[3]+'</span></td></tr>').join('');
+$('#wordGroups').innerHTML=WORDS.map(g=>'<h3>'+g[0]+'</h3><ul class="words">'+g[1].map(w=>'<li><span class="it" lang="it">'+w[0]+'</span><span class="es" lang="es">'+w[1]+'</span></li>').join('')+'</ul>').join('');
+$('#missGrid').innerHTML=MISS.map(m=>'<div><h3>'+m[0]+'</h3><p>'+m[1]+'</p></div>').join('');
+$('#cutList').innerHTML=li(CUT);$('#toolList').innerHTML=li(TOOLS);
+
+/* ---------- refresh ---------- */
+function refresh(){
+  const p=me(),t=totals(p.ticks);
+  KNOWN.forEach(id=>{const el=document.getElementById(id);if(el)el.checked=!!p.ticks[id]});
+  BLOCKS.forEach((b,i)=>{const s=t.per[i],cls=s.done?'done':s.any?'part':'';
+    const pill=$('[data-pill="'+b.n+'"]');pill.className='pill '+cls;pill.textContent=s.done?'Done':s.any?'In progress':'2 h';
+    $('[data-stop="'+b.n+'"]').className='stop '+cls;
+    const seg=$('[data-seg="'+b.n+'"]');if(seg)seg.className='seg'+(t.per[i-1].done?' on':'');});
+  $('#sumBlocks').textContent=t.done+' / 10';$('#sumHours').textContent=(t.done*2)+' / 20';
+  const next=BLOCKS.find((b,i)=>!t.per[i].done);
+  $('#sumNext').textContent=next?'Next: block '+next.n+', '+next.title:'All ten blocks done. Keep it warm until spring.';
+  $('#whoChip').textContent=p.name||'Add your name';
+  $('#nameBar').hidden=!!p.name;
+  renderFamily();
+}
+function toast(msg){const el=$('#toast');el.textContent=msg;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>{el.hidden=true},3200)}
+
+$('#blocks').addEventListener('change',e=>{
+  const el=e.target;if(!el.matches('input[type=checkbox]')||!KNOWN.has(el.id))return;
+  const p=me(),b=BLOCKS[parseInt(el.id.slice(1),10)-1],was=stat(p.ticks,b).done;
+  if(el.checked)p.ticks[el.id]=1;else delete p.ticks[el.id];
+  p.t=Date.now();save();refresh();schedulePush();
+  if(!was&&stat(p.ticks,b).done){const d=totals(p.ticks).done;toast('Fatto! Block '+b.n+' done. '+(d*2)+' of 20 hours.')}
+});
+$('#route').addEventListener('click',e=>{const s=e.target.closest('[data-stop]');if(!s)return;const d=$('#b'+s.dataset.stop);d.open=true;d.scrollIntoView({block:'start'})});
+
+/* ---------- tabs ---------- */
+const TABS=['plan','spanish','family','missing'];
+function showTab(){let h=(location.hash||'').slice(1);if(TABS.indexOf(h)<0)h='plan';
+  TABS.forEach(t=>{$('#view-'+t).hidden=t!==h;const a=$('[data-tab="'+t+'"]');if(t===h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});}
+window.addEventListener('hashchange',()=>{showTab();window.scrollTo(0,0)});showTab();
+
+/* ---------- family ---------- */
+let remote={},uid=null,db=null,readonly=false;
+function rowHtml(){return '<li><span class="pname"></span><span class="pnum"></span><span class="pbar">'+'<i></i>'.repeat(10)+'</span></li>'}
+function renderFamily(){
+  const rows=[];const mineIds=new Set(state.people.map(p=>p.id));
+  state.people.forEach(p=>{if(p.name||p.t>0)rows.push({p:p,tag:p.id===state.active?'you':'this device'})});
+  Object.keys(remote).forEach(docId=>{if(docId===uid)return;const ppl=remote[docId]&&remote[docId].people;if(!ppl||typeof ppl!=='object')return;
+    Object.keys(ppl).slice(0,12).forEach(pid=>{if(mineIds.has(pid))return;const c=cleanPerson(ppl[pid],pid);if(c.name||c.t>0)rows.push({p:c,tag:''})})});
+  rows.forEach(r=>{r.tt=totals(r.p.ticks)});rows.sort((a,b)=>b.tt.done-a.tt.done);
+  const board=$('#board');
+  if(!rows.length){board.innerHTML='<li class="empty">Nobody is on the board yet. Add your name below and tick your first step.</li>'}
+  else{board.innerHTML=rows.map(rowHtml).join('');
+    $$('li',board).forEach((el,i)=>{const r=rows[i];const n=$('.pname',el);n.textContent=r.p.name||'No name yet';
+      if(r.tag){const s=document.createElement('small');s.textContent=r.tag;n.appendChild(s)}
+      $('.pnum',el).textContent=r.tt.done+' / 10 blocks · '+(r.tt.done*2)+' h';
+      $$('.pbar i',el).forEach((seg,k)=>{seg.className=r.tt.per[k].done?'done':r.tt.per[k].any?'part':''})})}
+  const ni=$('#nameInput');if(document.activeElement!==ni)ni.value=me().name;
+  const multi=state.people.length>1;$('#switchField').hidden=!multi;$('#removeBtn').hidden=!multi;
+  const sel=$('#whoSelect');sel.innerHTML='';state.people.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name||'No name yet';o.selected=p.id===state.active;sel.appendChild(o)});
+}
+let nameT=null;
+$('#nameInput').addEventListener('input',e=>{const p=me();p.name=e.target.value.trim().slice(0,24);p.t=Date.now();save();
+  $('#whoChip').textContent=p.name||'Add your name';$('#nameBar').hidden=!!p.name;clearTimeout(nameT);nameT=setTimeout(()=>{renderFamily();schedulePush()},700)});
+$('#whoSelect').addEventListener('change',e=>{state.active=e.target.value;save();armRemove(false);refresh()});
+$('#addForm').addEventListener('submit',e=>{e.preventDefault();const inp=$('#addInput'),name=inp.value.trim().slice(0,24);if(!name)return;
+  const p={id:rid(),name:name,ticks:{},t:Date.now()};state.people.push(p);state.active=p.id;inp.value='';save();refresh();schedulePush();toast(name+' added. Now tracking '+name+'.')});
+let removeArmed=false;
+function armRemove(on){removeArmed=on;$('#removeBtn').textContent=on?'Tap again to remove '+(me().name||'this person')+' and their progress':'Remove this person from this device'}
+$('#removeBtn').addEventListener('click',()=>{if(!removeArmed){armRemove(true);return}
+  const p=me();state.people=state.people.filter(x=>x.id!==p.id);state.removed.push(p.id);state.active=state.people[0].id;armRemove(false);save();refresh();schedulePush()});
+$('#copyBtn').addEventListener('click',()=>{const p=me(),t=totals(p.ticks),next=BLOCKS.find((b,i)=>!t.per[i].done);
+  const text=(p.name||'Me')+': '+t.done+' of 10 blocks done in Venti Ore ('+(t.done*2)+' of 20 hours). '+(next?'Next up: block '+next.n+', '+next.title+'.':'Finished!');
+  const show=()=>{const o=$('#copyOut');o.hidden=false;o.value=text;o.focus();o.select()};
+  try{navigator.clipboard.writeText(text).then(()=>toast('Copied. Paste it in the family chat.'),show)}catch(err){show()}});
+
+/* ---------- shared board (db) ---------- */
+const C=window.claude&&typeof window.claude.use==='function'?window.claude:null;
+let pushT=null,pushing=false,pushAgain=false,merged=false,retried=false;
+function setSync(s){$('#syncStatus').textContent=s==='synced'?'Synced to the family board.':'Saved on this device.'}
+function schedulePush(){if(!db||!uid||readonly||!merged)return;clearTimeout(pushT);pushT=setTimeout(push,900)}
+async function push(){
+  if(pushing){pushAgain=true;return}pushing=true;
+  const people={};state.people.filter(p=>p.t>0).forEach(p=>{people[p.id]={name:p.name,ticks:p.ticks,t:p.t}});
+  try{await db.doc('progress/'+uid).set({people:people,t:Date.now()});state.removed=[];save();setSync('synced');retried=false}
+  catch(e){if(e&&e.code==='unavailable'&&!retried){retried=true;setTimeout(push,3000+Math.random()*2000)}else{readonly=true;setSync('local')}}
+  pushing=false;if(pushAgain){pushAgain=false;push()}
+}
+function reconcile(){
+  const mine=(remote[uid]&&remote[uid].people&&typeof remote[uid].people==='object')?remote[uid].people:{};
+  const rids=Object.keys(mine);let changed=false,need=false;
+  if(!merged&&rids.length&&state.people.length===1&&state.people[0].t===0&&!state.people[0].name){state.people=[];changed=true}
+  rids.forEach(pid=>{const c=cleanPerson(mine[pid],pid),lp=state.people.find(p=>p.id===pid);
+    if(!lp){if(state.removed.indexOf(pid)>=0)need=true;else{state.people.push(c);changed=true}}
+    else if(c.t>lp.t){lp.name=c.name;lp.ticks=c.ticks;lp.t=c.t;changed=true}});
+  state.people.forEach(lp=>{if(lp.t>0){const r=mine[lp.id];if(!r||lp.t>(Number(r.t)||0))need=true}});
+  if(!state.people.length)state.people=[{id:rid(),name:'',ticks:{},t:0}];
+  if(!state.people.some(p=>p.id===state.active))state.active=state.people[0].id;
+  merged=true;
+  if(changed){save();refresh()}
+  if(need)schedulePush();else if(rids.length&&!readonly)setSync('synced');
+}
+async function initSync(){
+  if(!C)return;let d=null,u=null;
+  try{[d,u]=await Promise.all([C.use('db'),C.use('user')])}catch(e){return}
+  if(!d)return;db=d;
+  try{uid=u?await u.id():null}catch(e){uid=null}
+  let first=false;const note=$('#boardNote');
+  const timer=setTimeout(()=>{if(!first)note.textContent='The shared board cannot be reached right now. Your own progress is still saved on this device.'},10000);
+  db.collection('progress').onSnapshot(snap=>{
+    const r={};snap.docs.forEach(doc=>{r[doc.id]=doc.data()||{}});remote=r;
+    if(!snap.metadata.fromCache){first=true;clearTimeout(timer);note.textContent='';if(uid)reconcile()}
+    renderFamily();
+  },()=>{first=true;clearTimeout(timer);note.textContent='';db=null});
+}
+
+/* ---------- audio ---------- */
+let speakFn=null,stopFn=null;const root=document.documentElement;
+function sayText(s){return s.replace(/[…_]+/g,' ').replace(/[()]/g,' ').replace(/\s*[\/·→]\s*/g,', ').replace(/\s+/g,' ').trim()}
+function say(text){text=sayText(text).slice(0,1900);if(speakFn&&text)speakFn(text)}
+function disableSpeech(){speakFn=null;root.classList.remove('can-speak');$('#stopAudio').hidden=true}
+async function initSpeech(){
+  let t=null;if(C){try{t=await C.use('tts')}catch(e){t=null}}
+  if(t){
+    speakFn=text=>{t.speak(text,{language:'it',rate:0.85}).catch(e=>{if(e&&(e.code==='not_granted'||e.code==='unavailable'))disableSpeech();else if(e&&e.code==='rate_limited')toast('Audio is busy. Try again in a minute.')})};
+    stopFn=()=>{t.stop().catch(()=>{})};
+    try{t.onState(s=>{$('#stopAudio').hidden=!s||s.state==='idle';if(s&&s.state==='idle'&&(s.reason==='not_granted'||s.reason==='unavailable'))disableSpeech()})}catch(e){}
+    root.classList.add('can-speak');return;
+  }
+  const ss=window.speechSynthesis;if(!ss||typeof SpeechSynthesisUtterance==='undefined')return;
+  const pick=()=>{let v=[];try{v=ss.getVoices()||[]}catch(e){}return v.find(x=>/^it(-|_|$)/i.test(x.lang))||null};
+  const arm=()=>{const voice=pick();if(!voice||speakFn)return;
+    speakFn=text=>{try{ss.cancel();const u=new SpeechSynthesisUtterance(text);u.voice=voice;u.lang=voice.lang;u.rate=0.85;
+      u.onstart=()=>{$('#stopAudio').hidden=false};u.onend=u.onerror=()=>{$('#stopAudio').hidden=true};ss.speak(u)}catch(e){}};
+    stopFn=()=>{try{ss.cancel()}catch(e){}$('#stopAudio').hidden=true};root.classList.add('can-speak')};
+  arm();try{ss.addEventListener('voiceschanged',arm)}catch(e){}
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('.it');if(el&&!el.classList.contains('ns')&&speakFn){e.preventDefault();say(el.textContent);return}
+  const h=e.target.closest('.hear');if(h&&speakFn){say(h.dataset.say||'')}
+});
+$('#stopAudio').addEventListener('click',()=>{if(stopFn)stopFn()});
+
+/* ---------- practice partner ---------- */
+let sampleFn=null;const chats={};
+function addMsg(log,cls,text){const d=document.createElement('div');d.className='msg '+cls;d.textContent=text;log.appendChild(d);return d}
+function addHear(log,text){const it=text.split(/\n?\s*Nota:/)[0].trim();if(!it)return;const b=document.createElement('button');b.type='button';b.className='btn link hear';b.textContent='Hear it';b.dataset.say=it;log.appendChild(b)}
+async function turn(box){
+  const n=box.dataset.b,ch=chats[n],log=$('.rp-log',box),form=$('.rp-form',box),inp=$('input',form),btn=$('button',form);
+  inp.disabled=btn.disabled=true;const bubble=addMsg(log,'a','…');
+  try{
+    const res=await sampleFn(ch.hist,{cache:false,onText:u=>{if(u&&u.text)bubble.textContent=u.text}});
+    const text=(res&&res.text||'').trim();bubble.textContent=text||'…';ch.hist.push({role:'assistant',content:text||'…'});addHear(log,text);
+    form.hidden=false;inp.disabled=btn.disabled=false;inp.focus({preventScroll:true});
+  }catch(e){
+    bubble.remove();const code=e&&e.code;
+    if(code==='not_granted'){root.classList.remove('can-chat');return}
+    if(ch.hist.length&&ch.hist[ch.hist.length-1].role==='user'&&ch.hist.length>1){const last=ch.hist.pop();inp.value=last.content}
+    addMsg(log,'err',code==='rate_limited'?'Too many messages for now. Wait a minute and send again.':'The practice partner did not answer. Check your connection and send again.');
+    if(ch.hist.length>1){form.hidden=false;inp.disabled=btn.disabled=false}else{delete chats[n];$('.rp-start',box).hidden=false}
+  }
+}
+$('#blocks').addEventListener('click',e=>{
+  const st=e.target.closest('.rp-start');if(!st||!sampleFn)return;
+  const box=st.closest('.rp'),n=box.dataset.b,b=BLOCKS[n-1];
+  $('.rp-log',box).innerHTML='';st.textContent='Start over';
+  chats[n]={hist:[{role:'user',content:'You are an Italian conversation partner inside a language-learning app. The learner is a beginner in Italian who is fluent in Spanish and English. Scene: '+b.scene+'. Rules: stay in character. Write only in Italian at A1 to A2 level, one or two short sentences per turn, and end each turn with a question or a prompt so the learner has to answer. If the learner\'s last message contained a mistake, add one final line that starts with "Nota:" written in English, giving the corrected Italian sentence and, when the mistake comes from Spanish, a few words saying so. If there was no mistake, add no note. If the learner writes in Spanish or English, answer in simple Italian and show them how to say it in Italian. Keep to these rules for the whole conversation. Begin now with your first line in character.'}]};
+  turn(box);
+});
+$('#blocks').addEventListener('submit',e=>{
+  const form=e.target.closest('.rp-form');if(!form)return;e.preventDefault();
+  const box=form.closest('.rp'),ch=chats[box.dataset.b],inp=$('input',form),text=inp.value.trim().slice(0,600);
+  if(!ch||!text||!sampleFn)return;inp.value='';$$('.msg.err',box).forEach(x=>x.remove());
+  addMsg($('.rp-log',box),'u',text);ch.hist.push({role:'user',content:text});
+  if(ch.hist.length>41)ch.hist.splice(1,2);
+  turn(box);
+});
+async function initChat(){if(!C)return;try{const s=await C.use('sample');if(s){sampleFn=s;root.classList.add('can-chat')}}catch(e){}}
+
+/* ---------- go ---------- */
+refresh();
+const firstOpen=BLOCKS.find((b,i)=>!totals(me().ticks).per[i].done)||BLOCKS[0];
+$('#b'+firstOpen.n).open=true;
+initSync();initSpeech();initChat();
+})();
+</script>
